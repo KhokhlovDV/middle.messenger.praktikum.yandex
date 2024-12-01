@@ -1,3 +1,18 @@
-<div class="modal-window">
-    {{> Button id="sign-up" text="Зарегистрироваться"}}
+<div class="modal modal-sign modal-sign-up">
+    <h2 class="modal-sign__header">Регистрация</h2>
+    <form class="modal-sign__form">
+        <div>
+            {{> FormField type="email" label="Почта" id="email" value=email}}
+            {{> FormField type="text" label="Логин" id="login" value=login}}
+            {{> FormField type="text" label="Имя" id="first_name" value=firstName}}
+            {{> FormField type="text" label="Фамилия" id="second_name" value=secondName}}
+            {{> FormField type="tel" label="Телефон" id="phone" value=phone}}
+            {{> FormField type="password" label="Пароль" id="password" value=password}}
+            {{> FormField type="password" label="Пароль (еще раз)" id="confirmed_password" value=confirmedPassword}}
+        </div>
+        <div>
+            {{> Button id="sign-up" text="Зарегистрироваться" class="modal-sign__button"}}
+            <span class="action_text" id="sign-in">Войти</span>
+        </div>
+    </form>
 </div>

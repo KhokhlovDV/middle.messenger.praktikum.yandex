@@ -41,7 +41,7 @@ export class App {
     renderSignIn = () => {
         const template = Handlebars.compile(Pages.SignIn);
         this.appElement.innerHTML = template({
-            login: 'khokhlov.dv',
+            login: 'ivanivanov',
             password: 'mypassword',
         });
         document.getElementById('sign-in')?.addEventListener('click', () => {
@@ -56,7 +56,21 @@ export class App {
 
     renderSignUp = () => {
         const template = Handlebars.compile(Pages.SignUp);
-        this.appElement.innerHTML = template({});
+        this.appElement.innerHTML = template({
+            email: 'pochta@yandex.ru',
+            login: 'ivanivanov',
+            firstName: 'Иван',
+            secondName: 'Иванов',
+            phone: '+7 (909) 967 30 30',
+            password: 'mypass',
+            confirmedPassword: 'mypass',
+        });
+        document.getElementById('sign-in')?.addEventListener('click', () => {
+            this.router.navigate('/');
+        });
+        document.getElementById('sign-up')?.addEventListener('click', () => {
+            this.router.navigate('/chat');
+        });
     };
 
     renderChat = () => {

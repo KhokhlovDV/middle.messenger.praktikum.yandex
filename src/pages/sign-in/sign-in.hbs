@@ -1,13 +1,13 @@
 <div class="modal modal-sign modal-sign-in">
-    <div>
-        <h2 class="modal-sign__header">Вход</h2>
-        <form>
-            {{> FormField type="text" label="Логин" id="login" name="login" value=login}}
-            {{> FormField type="password" label="Пароль" id="password" name="password" value=password}}
-        </form>
-    </div>
-    <div>
-        {{> Button id="sign-in" text="Войти" class="modal-sign__button"}}
-        <span class="action_text" id="registration">Нет аккаунта?</span>
-    </div>
+    <h2 class="modal-sign__header">Вход</h2>
+    <form class="modal-sign__form">
+        <div>
+            {{> FormField type="text" label="Логин" id="login" value=login}}
+            {{> FormField type="password" label="Пароль" id="password" value=password}}
+        </div>
+        <div>
+            {{> Button id="sign-in" text="Войти" class="modal-sign__button"}}
+            <span class="action_text" id="registration">Нет аккаунта?</span>
+        </div>
+    </form>
 </div>
