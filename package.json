@@ -1,5 +1,5 @@
 {
-  "name": "middle-frontend",
+  "name": "messenger",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,6 +9,9 @@
     "start": "npm run build && node server.cjs"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "postcss-preset-env": "^10.1.1",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
