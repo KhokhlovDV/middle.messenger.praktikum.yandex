@@ -18,16 +18,16 @@ export class App {
     private router: Router;
     constructor() {
         this.appElement = document.getElementById('app') as HTMLDivElement;
-        this.router = new Router(
-            [
+        this.router = new Router({
+            routes: [
                 { path: '/not-found', onRouteMatch: this.renderNotFound },
                 { path: '/server-error', onRouteMatch: this.renderServerError },
                 { path: '/', onRouteMatch: this.renderSignIn },
                 { path: '/sign-up', onRouteMatch: this.renderSignUp },
                 { path: '/chat', onRouteMatch: this.renderChat },
             ],
-            '/not-found'
-        );
+            onRouteNotFound: this.renderNotFound,
+        });
     }
 
     renderNotFound = () => {

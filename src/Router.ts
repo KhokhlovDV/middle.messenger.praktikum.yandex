@@ -3,26 +3,35 @@ interface Route {
     onRouteMatch: () => void;
 }
 
+interface RouterParams {
+    routes: Route[];
+    onRouteNotFound: () => void;
+}
+
 export class Router {
-    constructor(private routes: Route[], private notFoundRoute: string) {
-        this.navigate(this.getCurrentPath());
+    constructor(private params: RouterParams) {
+        this.matchingRoute(this.getCurrentPath());
         window.addEventListener('popstate', () => {
-            this.getRoute(this.getCurrentPath())?.onRouteMatch();
+            this.matchingRoute(this.getCurrentPath());
         });
     }
 
     navigate(path: string) {
-        const currentRoute =
-            this.getRoute(path) ?? this.getRoute(this.notFoundRoute);
-        if (!currentRoute) {
-            throw new Error('Wrong route setup');
-        }
-        currentRoute.onRouteMatch();
+        this.matchingRoute(path);
         window.history.pushState({}, '', path);
+    }
+
+    private matchingRoute(path: string) {
+        const currentRoute = this.getRoute(path);
+        if (!currentRoute) {
+            this.params.onRouteNotFound();
+        } else {
+            currentRoute.onRouteMatch();
+        }
     }
 
     private getCurrentPath = () => window.location.pathname;
 
     private getRoute = (path: string) =>
-        this.routes.find((route) => route.path === path);
+        this.params.routes.find((route) => route.path === path);
 }
