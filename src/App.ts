@@ -3,9 +3,11 @@ import { Button } from './components/button';
 import * as Pages from './pages';
 import { Router } from './Router';
 import { FormField } from './components/form-field';
+import { Link } from './components/link';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
+Handlebars.registerPartial('Link', Link);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -47,11 +49,7 @@ export class App {
         document.getElementById('sign-in')?.addEventListener('click', () => {
             this.router.navigate('/chat');
         });
-        document
-            .getElementById('registration')
-            ?.addEventListener('click', () => {
-                this.router.navigate('/sign-up');
-            });
+        this.setLinkListeners();
     };
 
     renderSignUp = () => {
@@ -65,18 +63,31 @@ export class App {
             password: 'mypass',
             confirmedPassword: 'mypass',
         });
-        document.getElementById('sign-in')?.addEventListener('click', () => {
-            this.router.navigate('/');
-        });
         document.getElementById('sign-up')?.addEventListener('click', () => {
             this.router.navigate('/chat');
         });
+        this.setLinkListeners();
     };
 
     renderChat = () => {
         const template = Handlebars.compile(Pages.ChatPage);
         this.appElement.innerHTML = template({});
     };
+
+    private setLinkListeners() {
+        const footerLinks = document.querySelectorAll('a');
+        footerLinks.forEach((link) => {
+            link.addEventListener('click', (e) => {
+                if (
+                    e.target instanceof HTMLAnchorElement &&
+                    e.target.dataset.page
+                ) {
+                    e.preventDefault();
+                    this.router.navigate(e.target.dataset.page);
+                }
+            });
+        });
+    }
 
     private renderErrorPage({
         errorCode,
@@ -87,10 +98,6 @@ export class App {
     }) {
         const template = Handlebars.compile(Pages.ErrorPage);
         this.appElement.innerHTML = template({ errorCode, description });
-        document
-            .getElementById('back_to_chat')
-            ?.addEventListener('click', () => {
-                this.router.navigate('/chat');
-            });
+        this.setLinkListeners();
     }
 }
