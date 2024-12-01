@@ -2,8 +2,10 @@ import Handlebars from 'handlebars';
 import { Button } from './components/button';
 import * as Pages from './pages';
 import { Router } from './Router';
+import { FormField } from './components/form-field';
 
 Handlebars.registerPartial('Button', Button);
+Handlebars.registerPartial('FormField', FormField);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -13,29 +15,68 @@ export class App {
         this.router = new Router(
             [
                 { path: '/not-found', onRouteMatch: this.renderNotFound },
+                { path: '/server-error', onRouteMatch: this.renderServerError },
                 { path: '/', onRouteMatch: this.renderSignIn },
                 { path: '/sign-up', onRouteMatch: this.renderSignUp },
+                { path: '/chat', onRouteMatch: this.renderChat },
             ],
             '/not-found'
         );
     }
 
     renderNotFound = () => {
-        const template = Handlebars.compile(Pages.NotFound);
-        this.appElement.innerHTML = template({});
+        this.renderErrorPage({
+            errorCode: '404',
+            description: 'Не туда попали',
+        });
+    };
+
+    renderServerError = () => {
+        this.renderErrorPage({
+            errorCode: '500',
+            description: 'Мы уже фиксим',
+        });
     };
 
     renderSignIn = () => {
         const template = Handlebars.compile(Pages.SignIn);
-        this.appElement.innerHTML = template({});
-        document.getElementById('sign-in')?.addEventListener('click', () => {
-            console.log('CLIECK!!!');
-            this.router.navigate('/sign-up');
+        this.appElement.innerHTML = template({
+            login: 'khokhlov.dv',
+            password: 'mypassword',
         });
+        document.getElementById('sign-in')?.addEventListener('click', () => {
+            this.router.navigate('/chat');
+        });
+        document
+            .getElementById('registration')
+            ?.addEventListener('click', () => {
+                this.router.navigate('/sign-up');
+            });
     };
 
     renderSignUp = () => {
         const template = Handlebars.compile(Pages.SignUp);
         this.appElement.innerHTML = template({});
     };
+
+    renderChat = () => {
+        const template = Handlebars.compile(Pages.ChatPage);
+        this.appElement.innerHTML = template({});
+    };
+
+    private renderErrorPage({
+        errorCode,
+        description,
+    }: {
+        errorCode: string;
+        description: string;
+    }) {
+        const template = Handlebars.compile(Pages.ErrorPage);
+        this.appElement.innerHTML = template({ errorCode, description });
+        document
+            .getElementById('back_to_chat')
+            ?.addEventListener('click', () => {
+                this.router.navigate('/chat');
+            });
+    }
 }

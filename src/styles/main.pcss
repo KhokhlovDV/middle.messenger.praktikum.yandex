@@ -13,23 +13,58 @@
 
 body {
     font-family: Arial, sans-serif;
+    font-weight: 500;
+    line-height: 13px;
+    font-size: 13px;
     margin: 0;
     padding: 0;
     color: var(--text-color);
 }
 
-.button {
+button {
     width: 280px;
     color: var(--on-primary-color);
     background-color: var(--primary-color);
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 13px;
     text-align: center;
     border: none;
     border-radius: 8px;
     padding: 11px 0;
     cursor: pointer;
+}
+
+input {
+    border: none;
+    padding: 0;
+    &:focus {
+        outline: none;
+    }
+}
+
+h1,
+h2,
+h3 {
+    text-align: center;
+    margin: 0;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 40px;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 20px;
+}
+
+.action_text {
+    cursor: pointer;
+    color: var(--primary-color);
+    font-size: 11px;
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    line-height: 11px;
 }
 
 .modal {
@@ -40,10 +75,60 @@ body {
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 6px 0px #00000024;
     background-color: var(--on-primary-color);
-    padding: 50px 30px 30px 30px;
     border-radius: 12px;
+    width: 340px;
 }
 
-.modal_sign-in {
+.form-field {
+    margin-bottom: 16px;
+}
+
+.form-field__label {
+    font-size: 9px;
+    line-height: 9px;
+    display: block;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+.form-field__input {
+    display: block;
+    width: 100%;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.modal-sign {
+    padding: 50px 30px 30px 30px;
+}
+
+.modal-sign__header {
+    margin-bottom: 40px;
+}
+
+.modal-sign__button {
+    margin-bottom: 14px;
+}
+
+.modal-sign-in {
     height: 460px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.error-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.error-page__error-code {
+    margin-bottom: 20px;
+}
+
+.error-page__error-description {
+    margin-bottom: 70px;
 }
