@@ -4,10 +4,14 @@ import * as Pages from './pages';
 import { Router } from './Router';
 import { FormField } from './components/form-field';
 import { Link } from './components/link';
+import { Avatar } from './components/avatar';
+import { RoundedButton } from './components/rounded-button';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
 Handlebars.registerPartial('Link', Link);
+Handlebars.registerPartial('Avatar', Avatar);
+Handlebars.registerPartial('RoundedButton', RoundedButton);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -71,7 +75,12 @@ export class App {
 
     renderChat = () => {
         const template = Handlebars.compile(Pages.ChatPage);
-        this.appElement.innerHTML = template({});
+        this.appElement.innerHTML = template({
+            message: 'Сообщение',
+            avatar: 'https://avatar.iran.liara.run/public/50',
+            name: 'Вадим',
+        });
+        this.setLinkListeners();
     };
 
     private setLinkListeners() {

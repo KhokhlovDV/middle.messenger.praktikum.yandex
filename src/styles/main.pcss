@@ -1,10 +1,11 @@
 :root {
     --text-color: #1e1e1e;
-    --primary-color: #3369f3;
-    --accent-color: #ff0000;
+    --primary-color: #efefef;
+    --accent-color: #3369f3;
+    --on-accent-color: #ffffff;
     --secondary-color: #999999;
-    --on-primary-color: #ffffff;
     --error-color: #ff2f2f;
+    --surface-color: #fbfbfb;
 }
 
 * {
@@ -19,17 +20,6 @@ body {
     margin: 0;
     padding: 0;
     color: var(--text-color);
-}
-
-button {
-    width: 280px;
-    color: var(--on-primary-color);
-    background-color: var(--primary-color);
-    text-align: center;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 0;
-    cursor: pointer;
 }
 
 input {
@@ -57,10 +47,68 @@ h2 {
     line-height: 20px;
 }
 
-a {
+h3 {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 13px;
+}
+
+.link {
     cursor: pointer;
-    color: var(--primary-color);
     text-decoration: none;
+}
+
+.link-accent {
+    color: var(--accent-color);
+}
+
+.link-secondary {
+    color: var(--secondary-color);
+}
+
+.link-sm {
+    font-size: 11px;
+    line-height: 11px;
+}
+
+.link-m {
+    font-size: 12px;
+    line-height: 12px;
+}
+
+.avatar {
+    vertical-align: middle;
+    border-radius: 50%;
+    background: var(--primary-color);
+    object-fit: cover;
+}
+
+.avatar-sm {
+    width: 34px;
+    height: 34px;
+}
+
+.button {
+    width: 280px;
+    color: var(--on-accent-color);
+    background-color: var(--accent-color);
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 0;
+    cursor: pointer;
+}
+
+.rounded-button {
+    border: none;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal {
@@ -70,13 +118,9 @@ a {
     top: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 6px 0px #00000024;
-    background-color: var(--on-primary-color);
+    background-color: var(--on-accent-color);
     border-radius: 12px;
     width: 340px;
-}
-
-.form-field {
-    margin-bottom: 16px;
 }
 
 .form-field__label {
@@ -91,7 +135,7 @@ a {
     display: block;
     width: 100%;
     padding-bottom: 6px;
-    border-bottom: 1px solid var(--primary-color);
+    border-bottom: 1px solid var(--accent-color);
 }
 
 .modal-sign {
@@ -111,16 +155,18 @@ a {
     flex: 1;
 }
 
+.modal-sign__form-field {
+    margin-bottom: 16px;
+}
+
 .modal-sign__button {
     margin-bottom: 14px;
 }
 
 .modal-sign__link {
-    font-size: 11px;
     display: block;
     width: fit-content;
     margin: 0 auto;
-    line-height: 11px;
 }
 
 .modal-sign-in {
@@ -145,4 +191,89 @@ a {
 
 .error-page__error-description {
     margin-bottom: 70px;
+}
+
+.chat-page {
+    height: 100vh;
+    display: flex;
+}
+
+.chat-page__chats {
+    width: 310px;
+    background: var(--surface-color);
+    padding: 20px 10px 0 10px;
+}
+
+.chat-page__profile {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 8px;
+}
+
+.chat-page__search-form {
+    margin-bottom: 14px;
+}
+
+.chat-page__search-field {
+    width: 100%;
+    background: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.chat-page__nav {
+    height: 100%;
+    overflow: auto;
+    border-top: 1px solid var(--primary-color);
+}
+
+.chat-page__current-chat {
+    flex: 1;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-page__header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-page__more {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.chat-page__messages {
+    flex: 1;
+    border-color: var(--primary-color);
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.chat-page__message-box {
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-page__attach {
+    cursor: pointer;
+}
+
+.chat-page__message-form {
+    flex: 1;
+}
+
+.chat-page__message {
+    background: var(--primary-color);
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: var(--secondary-color);
+    width: 100%;
 }

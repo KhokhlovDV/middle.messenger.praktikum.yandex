@@ -1,1 +1,30 @@
-<div>Chat</div>
+<main class='chat-page'>
+    <section class='chat-page__chats'>
+        <div class="chat-page__profile">
+            {{> Link href="#" data-page="/profile" text="Профиль" class="link-secondary link-m"}}
+            <img src="/navigate.svg">
+        </div>
+        <form class="chat-page__search-form">
+            <input class="chat-page__search-field" placeholder="Поиск">
+        </form>
+    </section> 
+    <section class='chat-page__current-chat'>
+        <header class='chat-page__header'>
+            {{> Avatar class="avatar-sm" src=avatar}}
+            <h3>{{name}}</h3>
+            <img class="chat-page__more" src="/more.svg">
+        </header>
+        <div class='chat-page__messages'></div>
+        <footer class='chat-page__message-box'>
+            <img class='chat-page__attach' src="/attach.svg">
+            <form class='chat-page__message-form'>
+                <input
+                    class='chat-page__message'
+                    name='message'
+                    value='{{message}}'
+                />
+            </form>
+            {{> RoundedButton src="/right_arrow.svg"}}
+        </footer>
+    </section>
+</main>
