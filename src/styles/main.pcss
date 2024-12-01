@@ -7,9 +7,43 @@
     --error-color: #ff2f2f;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: var(--text-color);
+}
+
+.button {
+    width: 280px;
+    color: var(--on-primary-color);
+    background-color: var(--primary-color);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 13px;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 0;
+    cursor: pointer;
+}
+
+.modal {
+    position: absolute;
+    float: left;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 6px 0px #00000024;
+    background-color: var(--on-primary-color);
+    padding: 50px 30px 30px 30px;
+    border-radius: 12px;
+}
+
+.modal_sign-in {
+    height: 460px;
 }
