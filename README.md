@@ -18,7 +18,7 @@ Figma: https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link
 
 ### На веб-приложение:
 
-Netlify:
+Netlify: https://questionnaire-njkadsfh.netlify.app
 
 ### На сверстанные макеты:
 
