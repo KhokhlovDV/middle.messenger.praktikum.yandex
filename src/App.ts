@@ -8,6 +8,7 @@ import { Avatar } from './components/avatar';
 import { RoundedButton } from './components/rounded-button';
 import { ProfileLayout } from './components/profile-layout';
 import { InlineFormField } from './components/inline-form-field';
+import { AvatarPicker } from './components/avatar-picker';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
@@ -16,6 +17,7 @@ Handlebars.registerPartial('Link', Link);
 Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
 Handlebars.registerPartial('ProfileLayout', ProfileLayout);
+Handlebars.registerPartial('AvatarPicker', AvatarPicker);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -121,7 +123,6 @@ export class App {
         const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
 
         this.appElement.innerHTML = template({
-            avatar: 'https://avatar.iran.liara.run/public/50',
             email: 'pochta@yandex.ru',
             login: 'ivanivanov',
             firstName: 'Иван',
