@@ -1,18 +1,9 @@
-<div class="modal-sign modal modal-sign-up">
-    <h2 class="modal-sign__header">Регистрация</h2>
-    <form class="modal-sign__form">
-        <div>
-            {{> FormField class="modal-sign__form-field" type="email" label="Почта" id="email" value=email}}
-            {{> FormField class="modal-sign__form-field" type="text" label="Логин" id="login" value=login}}
-            {{> FormField class="modal-sign__form-field" type="text" label="Имя" id="first_name" value=firstName}}
-            {{> FormField class="modal-sign__form-field" type="text" label="Фамилия" id="second_name" value=secondName}}
-            {{> FormField class="modal-sign__form-field" type="tel" label="Телефон" id="phone" value=phone}}
-            {{> FormField class="modal-sign__form-field" type="password" label="Пароль" id="password" value=password}}
-            {{> FormField class="modal-sign__form-field" type="password" label="Пароль (еще раз)" id="confirmed_password" value=confirmedPassword}}
-        </div>
-        <div>
-            {{> Button id="sign-up" text="Зарегистрироваться" class="modal-sign__button"}}
-            {{> Link class="modal-sign__link  link-accent link-sm" href="#" data-page="/" text="Войти"}}
-        </div>
-    </form>
-</div>
+{{#> SignLayout class="sign-up" buttonId="sign-up" header="Регистрация" buttonText="Зарегистрироваться" page="/" linkText="Войти"}}
+    {{> FormField type="email" label="Почта" id="email" value=email}}
+    {{> FormField type="text" label="Логин" id="login" value=login}}
+    {{> FormField type="text" label="Имя" id="first_name" value=firstName}}
+    {{> FormField type="text" label="Фамилия" id="second_name" value=secondName}}
+    {{> FormField type="tel" label="Телефон" id="phone" value=phone}}
+    {{> FormField type="password" label="Пароль" id="password" value=password}}
+    {{> FormField type="password" label="Пароль (еще раз)" id="confirmed_password" value=confirmedPassword}}
+{{/SignLayout}}

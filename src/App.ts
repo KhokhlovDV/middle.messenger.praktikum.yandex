@@ -9,6 +9,9 @@ import { RoundedButton } from './components/rounded-button';
 import { ProfileLayout } from './components/profile-layout';
 import { InlineFormField } from './components/inline-form-field';
 import { AvatarPicker } from './components/avatar-picker';
+import { ModalWindow } from './components/modal-window';
+import { SignLayout } from './components/sign-layout';
+import { ProfileBlock } from './components/profile-block';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
@@ -18,6 +21,13 @@ Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
 Handlebars.registerPartial('ProfileLayout', ProfileLayout);
 Handlebars.registerPartial('AvatarPicker', AvatarPicker);
+Handlebars.registerPartial('ModalWindow', ModalWindow);
+Handlebars.registerPartial('SignLayout', SignLayout);
+Handlebars.registerPartial('ProfileBlock', ProfileBlock);
+
+Handlebars.registerHelper('append', function (s1, s2) {
+    return `${s1} ${s2}`;
+});
 
 export class App {
     private appElement: HTMLDivElement;

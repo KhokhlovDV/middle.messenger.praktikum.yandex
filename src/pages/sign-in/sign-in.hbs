@@ -1,13 +1,4 @@
-<div class="modal-sign modal-sign-in modal">
-    <h2 class="modal-sign__header">Вход</h2>
-    <form class="modal-sign__form">
-        <div>
-            {{> FormField class="modal-sign__form-field" type="text" label="Логин" id="login" value=login}}
-            {{> FormField class="modal-sign__form-field" type="password" label="Пароль" id="password" value=password}}
-        </div>
-        <div>
-            {{> Button class="modal-sign__button" id="sign-in" text="Войти" }}
-            {{> Link class="modal-sign__link link-accent link-sm" href="#" data-page="/sign-up" text="Нет аккаунта?" }}
-        </div>
-    </form>
-</div>
+{{#> SignLayout class="sign-in" buttonId="sign-in" header="Вход" buttonText="Войти" page="/sign-up" linkText="Нет аккаунта?"}}
+    {{> FormField type="text" label="Логин" id="login" value=login}}
+    {{> FormField type="password" label="Пароль" id="password" value=password}}
+{{/SignLayout}}
