@@ -20,7 +20,7 @@ export const data = {
         confirmedPassword: 'mypass',
     },
     profile: {
-        avatar: 'https://avatar.iran.liara.run/public/50',
+        avatar: '',
         email: 'pochta@yandex.ru',
         login: 'ivanivanov',
         firstName: 'Иван',
@@ -29,7 +29,7 @@ export const data = {
         disabled: true,
     },
     passwordChange: {
-        avatar: 'https://avatar.iran.liara.run/public/50',
+        avatar: '',
         firstName: 'Иван',
         oldPassword: 'mypass',
         newPassword: 'mypass',
@@ -42,5 +42,10 @@ export const data = {
     signIn: {
         login: 'ivanivanov',
         password: 'mypassword',
+    },
+    chat: {
+        message: 'Сообщение',
+        avatar: '',
+        name: 'Вадим',
     },
 };

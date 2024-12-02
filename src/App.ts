@@ -13,6 +13,10 @@ import { ModalWindow } from './components/modal-window';
 import { SignLayout } from './components/sign-layout';
 import { ProfileBlock } from './components/profile-block';
 import { data } from './mock-data';
+import { ChatLayout } from './components/chat-layout';
+import { ChatHeader } from './components/chat-header';
+import { ChatMessages } from './components/chat-messages';
+import { ChatMessageBox } from './components/chat-message-box';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
@@ -25,6 +29,10 @@ Handlebars.registerPartial('AvatarPicker', AvatarPicker);
 Handlebars.registerPartial('ModalWindow', ModalWindow);
 Handlebars.registerPartial('SignLayout', SignLayout);
 Handlebars.registerPartial('ProfileBlock', ProfileBlock);
+Handlebars.registerPartial('ChatLayout', ChatLayout);
+Handlebars.registerPartial('ChatHeader', ChatHeader);
+Handlebars.registerPartial('ChatMessages', ChatMessages);
+Handlebars.registerPartial('ChatMessageBox', ChatMessageBox);
 
 Handlebars.registerHelper('append', function (s1, s2) {
     return `${s1} ${s2}`;
@@ -37,7 +45,6 @@ export class App {
         this.appElement = document.getElementById('app') as HTMLDivElement;
         this.router = new Router({
             routes: [
-                { path: '/not-found', onRouteMatch: this.renderNotFound },
                 { path: '/server-error', onRouteMatch: this.renderServerError },
                 { path: '/', onRouteMatch: this.renderSignIn },
                 { path: '/sign-up', onRouteMatch: this.renderSignUp },
@@ -84,11 +91,7 @@ export class App {
 
     renderChat = () => {
         const template = Handlebars.compile(Pages.ChatPage);
-        this.appElement.innerHTML = template({
-            message: 'Сообщение',
-            avatar: 'https://avatar.iran.liara.run/public/50',
-            name: 'Вадим',
-        });
+        this.appElement.innerHTML = template(data.chat);
         this.setLinkListeners();
     };
 
