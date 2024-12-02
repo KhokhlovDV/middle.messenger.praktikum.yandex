@@ -1,34 +1,37 @@
 import Handlebars from 'handlebars';
-import { Button } from './components/button';
 import * as Pages from './pages';
 import { Router } from './Router';
-import { FormField } from './components/form-field';
-import { Link } from './components/link';
-import { Avatar } from './components/avatar';
-import { RoundedButton } from './components/rounded-button';
-import { ProfileLayout } from './components/profile-layout';
-import { InlineFormField } from './components/inline-form-field';
-import { AvatarPicker } from './components/avatar-picker';
-import { ModalWindow } from './components/modal-window';
-import { SignLayout } from './components/sign-layout';
-import { ProfileBlock } from './components/profile-block';
 import { data } from './mock-data';
-import { ChatLayout } from './components/chat-layout';
-import { ChatHeader } from './components/chat-header';
-import { ChatMessages } from './components/chat-messages';
-import { ChatMessageBox } from './components/chat-message-box';
+import { FormField } from './pages/sign/components/form-field';
+import { SignLayout } from './pages/sign/components/sign-layout';
+import { InlineFormField } from './pages/profile/components/inline-form-field';
+import { ProfileLayout } from './pages/profile/components/profile-layout';
+import { ProfileBlock } from './pages/profile/components/profile-block';
+import { ChatLayout } from './pages/chat/components/chat-layout';
+import { ChatHeader } from './pages/chat/components/chat-header';
+import { ChatMessages } from './pages/chat/components/chat-messages';
+import { ChatMessageBox } from './pages/chat/components/chat-message-box';
+import { AvatarPicker } from './pages/profile/components/avatar-picker';
+import { Avatar } from './pages/chat/components/avatar';
+import { Button } from './shared-components/button';
+import { Link } from './shared-components/link';
+import { RoundedButton } from './shared-components/rounded-button';
+import { ModalWindow } from './shared-components/modal-window';
 
 Handlebars.registerPartial('Button', Button);
-Handlebars.registerPartial('FormField', FormField);
-Handlebars.registerPartial('InlineFormField', InlineFormField);
 Handlebars.registerPartial('Link', Link);
-Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
-Handlebars.registerPartial('ProfileLayout', ProfileLayout);
-Handlebars.registerPartial('AvatarPicker', AvatarPicker);
 Handlebars.registerPartial('ModalWindow', ModalWindow);
+
 Handlebars.registerPartial('SignLayout', SignLayout);
+Handlebars.registerPartial('FormField', FormField);
+
+Handlebars.registerPartial('ProfileLayout', ProfileLayout);
+Handlebars.registerPartial('InlineFormField', InlineFormField);
 Handlebars.registerPartial('ProfileBlock', ProfileBlock);
+Handlebars.registerPartial('AvatarPicker', AvatarPicker);
+
+Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('ChatLayout', ChatLayout);
 Handlebars.registerPartial('ChatHeader', ChatHeader);
 Handlebars.registerPartial('ChatMessages', ChatMessages);
@@ -96,7 +99,7 @@ export class App {
     };
 
     renderProfile = () => {
-        const template = Handlebars.compile(Pages.ProfilePage);
+        const template = Handlebars.compile(Pages.ProfileInfoPage);
         this.appElement.innerHTML = template(data.profile);
         document
             .getElementById('back-button')
