@@ -1,0 +1,10 @@
+<div class="profile-layout">
+    <nav class="profile-layout__nav">
+        {{> RoundedButton src="/left_arrow.svg" id="back-button"}}
+    </nav>
+    <main class="profile-layout__content">
+        {{> Avatar src=avatar class="avatar-l profile-layout__avatar"}}
+        <h3 class="profile-layout__first-name">{{firstName}}</h3>
+        {{> @partial-block}}
+    </main>
+</div>

@@ -6,12 +6,18 @@ import { FormField } from './components/form-field';
 import { Link } from './components/link';
 import { Avatar } from './components/avatar';
 import { RoundedButton } from './components/rounded-button';
+import { ProfileLayout } from './components/profile-layout';
+import { ProfileFormLayout } from './components/profile-form-layout';
+import { InlineFormField } from './components/inline-form-field';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
+Handlebars.registerPartial('InlineFormField', InlineFormField);
 Handlebars.registerPartial('Link', Link);
 Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
+Handlebars.registerPartial('ProfileLayout', ProfileLayout);
+Handlebars.registerPartial('ProfileFormLayout', ProfileFormLayout);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -25,6 +31,7 @@ export class App {
                 { path: '/', onRouteMatch: this.renderSignIn },
                 { path: '/sign-up', onRouteMatch: this.renderSignUp },
                 { path: '/chat', onRouteMatch: this.renderChat },
+                { path: '/profile', onRouteMatch: this.renderProfile },
             ],
             onRouteNotFound: this.renderNotFound,
         });
@@ -80,6 +87,27 @@ export class App {
             avatar: 'https://avatar.iran.liara.run/public/50',
             name: 'Вадим',
         });
+        this.setLinkListeners();
+    };
+
+    renderProfile = () => {
+        const template = Handlebars.compile(Pages.ProfilePage);
+
+        this.appElement.innerHTML = template({
+            avatar: 'https://avatar.iran.liara.run/public/50',
+            email: 'pochta@yandex.ru',
+            login: 'ivanivanov',
+            firstName: 'Иван',
+            secondName: 'Иванов',
+            phone: '+7 (909) 967 30 30',
+            disabled: true,
+        });
+
+        document
+            .getElementById('back-button')
+            ?.addEventListener('click', () => {
+                this.router.navigate('/chat');
+            });
         this.setLinkListeners();
     };
 

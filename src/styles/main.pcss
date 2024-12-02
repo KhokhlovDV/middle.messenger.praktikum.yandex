@@ -28,6 +28,9 @@ input {
     &:focus {
         outline: none;
     }
+    &:disabled {
+        background-color: unset;
+    }
 }
 
 h1,
@@ -48,9 +51,63 @@ h2 {
 }
 
 h3 {
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
-    line-height: 13px;
+    line-height: 16px;
+}
+
+.profile-layout {
+    height: 100vh;
+    display: flex;
+}
+
+.profile-layout__nav {
+    display: flex;
+    width: 64px;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface-color);
+}
+
+.profile-layout__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+.profile-layout__avatar {
+    margin-bottom: 21px;
+    cursor: pointer;
+}
+
+.profile-layout__first-name {
+    margin-bottom: 60px;
+}
+
+.profile-form-layout {
+    display: flex;
+    flex-direction: column;
+    width: 510px;
+    gap: 10px;
+
+    & > * {
+        &:not(:last-child) {
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--primary-color);
+        }
+    }
+}
+
+.inline-form-field {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inline-form-field__input {
+    text-align: end;
+    color: var(--secondary-color);
 }
 
 .link {
@@ -86,6 +143,11 @@ h3 {
 .avatar-sm {
     width: 34px;
     height: 34px;
+}
+
+.avatar-l {
+    width: 130px;
+    height: 130px;
 }
 
 .button {
