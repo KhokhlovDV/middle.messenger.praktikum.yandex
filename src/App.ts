@@ -12,6 +12,7 @@ import { AvatarPicker } from './components/avatar-picker';
 import { ModalWindow } from './components/modal-window';
 import { SignLayout } from './components/sign-layout';
 import { ProfileBlock } from './components/profile-block';
+import { data } from './mock-data';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('FormField', FormField);
@@ -56,25 +57,16 @@ export class App {
     }
 
     renderNotFound = () => {
-        this.renderErrorPage({
-            errorCode: '404',
-            description: 'Не туда попали',
-        });
+        this.renderErrorPage(data.notFound);
     };
 
     renderServerError = () => {
-        this.renderErrorPage({
-            errorCode: '500',
-            description: 'Мы уже фиксим',
-        });
+        this.renderErrorPage(data.serverError);
     };
 
     renderSignIn = () => {
         const template = Handlebars.compile(Pages.SignIn);
-        this.appElement.innerHTML = template({
-            login: 'ivanivanov',
-            password: 'mypassword',
-        });
+        this.appElement.innerHTML = template(data.signIn);
         document.getElementById('sign-in')?.addEventListener('click', () => {
             this.router.navigate('/chat');
         });
@@ -83,15 +75,7 @@ export class App {
 
     renderSignUp = () => {
         const template = Handlebars.compile(Pages.SignUp);
-        this.appElement.innerHTML = template({
-            email: 'pochta@yandex.ru',
-            login: 'ivanivanov',
-            firstName: 'Иван',
-            secondName: 'Иванов',
-            phone: '+7 (909) 967 30 30',
-            password: 'mypass',
-            confirmedPassword: 'mypass',
-        });
+        this.appElement.innerHTML = template(data.signUp);
         document.getElementById('sign-up')?.addEventListener('click', () => {
             this.router.navigate('/chat');
         });
@@ -110,17 +94,7 @@ export class App {
 
     renderProfile = () => {
         const template = Handlebars.compile(Pages.ProfilePage);
-
-        this.appElement.innerHTML = template({
-            avatar: 'https://avatar.iran.liara.run/public/50',
-            email: 'pochta@yandex.ru',
-            login: 'ivanivanov',
-            firstName: 'Иван',
-            secondName: 'Иванов',
-            phone: '+7 (909) 967 30 30',
-            disabled: true,
-        });
-
+        this.appElement.innerHTML = template(data.profile);
         document
             .getElementById('back-button')
             ?.addEventListener('click', () => {
@@ -131,19 +105,10 @@ export class App {
 
     renderChangeProfile = () => {
         const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
-
-        this.appElement.innerHTML = template({
-            email: 'pochta@yandex.ru',
-            login: 'ivanivanov',
-            firstName: 'Иван',
-            secondName: 'Иванов',
-            phone: '+7 (909) 967 30 30',
-        });
-
+        this.appElement.innerHTML = template(data.changeProfile);
         document.getElementById('save')?.addEventListener('click', () => {
             this.router.navigate('/profile');
         });
-
         document
             .getElementById('back-button')
             ?.addEventListener('click', () => {
@@ -153,19 +118,10 @@ export class App {
 
     renderChangePassword = () => {
         const template = Handlebars.compile(Pages.ProfilePasswordPage);
-
-        this.appElement.innerHTML = template({
-            avatar: 'https://avatar.iran.liara.run/public/50',
-            firstName: 'Иван',
-            oldPassword: 'mypass',
-            newPassword: 'mypass',
-            confirmedPassword: 'mypass',
-        });
-
+        this.appElement.innerHTML = template(data.passwordChange);
         document.getElementById('save')?.addEventListener('click', () => {
             this.router.navigate('/profile');
         });
-
         document
             .getElementById('back-button')
             ?.addEventListener('click', () => {
