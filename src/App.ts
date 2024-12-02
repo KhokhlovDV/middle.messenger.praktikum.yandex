@@ -67,17 +67,21 @@ export class App {
     }
 
     renderNotFound = () => {
-        this.renderErrorPage(data.notFound);
+        const template = Handlebars.compile(Pages.ErrorPage);
+        this.appElement.innerHTML = template(data.notFound);
+        this.setLinkListeners();
     };
 
     renderServerError = () => {
-        this.renderErrorPage(data.serverError);
+        const template = Handlebars.compile(Pages.ErrorPage);
+        this.appElement.innerHTML = template(data.serverError);
+        this.setLinkListeners();
     };
 
     renderSignIn = () => {
         const template = Handlebars.compile(Pages.SignIn);
         this.appElement.innerHTML = template(data.signIn);
-        document.getElementById('sign-in')?.addEventListener('click', () => {
+        this.addClickListenerById('sign-in', () => {
             this.router.navigate('/chat');
         });
         this.setLinkListeners();
@@ -86,7 +90,7 @@ export class App {
     renderSignUp = () => {
         const template = Handlebars.compile(Pages.SignUp);
         this.appElement.innerHTML = template(data.signUp);
-        document.getElementById('sign-up')?.addEventListener('click', () => {
+        this.addClickListenerById('sign-up', () => {
             this.router.navigate('/chat');
         });
         this.setLinkListeners();
@@ -101,43 +105,42 @@ export class App {
     renderProfile = () => {
         const template = Handlebars.compile(Pages.ProfileInfoPage);
         this.appElement.innerHTML = template(data.profile);
-        document
-            .getElementById('back-button')
-            ?.addEventListener('click', () => {
-                this.router.navigate('/chat');
-            });
+        this.addClickListenerById('back-button', () => {
+            this.router.navigate('/chat');
+        });
         this.setLinkListeners();
     };
 
     renderChangeProfile = () => {
         const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
         this.appElement.innerHTML = template(data.changeProfile);
-        document.getElementById('save')?.addEventListener('click', () => {
-            this.router.navigate('/profile');
-        });
-        document
-            .getElementById('back-button')
-            ?.addEventListener('click', () => {
-                this.router.navigate('/profile');
-            });
+        this.setChangeProfileButtonListeners();
     };
 
     renderChangePassword = () => {
         const template = Handlebars.compile(Pages.ProfilePasswordPage);
         this.appElement.innerHTML = template(data.passwordChange);
-        document.getElementById('save')?.addEventListener('click', () => {
-            this.router.navigate('/profile');
-        });
-        document
-            .getElementById('back-button')
-            ?.addEventListener('click', () => {
-                this.router.navigate('/profile');
-            });
+        this.setChangeProfileButtonListeners();
     };
 
+    private setChangeProfileButtonListeners() {
+        this.addClickListenerById('save', () => {
+            this.router.navigate('/profile');
+        });
+        this.addClickListenerById('back-button', () => {
+            this.router.navigate('/profile');
+        });
+    }
+
+    private addClickListenerById(id: string, onClick: () => void) {
+        document.getElementById(id)?.addEventListener('click', () => {
+            onClick();
+        });
+    }
+
     private setLinkListeners() {
-        const footerLinks = document.querySelectorAll('a');
-        footerLinks.forEach((link) => {
+        const links = document.querySelectorAll('a');
+        links.forEach((link) => {
             link.addEventListener('click', (e) => {
                 if (
                     e.target instanceof HTMLAnchorElement &&
@@ -148,17 +151,5 @@ export class App {
                 }
             });
         });
-    }
-
-    private renderErrorPage({
-        errorCode,
-        description,
-    }: {
-        errorCode: string;
-        description: string;
-    }) {
-        const template = Handlebars.compile(Pages.ErrorPage);
-        this.appElement.innerHTML = template({ errorCode, description });
-        this.setLinkListeners();
     }
 }
