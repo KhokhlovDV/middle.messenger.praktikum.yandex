@@ -7,7 +7,6 @@ import { Link } from './components/link';
 import { Avatar } from './components/avatar';
 import { RoundedButton } from './components/rounded-button';
 import { ProfileLayout } from './components/profile-layout';
-import { ProfileFormLayout } from './components/profile-form-layout';
 import { InlineFormField } from './components/inline-form-field';
 
 Handlebars.registerPartial('Button', Button);
@@ -17,7 +16,6 @@ Handlebars.registerPartial('Link', Link);
 Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
 Handlebars.registerPartial('ProfileLayout', ProfileLayout);
-Handlebars.registerPartial('ProfileFormLayout', ProfileFormLayout);
 
 export class App {
     private appElement: HTMLDivElement;
@@ -32,6 +30,14 @@ export class App {
                 { path: '/sign-up', onRouteMatch: this.renderSignUp },
                 { path: '/chat', onRouteMatch: this.renderChat },
                 { path: '/profile', onRouteMatch: this.renderProfile },
+                {
+                    path: '/change-profile',
+                    onRouteMatch: this.renderChangeProfile,
+                },
+                {
+                    path: '/change-password',
+                    onRouteMatch: this.renderChangePassword,
+                },
             ],
             onRouteNotFound: this.renderNotFound,
         });
@@ -109,6 +115,51 @@ export class App {
                 this.router.navigate('/chat');
             });
         this.setLinkListeners();
+    };
+
+    renderChangeProfile = () => {
+        const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
+
+        this.appElement.innerHTML = template({
+            avatar: 'https://avatar.iran.liara.run/public/50',
+            email: 'pochta@yandex.ru',
+            login: 'ivanivanov',
+            firstName: 'Иван',
+            secondName: 'Иванов',
+            phone: '+7 (909) 967 30 30',
+        });
+
+        document.getElementById('save')?.addEventListener('click', () => {
+            this.router.navigate('/profile');
+        });
+
+        document
+            .getElementById('back-button')
+            ?.addEventListener('click', () => {
+                this.router.navigate('/profile');
+            });
+    };
+
+    renderChangePassword = () => {
+        const template = Handlebars.compile(Pages.ProfilePasswordPage);
+
+        this.appElement.innerHTML = template({
+            avatar: 'https://avatar.iran.liara.run/public/50',
+            firstName: 'Иван',
+            oldPassword: 'mypass',
+            newPassword: 'mypass',
+            confirmedPassword: 'mypass',
+        });
+
+        document.getElementById('save')?.addEventListener('click', () => {
+            this.router.navigate('/profile');
+        });
+
+        document
+            .getElementById('back-button')
+            ?.addEventListener('click', () => {
+                this.router.navigate('/profile');
+            });
     };
 
     private setLinkListeners() {

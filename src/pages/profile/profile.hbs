@@ -1,10 +1,21 @@
-{{#> ProfileLayout avatar=avatar firstName=firstName}}
-    {{#> ProfileFormLayout}}
-            {{> InlineFormField type="email" label="Почта" id="email" value=email disabled=disabled}}
-            {{> InlineFormField type="text" label="Логин" id="login" value=login disabled=disabled}}
-            {{> InlineFormField type="text" label="Имя" id="first_name" value=firstName disabled=disabled}}
-            {{> InlineFormField type="text" label="Фамилия" id="second_name" value=secondName disabled=disabled}}
-            {{> InlineFormField type="tel" label="Телефон" id="phone" value=phone disabled=disabled}}
-    {{/ProfileFormLayout}}
+{{#> ProfileLayout avatar=avatar firstName=firstName class="profile-info"}}
+    <form class="profile-block profile-info__block">
+        {{> InlineFormField type="email" label="Почта" id="email" value=email disabled=disabled}}
+        {{> InlineFormField type="text" label="Логин" id="login" value=login disabled=disabled}}
+        {{> InlineFormField type="text" label="Имя" id="first_name" value=firstName disabled=disabled}}
+        {{> InlineFormField type="text" label="Фамилия" id="second_name" value=secondName disabled=disabled}}
+        {{> InlineFormField type="tel" label="Телефон" id="phone" value=phone disabled=disabled}}
+    </form>
+    <div class="profile-block">
+        <span>
+            {{> Link class="link-accent link-l" href="#" data-page="/change-profile" text="Изменить данные" }}
+        </span>
+        <span>
+            {{> Link class="link-accent link-l" href="#" data-page="/change-password" text="Изменить пароль" }}
+        </span>
+        <span>
+            {{> Link class="link-tertiary link-l" href="#" data-page="/" text="Выйти" }}
+        </span>
+    </div>
 {{/ProfileLayout}}
 
