@@ -1,1 +1,4 @@
-<button id='{{id}}' class='button {{class}}'>{{text}}</button>
+<button 
+    {{#if id}} id='{{id}}' {{/if}} 
+    {{#if type}} type='{{type}}' {{/if}} 
+    class='button {{class}}'>{{text}}</button>

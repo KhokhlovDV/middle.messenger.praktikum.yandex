@@ -2,12 +2,12 @@
     <button class='chat-message-box__attach'>
         <img src="/attach.svg">
     </button>
-    <form class='chat-message-box__message-form'>
+    <form class='chat-message-box__message-form' id="send-message">
         <input
             class='chat-message-box__message'
             name='message'
             value='{{message}}'
         />
-        {{> RoundedButton src="/right_arrow.svg" id="send-message"}}
+        {{> RoundedButton src="/right_arrow.svg" type="submit"}}
     </form>
 </footer>

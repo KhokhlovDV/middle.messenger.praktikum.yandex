@@ -81,7 +81,7 @@ export class App {
     renderSignIn = () => {
         const template = Handlebars.compile(Pages.SignIn);
         this.appElement.innerHTML = template(data.signIn);
-        this.addClickListenerById('sign-in', () => {
+        this.addFormSubmitById('sign-in', () => {
             this.router.navigate('/chat');
         });
         this.setLinkListeners();
@@ -90,7 +90,7 @@ export class App {
     renderSignUp = () => {
         const template = Handlebars.compile(Pages.SignUp);
         this.appElement.innerHTML = template(data.signUp);
-        this.addClickListenerById('sign-up', () => {
+        this.addFormSubmitById('sign-up', () => {
             this.router.navigate('/chat');
         });
         this.setLinkListeners();
@@ -99,6 +99,7 @@ export class App {
     renderChat = () => {
         const template = Handlebars.compile(Pages.ChatPage);
         this.appElement.innerHTML = template(data.chat);
+        this.addFormSubmitById('send-message');
         this.setLinkListeners();
     };
 
@@ -114,21 +115,29 @@ export class App {
     renderChangeProfile = () => {
         const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
         this.appElement.innerHTML = template(data.changeProfile);
-        this.setChangeProfileButtonListeners();
+        this.addClickListenerById('back-button', () => {
+            this.router.navigate('/profile');
+        });
+        this.addFormSubmitById('profile-form', () => {
+            this.router.navigate('/profile');
+        });
     };
 
     renderChangePassword = () => {
         const template = Handlebars.compile(Pages.ProfilePasswordPage);
         this.appElement.innerHTML = template(data.passwordChange);
-        this.setChangeProfileButtonListeners();
-    };
-
-    private setChangeProfileButtonListeners() {
-        this.addClickListenerById('save', () => {
-            this.router.navigate('/profile');
-        });
         this.addClickListenerById('back-button', () => {
             this.router.navigate('/profile');
+        });
+        this.addFormSubmitById('password-form', () => {
+            this.router.navigate('/profile');
+        });
+    };
+
+    private addFormSubmitById(id: string, onClick?: () => void) {
+        document.getElementById(id)?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            onClick?.();
         });
     }
 

@@ -1,5 +1,5 @@
 {{#> ProfileLayout avatar=avatar firstName=firstName class="profile-personal-data"}}
-    <form class="profile-personal-data__form">
+    <form id="profile-form">
         {{#> ProfileBlock}}
             {{> InlineFormField type="email" label="Почта" id="email" value=email}}
             {{> InlineFormField type="text" label="Логин" id="login" value=login}}
@@ -7,6 +7,7 @@
             {{> InlineFormField type="text" label="Фамилия" id="second_name" value=secondName}}
             {{> InlineFormField type="tel" label="Телефон" id="phone" value=phone}}
         {{/ProfileBlock}}
+        {{> Button class="profile-personal-data__button" text="Сохранить" }}
     </form>
-    {{> Button id="save" text="Сохранить" }}
+    
 {{/ProfileLayout}}
