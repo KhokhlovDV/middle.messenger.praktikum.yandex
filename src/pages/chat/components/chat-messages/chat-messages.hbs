@@ -1,1 +1,5 @@
-<div class='chat-messages'>Во втором спринте тут будет сделана лента сообщений</div>
+<ul class='chat-messages'>
+  {{#each messages}}
+    {{> ChatMessage message=this}}
+  {{/each}}
+</ul>

@@ -5,8 +5,8 @@
     {{#*inline "chat"}}
         <div class="chat">
             {{> ChatHeader avatar=avatar name=name}}
-            {{> ChatMessages }}
-            {{> ChatMessageBox message=message}}
+            {{> ChatMessages messages=messages}}
+            {{> ChatMyMessageBox message=message}}
         </div>
     {{/inline}}
 {{/ChatLayout}}

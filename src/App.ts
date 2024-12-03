@@ -10,7 +10,6 @@ import { ProfileBlock } from './pages/profile/components/profile-block';
 import { ChatLayout } from './pages/chat/components/chat-layout';
 import { ChatHeader } from './pages/chat/components/chat-header';
 import { ChatMessages } from './pages/chat/components/chat-messages';
-import { ChatMessageBox } from './pages/chat/components/chat-message-box';
 import { AvatarPicker } from './pages/profile/components/avatar-picker';
 import { Avatar } from './pages/chat/components/avatar';
 import { Button } from './shared-components/button';
@@ -19,6 +18,8 @@ import { RoundedButton } from './shared-components/rounded-button';
 import { ModalWindow } from './shared-components/modal-window';
 import { ChatFeed } from './pages/chat/components/chat-feed';
 import { ChatFeedItem } from './pages/chat/components/chat-feed-item';
+import { ChatMessage } from './pages/chat/components/chat-message';
+import { ChatMyMessageBox } from './pages/chat/components/chat-my-message-box';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('Link', Link);
@@ -37,7 +38,8 @@ Handlebars.registerPartial('Avatar', Avatar);
 Handlebars.registerPartial('ChatLayout', ChatLayout);
 Handlebars.registerPartial('ChatHeader', ChatHeader);
 Handlebars.registerPartial('ChatMessages', ChatMessages);
-Handlebars.registerPartial('ChatMessageBox', ChatMessageBox);
+Handlebars.registerPartial('ChatMessage', ChatMessage);
+Handlebars.registerPartial('ChatMyMessageBox', ChatMyMessageBox);
 Handlebars.registerPartial('ChatFeed', ChatFeed);
 Handlebars.registerPartial('ChatFeedItem', ChatFeedItem);
 
