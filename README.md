@@ -20,22 +20,22 @@ Figma: https://www.figma.com/design/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link
 
 ### На веб-приложение:
 
-Netlify: https://questionnaire-njkadsfh.netlify.app
+Netlify: https://kdv-messenger.netlify.app/
 
 ### На сверстанные макеты:
 
-Страница авторизации:
+Страница 404: https://kdv-messenger.netlify.app/404 (либо другая, не указанная в списке)
 
-Страница регистрации:
+Страница авторизации: https://kdv-messenger.netlify.app/
 
-Страница 404:
+Страница регистрации: https://kdv-messenger.netlify.app/sign-up
 
-Страница 5\*\*:
+Страница 5\*\*: https://kdv-messenger.netlify.app/server-error
 
-Страница профиля:
+Страница профиля: https://kdv-messenger.netlify.app/profile
 
-Страница изменения данных профиля:
+Страница изменения данных профиля: https://kdv-messenger.netlify.app/change-profile
 
-Страница изменения пароля:
+Страница изменения пароля: https://kdv-messenger.netlify.app/change-password
 
-Страница чата:
+Страница чата: https://kdv-messenger.netlify.app/chat
