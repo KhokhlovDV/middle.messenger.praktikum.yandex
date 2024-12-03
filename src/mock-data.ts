@@ -47,5 +47,137 @@ export const data = {
         message: 'Сообщение',
         avatar: '',
         name: 'Вадим',
+        chats: [
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: false,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage: 'Привет',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 4,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: false,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage: 'Привет',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 4,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: false,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage: 'Привет',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 4,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: false,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage: 'Привет',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 4,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: false,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+            {
+                avatar: '',
+                lastMessage: 'Привет',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 4,
+            },
+            {
+                avatar: '',
+                lastMessage:
+                    'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
+                myMessage: true,
+                messageTime: '10:49',
+                userName: 'Андрей',
+                unreadMessagesCount: 0,
+            },
+        ],
     },
 };

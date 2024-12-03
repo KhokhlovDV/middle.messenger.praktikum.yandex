@@ -17,6 +17,8 @@ import { Button } from './shared-components/button';
 import { Link } from './shared-components/link';
 import { RoundedButton } from './shared-components/rounded-button';
 import { ModalWindow } from './shared-components/modal-window';
+import { ChatFeed } from './pages/chat/components/chat-feed';
+import { ChatFeedItem } from './pages/chat/components/chat-feed-item';
 
 Handlebars.registerPartial('Button', Button);
 Handlebars.registerPartial('Link', Link);
@@ -36,6 +38,8 @@ Handlebars.registerPartial('ChatLayout', ChatLayout);
 Handlebars.registerPartial('ChatHeader', ChatHeader);
 Handlebars.registerPartial('ChatMessages', ChatMessages);
 Handlebars.registerPartial('ChatMessageBox', ChatMessageBox);
+Handlebars.registerPartial('ChatFeed', ChatFeed);
+Handlebars.registerPartial('ChatFeedItem', ChatFeedItem);
 
 Handlebars.registerHelper('append', function (s1, s2) {
     return `${s1} ${s2}`;
