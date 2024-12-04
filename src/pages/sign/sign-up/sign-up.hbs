@@ -1,0 +1,9 @@
+{{#> SignLayout class="sign-up" formId="sign-up" header="Регистрация" buttonText="Зарегистрироваться" page="/" linkText="Войти"}}
+    {{> FormField type="email" label="Почта" id="email" value=email}}
+    {{> FormField type="text" label="Логин" id="login" value=login}}
+    {{> FormField type="text" label="Имя" id="first_name" value=firstName}}
+    {{> FormField type="text" label="Фамилия" id="second_name" value=secondName}}
+    {{> FormField type="tel" label="Телефон" id="phone" value=phone}}
+    {{> FormField type="password" label="Пароль" id="password" value=password}}
+    {{> FormField type="password" label="Пароль (еще раз)" id="confirmed_password" value=confirmedPassword}}
+{{/SignLayout}}

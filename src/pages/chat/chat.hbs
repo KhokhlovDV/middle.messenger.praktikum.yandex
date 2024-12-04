@@ -1,0 +1,13 @@
+{{#> ChatLayout }}
+    {{#*inline "chats_feed"}}
+        {{> ChatFeed chats=chats}}
+    {{/inline}}
+    {{#*inline "chat"}}
+        <div class="chat">
+            {{> ChatHeader avatar=avatar name=name}}
+            {{> ChatMessages messages=messages}}
+            {{> ChatMyMessageBox message=message}}
+        </div>
+    {{/inline}}
+{{/ChatLayout}}
+

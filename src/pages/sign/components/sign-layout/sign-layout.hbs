@@ -1,0 +1,8 @@
+{{#> ModalWindow class=(append "sign-layout" class)}}
+    <h2 class="sign-layout__header">{{header}}</h2>
+    <form class="sign-layout__form" id='{{formId}}'>
+        <div>{{> @partial-block}}</div>
+        {{> Button class="sign-layout__button" text=buttonText type="submit"}}
+    </form>
+    {{> Link class="sign-layout__link link-accent link-sm" href="#" data-page=page text=linkText }}
+{{/ModalWindow}}
