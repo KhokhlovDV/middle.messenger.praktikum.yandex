@@ -9,12 +9,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "start": "npm run build && node server.cjs"
+    "start": "npm run build && node server.cjs",
+    "lint:style": "stylelint \"**/*.pcss\"",
+    "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "postcss-preset-env": "^10.1.1",
+    "stylelint": "^16.11.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-order": "^6.0.4",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   },
