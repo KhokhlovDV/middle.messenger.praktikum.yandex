@@ -43,13 +43,14 @@ Handlebars.registerPartial('ChatMyMessageBox', ChatMyMessageBox);
 Handlebars.registerPartial('ChatFeed', ChatFeed);
 Handlebars.registerPartial('ChatFeedItem', ChatFeedItem);
 
-Handlebars.registerHelper('append', function (s1, s2) {
-    return `${s1} ${s2}`;
-});
+const appendHelper = (s1, s2) => `${s1} ${s2}`;
+Handlebars.registerHelper('append', appendHelper);
 
 export class App {
     private appElement: HTMLDivElement;
+
     private router: Router;
+
     constructor() {
         this.appElement = document.getElementById('app') as HTMLDivElement;
         this.router = new Router({
