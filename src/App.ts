@@ -43,7 +43,7 @@ Handlebars.registerPartial('ChatMyMessageBox', ChatMyMessageBox);
 Handlebars.registerPartial('ChatFeed', ChatFeed);
 Handlebars.registerPartial('ChatFeedItem', ChatFeedItem);
 
-const appendHelper = (s1, s2) => `${s1} ${s2}`;
+const appendHelper = (s1: string, s2: string) => `${s1} ${s2}`;
 Handlebars.registerHelper('append', appendHelper);
 
 export class App {
