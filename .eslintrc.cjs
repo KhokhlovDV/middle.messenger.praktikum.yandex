@@ -22,4 +22,5 @@ module.exports = {
         'class-methods-use-this': 'off',
         'no-new': 'off',
     },
+    ignorePatterns: ['*.config.js'],
 };
