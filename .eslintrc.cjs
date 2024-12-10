@@ -17,6 +17,7 @@ module.exports = {
         'linebreak-style': 'off',
         'import/prefer-default-export': 'off',
         '@typescript-eslint/indent': 'off',
+        '@typescript-eslint/comma-dangle': 'off',
         'operator-linebreak': 'off',
         'implicit-arrow-linebreak': 'off',
         'class-methods-use-this': 'off',
