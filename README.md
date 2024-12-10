@@ -12,6 +12,16 @@
 
 Запустить проект на localhost: `npm run start`
 
+## Дополнительные команды
+
+Запуск проверок ESLint: `npm run lint`
+
+Запуск проверок ESLint(с попыткой автоматического исправления ошибок): `npm run lint:fix`
+
+Запуск проверок StyleLint: `npm run lint:style`
+
+Запуск проверок StyleLint(с попыткой автоматического исправления ошибок): `npm run lint:style:fix`
+
 ## Ссылки:
 
 ### Прототип
