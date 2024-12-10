@@ -22,6 +22,7 @@ module.exports = {
         'implicit-arrow-linebreak': 'off',
         'class-methods-use-this': 'off',
         'no-new': 'off',
+        'function-paren-newline': 'off',
     },
     ignorePatterns: ['*.config.js'],
 };
