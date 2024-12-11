@@ -18,9 +18,9 @@ export default abstract class Block {
 
     private element?: HTMLElement;
 
-    private id = helper.generateRandomId();
+    //  private id = helper.generateRandomId();
 
-    protected children: Record<string, Block>;
+    protected children: Record<string, Block> = {};
 
     private props: BlockProps;
 
@@ -47,6 +47,13 @@ export default abstract class Block {
     public dispatchComponentDidMount(): void {
         this.eventBus.emit(Block.EVENTS.FLOW_CDM);
     }
+
+    public setProps = (nextProps: BlockProps) => {
+        if (!nextProps) {
+            return;
+        }
+        Object.assign(this.props, nextProps);
+    };
 
     private makePropsProxy(props: BlockProps) {
         return new Proxy(props, {
@@ -205,14 +212,6 @@ export default abstract class Block {
 //         }
 //       });
 //     }
-
-//     public setProps = (nextProps: BlockProps): void => {
-//       if (!nextProps) {
-//         return;
-//       }
-
-//       Object.assign(this.props, nextProps);
-//     };
 
 //     public setLists = (nextList: Record<string, any[]>): void => {
 //       if (!nextList) {
