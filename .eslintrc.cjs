@@ -23,6 +23,9 @@ module.exports = {
         'class-methods-use-this': 'off',
         'no-new': 'off',
         'function-paren-newline': 'off',
+        'no-param-reassign': 'off',
+        'no-underscore-dangle': 'off',
+        '@typescript-eslint/quotes': 'off',
     },
     ignorePatterns: ['*.config.js'],
 };
