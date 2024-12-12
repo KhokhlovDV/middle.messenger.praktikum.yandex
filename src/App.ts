@@ -1,5 +1,4 @@
 import Handlebars from 'handlebars';
-import * as Pages from './pages';
 import { Router } from './Router';
 import { data } from './mock-data';
 import { FormField } from './pages/sign/components/form-field';
@@ -15,16 +14,15 @@ import { Avatar } from './pages/chat/components/avatar';
 import { Button } from './shared-components/button';
 import { Link } from './shared-components/link';
 import { RoundedButton } from './shared-components/rounded-button';
-import { ModalWindow } from './shared-components/modal-window';
 import { ChatFeed } from './pages/chat/components/chat-feed';
 import { ChatFeedItem } from './pages/chat/components/chat-feed-item';
 import { ChatMessage } from './pages/chat/components/chat-message';
 import { ChatMyMessageBox } from './pages/chat/components/chat-my-message-box';
+import Block from './framework/Block';
+import { SignIn } from './pages';
 
 Handlebars.registerPartial('Button', Button);
-Handlebars.registerPartial('Link', Link);
 Handlebars.registerPartial('RoundedButton', RoundedButton);
-Handlebars.registerPartial('ModalWindow', ModalWindow);
 
 Handlebars.registerPartial('SignLayout', SignLayout);
 Handlebars.registerPartial('FormField', FormField);
@@ -73,79 +71,86 @@ export class App {
         });
     }
 
+    render(element: Block) {
+        this.appElement.replaceChildren(element.getContent());
+        element.dispatchComponentDidMount();
+    }
+
     renderNotFound = () => {
-        const template = Handlebars.compile(Pages.ErrorPage);
-        this.appElement.innerHTML = template(data.notFound);
-        this.setLinkListeners();
+        // const template = Handlebars.compile(Pages.ErrorPage);
+        // this.appElement.innerHTML = template(data.notFound);
+        // this.setLinkListeners();
     };
 
     renderServerError = () => {
-        const template = Handlebars.compile(Pages.ErrorPage);
-        this.appElement.innerHTML = template(data.serverError);
-        this.setLinkListeners();
+        // const template = Handlebars.compile(Pages.ErrorPage);
+        // this.appElement.innerHTML = template(data.serverError);
+        // this.setLinkListeners();
     };
 
     renderSignIn = () => {
-        const template = Handlebars.compile(Pages.SignIn);
-        this.appElement.innerHTML = template(data.signIn);
-        this.addFormSubmitById('sign-in', () => {
-            this.router.navigate('/chat');
-        });
-        this.setLinkListeners();
+        const signIn = new SignIn();
+        this.render(signIn);
+        // const template = Handlebars.compile(Pages.SignIn);
+        // this.appElement.innerHTML = template(data.signIn);
+        // this.addFormSubmitById('sign-in', () => {
+        //     this.router.navigate('/chat');
+        // });
+        // this.setLinkListeners();
     };
 
     renderSignUp = () => {
-        const template = Handlebars.compile(Pages.SignUp);
-        this.appElement.innerHTML = template(data.signUp);
-        this.addFormSubmitById('sign-up', () => {
-            this.router.navigate('/chat');
-        });
-        this.setLinkListeners();
+        // const template = Handlebars.compile(Pages.SignUp);
+        // this.appElement.innerHTML = template(data.signUp);
+        // this.addFormSubmitById('sign-up', () => {
+        //     this.router.navigate('/chat');
+        // });
+        // this.setLinkListeners();
     };
 
     renderChat = () => {
-        const template = Handlebars.compile(Pages.ChatPage);
-        this.appElement.innerHTML = template(data.chat);
-        this.addFormSubmitById('send-message');
-        this.setLinkListeners();
+        // const template = Handlebars.compile(Pages.ChatPage);
+        // this.appElement.innerHTML = template(data.chat);
+        // this.addFormSubmitById('send-message');
+        // this.setLinkListeners();
     };
 
     renderProfile = () => {
-        const template = Handlebars.compile(Pages.ProfileInfoPage);
-        this.appElement.innerHTML = template(data.profile);
-        this.addClickListenerById('back-button', () => {
-            this.router.navigate('/chat');
-        });
-        this.setLinkListeners();
+        // const template = Handlebars.compile(Pages.ProfileInfoPage);
+        // this.appElement.innerHTML = template(data.profile);
+        // this.addClickListenerById('back-button', () => {
+        //     this.router.navigate('/chat');
+        // });
+        // this.setLinkListeners();
     };
 
     renderChangeProfile = () => {
-        const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
-        this.appElement.innerHTML = template(data.changeProfile);
-        this.addClickListenerById('back-button', () => {
-            this.router.navigate('/profile');
-        });
-        this.addFormSubmitById('profile-form', () => {
-            this.router.navigate('/profile');
-        });
+        // const template = Handlebars.compile(Pages.ProfilePersonalDataPage);
+        // this.appElement.innerHTML = template(data.changeProfile);
+        // this.addClickListenerById('back-button', () => {
+        //     this.router.navigate('/profile');
+        // });
+        // this.addFormSubmitById('profile-form', () => {
+        //     this.router.navigate('/profile');
+        // });
     };
 
     renderChangePassword = () => {
-        const template = Handlebars.compile(Pages.ProfilePasswordPage);
-        this.appElement.innerHTML = template(data.passwordChange);
-        this.addClickListenerById('back-button', () => {
-            this.router.navigate('/profile');
-        });
-        this.addFormSubmitById('password-form', () => {
-            this.router.navigate('/profile');
-        });
+        // const template = Handlebars.compile(Pages.ProfilePasswordPage);
+        // this.appElement.innerHTML = template(data.passwordChange);
+        // this.addClickListenerById('back-button', () => {
+        //     this.router.navigate('/profile');
+        // });
+        // this.addFormSubmitById('password-form', () => {
+        //     this.router.navigate('/profile');
+        // });
     };
 
     private addFormSubmitById(id: string, onClick?: () => void) {
-        document.getElementById(id)?.addEventListener('submit', (e) => {
-            e.preventDefault();
-            onClick?.();
-        });
+        // document.getElementById(id)?.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     onClick?.();
+        // });
     }
 
     private addClickListenerById(id: string, onClick: () => void) {
@@ -154,18 +159,18 @@ export class App {
         });
     }
 
-    private setLinkListeners() {
-        const links = document.querySelectorAll('a');
-        links.forEach((link) => {
-            link.addEventListener('click', (e) => {
-                if (
-                    e.target instanceof HTMLAnchorElement &&
-                    e.target.dataset.page
-                ) {
-                    e.preventDefault();
-                    this.router.navigate(e.target.dataset.page);
-                }
-            });
-        });
-    }
+    // private setLinkListeners() {
+    //     const links = document.querySelectorAll('a');
+    //     links.forEach((link) => {
+    //         link.addEventListener('click', (e) => {
+    //             if (
+    //                 e.target instanceof HTMLAnchorElement &&
+    //                 e.target.dataset.page
+    //             ) {
+    //                 e.preventDefault();
+    //                 this.router.navigate(e.target.dataset.page);
+    //             }
+    //         });
+    //     });
+    // }
 }
