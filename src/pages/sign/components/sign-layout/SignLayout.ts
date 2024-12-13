@@ -1,5 +1,6 @@
 import Block from '../../../../framework/Block';
 import { Link } from '../../../../shared-components/link';
+import { Mediator } from '../../../../utils/Mediator';
 import { Form } from '../form';
 import { FormInputProps } from '../form/Form';
 
@@ -7,31 +8,31 @@ interface Props {
     headerText: string;
     linkText: string;
     linkTo: string;
-    onLinkClick: (to: string) => void;
-    onFormSubmit: (data: FormData) => void;
     buttonText: string;
     formFields: FormInputProps[];
-    onBlur: (id: string, value: string) => void;
 }
 
 export class SignLayout extends Block {
-    constructor(props: Props) {
+    constructor(props: Props, mediator: Mediator) {
         super({
             headerText: props.headerText,
-            Form: new Form({
-                onFormSubmit: props.onFormSubmit,
-                className: 'sign-layout__form',
-                buttonClassName: 'sign-layout__button',
-                buttonText: props.buttonText,
-                formFields: props.formFields,
-                onBlur: props.onBlur,
-            }),
-            Link: new Link({
-                onLinkClick: props.onLinkClick,
-                text: props.linkText,
-                to: props.linkTo,
-                classNames: 'sign-layout__link link-accent link-sm',
-            }),
+            Form: new Form(
+                {
+                    className: 'sign-layout__form',
+                    buttonClassName: 'sign-layout__button',
+                    buttonText: props.buttonText,
+                    formFields: props.formFields,
+                },
+                mediator
+            ),
+            Link: new Link(
+                {
+                    text: props.linkText,
+                    to: props.linkTo,
+                    classNames: 'sign-layout__link link-accent link-sm',
+                },
+                mediator
+            ),
         });
     }
 

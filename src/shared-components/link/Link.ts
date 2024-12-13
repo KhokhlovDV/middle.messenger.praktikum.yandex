@@ -1,14 +1,14 @@
 import Block from '../../framework/Block';
+import { Mediator } from '../../utils/Mediator';
 
 type Props = {
     to: string;
     text: string;
-    onLinkClick: (to: string) => void;
     classNames?: string;
 };
 
 export class Link extends Block {
-    constructor(props: Props) {
+    constructor(props: Props, mediator: Mediator) {
         super({
             ...props,
             events: {
@@ -16,7 +16,7 @@ export class Link extends Block {
                     e.preventDefault();
                     const target = e.target as HTMLAnchorElement;
                     if (target.dataset?.page) {
-                        props.onLinkClick(target.dataset.page);
+                        mediator.navigateTo(target.dataset?.page);
                     }
                 },
             },

@@ -26,6 +26,7 @@ module.exports = {
         'no-param-reassign': 'off',
         'no-underscore-dangle': 'off',
         '@typescript-eslint/quotes': 'off',
+        'no-restricted-syntax': ['off', 'ForOfStatement'],
     },
     ignorePatterns: ['*.config.js'],
 };

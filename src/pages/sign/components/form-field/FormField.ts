@@ -3,10 +3,11 @@ import { Input } from '../../../../shared-components/input';
 
 interface Props {
     label: string;
-    onBlur: (id: string, value: string) => void;
     id: string;
     type?: string;
     value?: string;
+    errorMessage?: string;
+    onBlur: (target: HTMLInputElement) => void;
 }
 
 export class FormField extends Block {
@@ -14,9 +15,15 @@ export class FormField extends Block {
         super({
             id: props.id,
             label: props.label,
+            errorMessage: props.errorMessage,
             Input: new Input({
                 className: 'form-field__input',
-                ...props,
+                id: props.id,
+                type: props.type,
+                value: props.value,
+                onBlur: (target) => {
+                    props.onBlur(target);
+                },
             }),
         });
     }
@@ -25,6 +32,9 @@ export class FormField extends Block {
         return `<div class='form-field'>
                     <label class='form-field__label' for='{{id}}'>{{label}}</label>
                     {{{Input}}}
+                    {{#if errorMessage}}
+                        <div class='form-field__error'>{{errorMessage}}</div>
+                    {{/if}}
                 </div>`;
     }
 }

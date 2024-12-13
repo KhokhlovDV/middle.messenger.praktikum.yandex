@@ -5,7 +5,7 @@ interface Props {
     type?: string;
     value?: string;
     className?: string;
-    onBlur?: (id: string, value: string) => void;
+    onBlur?: (target: HTMLInputElement) => void;
 }
 
 export class Input extends Block {
@@ -16,7 +16,7 @@ export class Input extends Block {
             events: {
                 blur(e: Event) {
                     if (onBlur && e.target instanceof HTMLInputElement) {
-                        onBlur(e.target.id, e.target.value);
+                        onBlur(e.target);
                     }
                 },
             },
