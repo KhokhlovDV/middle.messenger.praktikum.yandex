@@ -1,3 +1,3 @@
 import './style.pcss';
 
-export { SignIn } from './SignIn';
+export { SignInPage } from './SignInPage';

@@ -1,4 +1,4 @@
-import { SignIn } from './pages';
+import { SignInPage, SignUpPage } from './pages';
 import { Error } from './pages/error/Error';
 import { Mediator } from './utils/Mediator';
 import { Router } from './utils/Router';
@@ -18,7 +18,7 @@ export class App implements Mediator {
             document.getElementById('app') as HTMLDivElement,
             {
                 routes: [
-                    { path: '/', Component: SignIn },
+                    { path: '/', Component: SignInPage },
                     {
                         path: '/server-error',
                         Component: Error,
@@ -27,16 +27,16 @@ export class App implements Mediator {
                             description: 'Мы уже фиксим',
                         },
                     },
-                    { path: '/sign-up', Component: SignIn },
-                    { path: '/chat', Component: SignIn },
-                    { path: '/profile', Component: SignIn },
+                    { path: '/sign-up', Component: SignUpPage },
+                    { path: '/chat', Component: SignInPage },
+                    { path: '/profile', Component: SignInPage },
                     {
                         path: '/change-profile',
-                        Component: SignIn,
+                        Component: SignInPage,
                     },
                     {
                         path: '/change-password',
-                        Component: SignIn,
+                        Component: SignInPage,
                     },
                 ],
                 notFoundRoute: {

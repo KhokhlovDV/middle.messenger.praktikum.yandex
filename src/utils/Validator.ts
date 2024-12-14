@@ -26,6 +26,7 @@ export class Validator {
                     errorMessage: 'Неверный телефон',
                 };
             case 'password':
+            case 'confirmed_password':
                 return {
                     regex: /^(?=(.*[A-Z]))(?=(.*\d)).{8,40}$/,
                     errorMessage: 'Неверный пароль',

@@ -1,5 +1,5 @@
-export { SignIn } from './sign/sign-in';
-export { SignUp } from './sign/sign-up';
+export { SignInPage } from './sign/sign-in';
+export { SignUpPage } from './sign/sign-up';
 export { ErrorPage } from './error';
 export { ChatPage } from './chat';
 export { ProfileInfoPage } from './profile/profile-info';
