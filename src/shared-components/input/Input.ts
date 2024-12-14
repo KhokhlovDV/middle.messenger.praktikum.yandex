@@ -5,6 +5,7 @@ interface Props {
     type?: string;
     value?: string;
     className?: string;
+    placeholder?: string;
     onBlur?: (target: HTMLInputElement) => void;
 }
 
@@ -30,6 +31,7 @@ export class Input extends Block {
                     type='{{type}}'
                     name='{{id}}'
                     id='{{id}}'
+                    placeholder='{{placeholder}}'
                 />`;
     }
 }

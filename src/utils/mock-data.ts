@@ -22,12 +22,13 @@ export const mockData = {
         newPassword: 'mypass',
         confirmedPassword: 'mypass',
     },
-    chat: {
+    chatData: {
         message: 'Сообщение',
         avatar: '',
         name: 'Вадим',
         chats: [
             {
+                id: '1',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -37,6 +38,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '2',
                 avatar: '',
                 lastMessage: 'Привет',
                 myMessage: true,
@@ -45,6 +47,7 @@ export const mockData = {
                 unreadMessagesCount: 4,
             },
             {
+                id: '3',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -54,6 +57,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '4',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -63,6 +67,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '5',
                 avatar: '',
                 lastMessage: 'Привет',
                 myMessage: true,
@@ -71,6 +76,7 @@ export const mockData = {
                 unreadMessagesCount: 4,
             },
             {
+                id: '6',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -80,6 +86,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '7',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -89,6 +96,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '8',
                 avatar: '',
                 lastMessage: 'Привет',
                 myMessage: true,
@@ -97,6 +105,7 @@ export const mockData = {
                 unreadMessagesCount: 4,
             },
             {
+                id: '9',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -106,6 +115,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '10',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -115,6 +125,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '11',
                 avatar: '',
                 lastMessage: 'Привет',
                 myMessage: true,
@@ -123,6 +134,7 @@ export const mockData = {
                 unreadMessagesCount: 4,
             },
             {
+                id: '12',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -132,6 +144,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '13',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',
@@ -141,6 +154,7 @@ export const mockData = {
                 unreadMessagesCount: 0,
             },
             {
+                id: '14',
                 avatar: '',
                 lastMessage: 'Привет',
                 myMessage: true,
@@ -149,6 +163,7 @@ export const mockData = {
                 unreadMessagesCount: 4,
             },
             {
+                id: '15',
                 avatar: '',
                 lastMessage:
                     'Друзья, у меня для вас особенный выпуск новостей! И Human Interface Guidelines и Material Design рекомендуют...',

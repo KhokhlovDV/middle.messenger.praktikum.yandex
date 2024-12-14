@@ -46,7 +46,7 @@ export class Validator {
                 return {
                     regex: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
                     errorMessage:
-                        key === 'second_name'
+                        key === 'first_name'
                             ? 'Неверное имя'
                             : 'Неверная фамилия',
                 };
