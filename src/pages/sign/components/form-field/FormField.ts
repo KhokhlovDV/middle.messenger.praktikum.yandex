@@ -17,12 +17,14 @@ export class FormField extends Block {
             label: props.label,
             errorMessage: props.errorMessage,
             Input: new Input({
-                className: 'form-field__input',
                 id: props.id,
                 type: props.type,
                 value: props.value,
                 onBlur: (target) => {
                     props.onBlur(target);
+                },
+                attr: {
+                    class: 'form-field__input',
                 },
             }),
         });

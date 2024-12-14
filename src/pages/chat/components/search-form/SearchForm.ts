@@ -12,7 +12,9 @@ export class SearchForm extends Block {
                 id: 'search',
                 type: 'text',
                 placeholder: 'Поиск',
-                className: 'search-form__search-field',
+                attr: {
+                    class: 'search-form__search-field',
+                },
             }),
             events: {
                 submit: (e: SubmitEvent) => {

@@ -4,9 +4,9 @@ interface Props {
     id: string;
     type?: string;
     value?: string;
-    className?: string;
     placeholder?: string;
     onBlur?: (target: HTMLInputElement) => void;
+    attr?: Record<string, string>;
 }
 
 export class Input extends Block {
@@ -21,12 +21,12 @@ export class Input extends Block {
                     }
                 },
             },
+            attr: props.attr,
         });
     }
 
     render() {
         return `<input
-                    class='{{className}}'
                     value='{{value}}'
                     type='{{type}}'
                     name='{{id}}'

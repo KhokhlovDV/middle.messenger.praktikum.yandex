@@ -17,11 +17,13 @@ export class MessageForm extends Block {
         const input = new Input({
             id: 'message',
             type: 'text',
-            className: 'message-form__message',
             onBlur: (target) => {
                 const formData = new FormData();
                 formData.set(target.id, target.value);
                 this.onValidateForm(formData);
+            },
+            attr: {
+                class: 'message-form__message',
             },
         });
 
@@ -47,8 +49,8 @@ export class MessageForm extends Block {
 
     private onValidateForm(data: FormData) {
         this.mediator.validate(data).forEach((error) => {
-            this.input.setProps({
-                className: error.errorMessage
+            this.input.setAttributes({
+                class: error.errorMessage
                     ? 'message-form__message message-form-error'
                     : 'message-form__message',
             });

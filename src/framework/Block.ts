@@ -7,6 +7,7 @@ type EventListener = (e: Event) => void;
 export interface BlockProps {
     [key: string]: unknown;
     events?: Record<string, EventListener>;
+    attr?: Record<string, string>;
 }
 
 export default abstract class Block {
@@ -35,7 +36,7 @@ export default abstract class Block {
         const { props, children, lists } =
             this.getChildrenPropsAndProps(propsWithChildren);
         this.lists = this.makePropsProxy({ ...lists });
-        this.props = this.makePropsProxy(props);
+        this.props = this.makePropsProxy({ ...props });
         this.children = children;
         this.registerEvents();
         this.eventBus.emit(Block.EVENTS.INIT);
@@ -177,6 +178,7 @@ export default abstract class Block {
         }
         this.element = newElement;
         this.addEvents();
+        this.addAttributes();
     }
 
     private removeEvents(): void {
@@ -196,6 +198,24 @@ export default abstract class Block {
         Object.keys(events).forEach((eventName) => {
             if (this.element) {
                 this.element.addEventListener(eventName, events[eventName]);
+            }
+        });
+    }
+
+    private addAttributes(): void {
+        const { attr = {} } = this.props;
+
+        Object.entries(attr).forEach(([key, value]) => {
+            if (this.element) {
+                this.element.setAttribute(key, value as string);
+            }
+        });
+    }
+
+    public setAttributes(attr: Record<string, string>): void {
+        Object.entries(attr).forEach(([key, value]) => {
+            if (this.element) {
+                this.element.setAttribute(key, value as string);
             }
         });
     }
