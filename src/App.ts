@@ -1,12 +1,16 @@
 import { SignIn } from './pages';
+import { Error } from './pages/error/Error';
 import { Mediator } from './utils/Mediator';
 import { Router } from './utils/Router';
+import { Store } from './utils/Store';
 import { Validator } from './utils/Validator';
 
 export class App implements Mediator {
     private router: Router;
 
     private validator = new Validator();
+
+    private store = new Store();
 
     constructor() {
         this.router = new Router(
@@ -17,7 +21,11 @@ export class App implements Mediator {
                     { path: '/', Component: SignIn },
                     {
                         path: '/server-error',
-                        Component: SignIn,
+                        Component: Error,
+                        defaultProps: {
+                            errorCode: '500',
+                            description: 'Мы уже фиксим',
+                        },
                     },
                     { path: '/sign-up', Component: SignIn },
                     { path: '/chat', Component: SignIn },
@@ -32,10 +40,18 @@ export class App implements Mediator {
                     },
                 ],
                 notFoundRoute: {
-                    Component: SignIn,
+                    Component: Error,
+                    defaultProps: {
+                        errorCode: '404',
+                        description: 'Не туда попали',
+                    },
                 },
             }
         );
+    }
+
+    getAppData() {
+        return this.store.getState();
     }
 
     validate(data: FormData): { id: string; errorMessage: string }[] {
