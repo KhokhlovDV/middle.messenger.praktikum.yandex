@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { EventBus } from './EventBus';
+import { Callback, EventBus } from './EventBus';
 import { helper } from '../utils/helper';
 
 type EventListener = (e: Event) => void;
@@ -96,7 +96,9 @@ export default abstract class Block {
         return new Proxy(props, {
             get: (target, prop: string) => {
                 const value = target[prop];
-                return typeof value === 'function' ? value.bind(target) : value;
+                return typeof value === 'function'
+                    ? (value.bind(target) as typeof value)
+                    : value;
             },
             set: (target, prop: string, value: unknown) => {
                 const oldTarget = { ...target };
@@ -111,15 +113,18 @@ export default abstract class Block {
     }
 
     private registerEvents() {
-        this.eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-        this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+        this.eventBus.on(Block.EVENTS.INIT, this.init.bind(this) as Callback);
+        this.eventBus.on(
+            Block.EVENTS.FLOW_RENDER,
+            this._render.bind(this) as Callback
+        );
         this.eventBus.on(
             Block.EVENTS.FLOW_CDM,
-            this._componentDidMount.bind(this)
+            this._componentDidMount.bind(this) as Callback
         );
         this.eventBus.on(
             Block.EVENTS.FLOW_CDU,
-            this._componentDidUpdate.bind(this)
+            this._componentDidUpdate.bind(this) as Callback
         );
     }
 
@@ -207,7 +212,7 @@ export default abstract class Block {
 
         Object.entries(attr).forEach(([key, value]) => {
             if (this.element) {
-                this.element.setAttribute(key, value as string);
+                this.element.setAttribute(key, value);
             }
         });
     }
@@ -215,7 +220,7 @@ export default abstract class Block {
     public setAttributes(attr: Record<string, string>): void {
         Object.entries(attr).forEach(([key, value]) => {
             if (this.element) {
-                this.element.setAttribute(key, value as string);
+                this.element.setAttribute(key, value);
             }
         });
     }

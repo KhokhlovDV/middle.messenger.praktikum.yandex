@@ -1,4 +1,4 @@
-type Callback = (...args: unknown[]) => void;
+export type Callback = (...args: unknown[]) => void;
 
 export class EventBus {
     listeners: Record<string, Callback[]>;

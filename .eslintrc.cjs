@@ -4,14 +4,14 @@ module.exports = {
     parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
-        project: ['tsconfig.json'],
-        tsconfigRootDir: __dirname,
+        project: './tsconfig.json',
     },
     plugins: ['@typescript-eslint'],
     extends: [
         'airbnb/base',
         'airbnb-typescript/base',
         'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
     ],
     rules: {
         '@typescript-eslint/indent': 'off',
