@@ -3,15 +3,18 @@ import { Mediator } from './Mediator';
 
 type Component = { new (props: BlockProps): Block };
 
-interface Route {
-    path: string;
+interface RouteData {
     Component: Component;
-    props?: BlockProps;
+    defaultProps?: BlockProps;
+}
+
+interface Route extends RouteData {
+    path: string;
 }
 
 interface RouterParams {
     routes: Route[];
-    NotFoundComponent: Component;
+    notFoundRoute: RouteData;
 }
 
 export class Router {
@@ -26,28 +29,29 @@ export class Router {
         });
     }
 
-    navigateTo(path: string) {
-        this.matchingRoute(path);
+    navigateTo(path: string, props?: BlockProps) {
+        this.matchingRoute(path, props);
         window.history.pushState({}, '', path);
     }
 
-    private matchingRoute(path: string) {
-        const currentRoute = this.getRoute(path);
-        const component = currentRoute
-            ? new currentRoute.Component({
-                  mediator: this.mediator,
-                  ...currentRoute.props,
-              })
-            : new this.routerParams.NotFoundComponent({
-                  mediator: this.mediator,
-              });
+    private matchingRoute(path: string, props?: BlockProps) {
+        const routeData = this.getRouteData(path);
+        const routeProps = props ?? routeData.defaultProps;
+        const component = new routeData.Component({
+            mediator: this.mediator,
+            ...routeProps,
+        });
         this.render(component);
     }
 
     private getCurrentPath = () => window.location.pathname;
 
-    private getRoute = (path: string) =>
-        this.routerParams.routes.find((route) => route.path === path);
+    private getRouteData(path: string) {
+        return (
+            this.routerParams.routes.find((route) => route.path === path) ??
+            this.routerParams.notFoundRoute
+        );
+    }
 
     private render(element: Block) {
         this.rootElement.replaceChildren(element.getContent());

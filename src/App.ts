@@ -31,7 +31,9 @@ export class App implements Mediator {
                         Component: SignIn,
                     },
                 ],
-                NotFoundComponent: SignIn,
+                notFoundRoute: {
+                    Component: SignIn,
+                },
             }
         );
     }
