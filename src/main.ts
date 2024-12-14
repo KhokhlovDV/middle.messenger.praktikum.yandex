@@ -1,6 +1,7 @@
 import './styles/main.pcss';
 import { App } from './App';
 
+const app = new App();
 document.addEventListener('DOMContentLoaded', () => {
-    new App();
+    app.init();
 });

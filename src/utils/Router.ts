@@ -22,7 +22,9 @@ export class Router {
         private mediator: Mediator,
         private rootElement: HTMLDivElement,
         private routerParams: RouterParams
-    ) {
+    ) {}
+
+    init() {
         this.matchingRoute(this.getCurrentPath());
         window.addEventListener('popstate', () => {
             this.matchingRoute(this.getCurrentPath());

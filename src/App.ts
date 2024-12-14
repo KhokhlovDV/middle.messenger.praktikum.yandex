@@ -50,6 +50,10 @@ export class App implements Mediator {
         );
     }
 
+    init() {
+        this.router.init();
+    }
+
     getAppData() {
         return this.store.getState();
     }
