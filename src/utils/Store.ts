@@ -12,6 +12,17 @@ export interface Chat {
     unreadMessagesCount: number;
 }
 
+export interface CurrentChatInfoType {
+    avatar: string;
+    name: string;
+}
+
+export interface ChatMessageType {
+    myMessage: boolean;
+    messageTime: string;
+    messageText: string;
+}
+
 export class Store {
     private state;
 

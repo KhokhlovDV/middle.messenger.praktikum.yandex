@@ -4,6 +4,9 @@ import { helper } from '../../utils/helper';
 import { Mediator } from '../../utils/Mediator';
 import { AppData } from '../../utils/Store';
 import { ChatFeed } from './components/chat-feed';
+import { ChatHeader } from './components/chat-header';
+import { ChatMessageBox } from './components/chat-message-box';
+import { ChatMessages } from './components/chat-messages';
 import { SearchForm } from './components/search-form';
 
 interface Props extends BlockProps {
@@ -13,6 +16,10 @@ interface Props extends BlockProps {
 export class ChatPage extends Block {
     constructor(props: Props) {
         const appData = props.mediator.getAppData() as AppData;
+        const {
+            chats,
+            currentChat: { chatInfo, messages },
+        } = appData;
         super({
             ProfileLink: new Link({
                 mediator: props.mediator,
@@ -26,10 +33,19 @@ export class ChatPage extends Block {
                 },
             }),
             ChatFeed: new ChatFeed({
-                chats: appData.chatData.chats,
+                chats,
                 onClick(chatId) {
                     console.log(`click on chat ${chatId}`);
                 },
+            }),
+            ChatHeader: new ChatHeader({
+                chatInfo,
+            }),
+            ChatMessages: new ChatMessages({
+                messages,
+            }),
+            ChatMessageBox: new ChatMessageBox({
+                mediator: props.mediator,
             }),
         });
     }
@@ -47,15 +63,10 @@ export class ChatPage extends Block {
                         </div>
                     </aside>
                     <section class='chat-layout__chat'>
+                        {{{ChatHeader}}}
+                        {{{ChatMessages}}}
+                        {{{ChatMessageBox}}}
                     </section>
                 </main>`;
     }
 }
-
-//     <section class='chat-layout__chat'>
-//         <div class="chat">
-//             {{> ChatHeader avatar=avatar name=name}}
-//             {{> ChatMessages messages=messages}}
-//             {{> ChatMyMessageBox message=message}}
-//         </div>
-//     </section>
