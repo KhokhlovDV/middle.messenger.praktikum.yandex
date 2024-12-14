@@ -1,4 +1,4 @@
-import Block from '../../../../framework/Block';
+import Block, { BlockProps } from '../../../../framework/Block';
 import { Button } from '../../../../shared-components/button';
 import { helper } from '../../../../utils/helper';
 import { Mediator } from '../../../../utils/Mediator';
@@ -10,9 +10,10 @@ export interface FormInputProps {
     id: string;
 }
 
-interface Props {
+interface Props extends BlockProps {
     buttonText: string;
     formFields: FormInputProps[];
+    mediator: Mediator;
     buttonClassName?: string;
     className?: string;
 }
@@ -20,7 +21,9 @@ interface Props {
 export class Form extends Block {
     private formFields: Map<string, FormField>;
 
-    constructor(props: Props, private mediator: Mediator) {
+    private mediator: Mediator;
+
+    constructor(props: Props) {
         const formFields = new Map<string, FormField>();
         props.formFields.forEach((field) =>
             formFields.set(
@@ -57,6 +60,7 @@ export class Form extends Block {
             FormField: [...formFields.values()],
         });
         this.formFields = formFields;
+        this.mediator = props.mediator;
     }
 
     onValidateForm(data: FormData) {

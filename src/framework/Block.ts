@@ -4,7 +4,7 @@ import { helper } from '../utils/helper';
 
 type EventListener = (e: Event) => void;
 
-interface BlockProps {
+export interface BlockProps {
     [key: string]: unknown;
     events?: Record<string, EventListener>;
 }

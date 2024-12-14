@@ -1,11 +1,12 @@
-import Block from '../framework/Block';
+import Block, { BlockProps } from '../framework/Block';
 import { Mediator } from './Mediator';
 
-type Component = { new (mediator: Mediator): Block };
+type Component = { new (props: BlockProps): Block };
 
 interface Route {
     path: string;
     Component: Component;
+    props?: BlockProps;
 }
 
 interface RouterParams {
@@ -33,8 +34,13 @@ export class Router {
     private matchingRoute(path: string) {
         const currentRoute = this.getRoute(path);
         const component = currentRoute
-            ? new currentRoute.Component(this.mediator)
-            : new this.routerParams.NotFoundComponent(this.mediator);
+            ? new currentRoute.Component({
+                  mediator: this.mediator,
+                  ...currentRoute.props,
+              })
+            : new this.routerParams.NotFoundComponent({
+                  mediator: this.mediator,
+              });
         this.render(component);
     }
 
