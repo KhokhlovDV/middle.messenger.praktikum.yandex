@@ -42,7 +42,7 @@ Netlify: https://kdv-messenger.netlify.app/
 
 Страница 5\*\*: https://kdv-messenger.netlify.app/server-error
 
-Страница профиля: https://kdv-messenger.netlify.app/profile
+Страница профиля: https://kdv-messenger.netlify.app/profile-info
 
 Страница изменения данных профиля: https://kdv-messenger.netlify.app/change-profile
 

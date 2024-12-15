@@ -24,7 +24,7 @@ export class ChatPage extends Block {
             ProfileLink: new Link({
                 mediator: props.mediator,
                 text: 'Профиль',
-                to: '/profile',
+                to: '/profile-info',
                 classNames: 'link-secondary link-m',
             }),
             SearchForm: new SearchForm({

@@ -2,6 +2,7 @@ import Block from '../../framework/Block';
 
 interface Props {
     id: string;
+    disabled?: boolean;
     type?: string;
     value?: string;
     placeholder?: string;
@@ -32,6 +33,9 @@ export class Input extends Block {
                     name='{{id}}'
                     id='{{id}}'
                     placeholder='{{placeholder}}'
+                    {{#if disabled}}
+                        disabled
+                    {{/if}}
                 />`;
     }
 }

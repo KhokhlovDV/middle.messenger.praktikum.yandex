@@ -1,3 +1,3 @@
 import './style.pcss';
 
-export { default as ProfileBlock } from './profile-block.hbs?raw';
+export { ProfileBlock } from './ProfileBlock';

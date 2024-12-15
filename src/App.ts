@@ -1,4 +1,4 @@
-import { ChatPage, SignInPage, SignUpPage } from './pages';
+import { ChatPage, ProfileInfoPage, SignInPage, SignUpPage } from './pages';
 import { Error } from './pages/error/Error';
 import { Mediator } from './utils/Mediator';
 import { Router } from './utils/Router';
@@ -29,7 +29,7 @@ export class App implements Mediator {
                     },
                     { path: '/sign-up', Component: SignUpPage },
                     { path: '/chat', Component: ChatPage },
-                    { path: '/profile', Component: SignInPage },
+                    { path: '/profile-info', Component: ProfileInfoPage },
                     {
                         path: '/change-profile',
                         Component: SignInPage,

@@ -1,26 +1,11 @@
 export const mockData = {
-    changeProfile: {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        firstName: 'Иван',
-        secondName: 'Иванов',
-        phone: '+7 (909) 967 30 30',
-    },
-    profile: {
+    profileInfo: {
         avatar: '',
         email: 'pochta@yandex.ru',
         login: 'ivanivanov',
         firstName: 'Иван',
         secondName: 'Иванов',
         phone: '+7 (909) 967 30 30',
-        disabled: true,
-    },
-    passwordChange: {
-        avatar: '',
-        firstName: 'Иван',
-        oldPassword: 'mypass',
-        newPassword: 'mypass',
-        confirmedPassword: 'mypass',
     },
     currentChat: {
         chatInfo: {
