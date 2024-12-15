@@ -11,6 +11,7 @@ export interface FormInputProps {
     type: string;
     disabled: boolean;
     value?: string;
+    placeholder?: string;
 }
 
 interface Props extends BlockProps {
@@ -37,11 +38,11 @@ export class ProfileForm extends Block {
                     errorMessage: '',
                     disabled: field.disabled,
                     value: field.value,
+                    placeholder: field.placeholder,
                     onBlur: (target) => {
-                        alert(`Blur: ${target}`);
-                        //const formData = new FormData();
-                        //formData.set(target.id, target.value);
-                        //this.onValidateForm(formData);
+                        const formData = new FormData();
+                        formData.set(target.id, target.value);
+                        this.onValidateForm(formData);
                     },
                 })
             )

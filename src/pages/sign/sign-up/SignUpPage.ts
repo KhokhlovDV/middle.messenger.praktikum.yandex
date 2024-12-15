@@ -10,7 +10,7 @@ const formFields: FormInputProps[] = [
     { id: 'second_name', label: 'Фамилия', type: 'text' },
     { id: 'phone', label: 'Телефон', type: 'tel' },
     { id: 'password', label: 'Пароль', type: 'password' },
-    { id: 'confirmed_password', label: 'Пароль (еще раз)', type: 'password' },
+    { id: 'confirmedPassword', label: 'Пароль (еще раз)', type: 'password' },
 ];
 
 interface Props extends BlockProps {

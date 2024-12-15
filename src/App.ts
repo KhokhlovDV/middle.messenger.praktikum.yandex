@@ -1,4 +1,11 @@
-import { ChatPage, ProfileInfoPage, SignInPage, SignUpPage } from './pages';
+import {
+    ChatPage,
+    ProfileInfoPage,
+    ProfilePasswordPage,
+    ProfilePersonalDataPage,
+    SignInPage,
+    SignUpPage,
+} from './pages';
 import { Error } from './pages/error/Error';
 import { Mediator } from './utils/Mediator';
 import { Router } from './utils/Router';
@@ -32,11 +39,11 @@ export class App implements Mediator {
                     { path: '/profile-info', Component: ProfileInfoPage },
                     {
                         path: '/change-profile',
-                        Component: SignInPage,
+                        Component: ProfilePersonalDataPage,
                     },
                     {
                         path: '/change-password',
-                        Component: SignInPage,
+                        Component: ProfilePasswordPage,
                     },
                 ],
                 notFoundRoute: {

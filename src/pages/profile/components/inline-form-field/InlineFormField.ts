@@ -9,6 +9,7 @@ interface Props extends BlockProps {
     disabled: boolean;
     onBlur: (target: HTMLInputElement) => void;
     value?: string;
+    placeholder?: string;
 }
 
 export class InlineFormField extends Block {
@@ -21,6 +22,7 @@ export class InlineFormField extends Block {
                 type: props.type,
                 disabled: props.disabled,
                 value: props.value,
+                placeholder: props.placeholder,
                 attr: {
                     class: 'inline-form-field__input',
                 },
@@ -35,7 +37,12 @@ export class InlineFormField extends Block {
 
     render() {
         return `<div class="inline-form-field">
-                    <label for='{{id}}'>{{label}}</label>
+                    <div class="inline-form-field__container">
+                        <label for='{{id}}'>{{label}}</label>
+                        {{#if errorMessage}}
+                            <div class='inline-form-field__error'>{{errorMessage}}</div>
+                        {{/if}}
+                    </div>
                     {{{Input}}}
                 </div>`;
     }
