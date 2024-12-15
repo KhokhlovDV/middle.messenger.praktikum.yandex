@@ -1,5 +1,32 @@
-.chat {
+.chat-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.chat-layout__side-content {
+    background: var(--surface-color);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    gap: 16px;
+    padding: 20px 10px 0;
+    width: 310px;
+}
+
+.chat-layout__profile {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+}
+
+.chat-layout__chats_feed {
+    flex: 1;
+    overflow: auto;
+}
+
+.chat-layout__chat {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 10px 20px;
 }

@@ -1,2 +1,3 @@
 import './style.pcss';
-export { default as ErrorPage } from './error.hbs?raw';
+
+export { Error as ErrorPage } from './Error';
