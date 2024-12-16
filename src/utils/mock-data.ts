@@ -5,7 +5,7 @@ export const mockData = {
         login: 'ivanivanov',
         firstName: 'Иван',
         secondName: 'Иванов',
-        phone: '+7 (909) 967 30 30',
+        phone: '+79099630530',
     },
     currentChat: {
         chatInfo: {

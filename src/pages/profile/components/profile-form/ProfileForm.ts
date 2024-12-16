@@ -1,7 +1,7 @@
-import Block, { BlockProps } from '../../../../framework/Block';
+import { BlockProps } from '../../../../framework/Block';
+import { BlockWithValidation } from '../../../../framework/BlockWithValidation';
 import { Button } from '../../../../shared-components/button';
-import { helper } from '../../../../utils/helper';
-import { DataForValidate, Mediator } from '../../../../utils/Mediator';
+import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 import { InlineFormField } from '../inline-form-field';
 import { ProfileBlock } from '../profile-block';
 
@@ -21,10 +21,8 @@ interface Props extends BlockProps {
     className?: string;
 }
 
-export class ProfileForm extends Block {
+export class ProfileForm extends BlockWithValidation {
     private formFields: Map<string, InlineFormField>;
-
-    private mediator: Mediator;
 
     constructor(props: Props) {
         const formFields = new Map<string, InlineFormField>();
@@ -40,39 +38,37 @@ export class ProfileForm extends Block {
                     value: field.value,
                     placeholder: field.placeholder,
                     onBlur: (value) => {
-                        this.onValidate([{ id: field.id, value }]);
+                        this.validateField(value, field.id);
                     },
                 })
             )
         );
 
-        super({
-            className: props.className,
-            events: {
-                submit: (e: SubmitEvent) => {
-                    e.preventDefault();
-                    const formData = new FormData(e.target as HTMLFormElement);
-                    helper.consoleFormData(formData);
-                    this.onValidate(helper.convertFormDataToArray(formData));
+        super(
+            {
+                className: props.className,
+                events: {
+                    submit: (e: SubmitEvent) => {
+                        this.submitForm(e);
+                    },
                 },
+                ProfileBlock: new ProfileBlock({
+                    content: [...formFields.values()],
+                }),
+                Button: props.button,
             },
-            ProfileBlock: new ProfileBlock({
-                content: [...formFields.values()],
-            }),
-            Button: props.button,
-        });
+            props.mediator
+        );
         this.formFields = formFields;
-        this.mediator = props.mediator;
     }
 
-    onValidate(data: DataForValidate[]) {
-        this.mediator.validate(data).forEach((result) => {
-            const formField = this.formFields.get(result.id);
-            if (formField) {
-                formField.setProps({
-                    errorMessage: result.errorMessage,
-                });
-            }
+    onValidationResult(result: ValidationResult): void {
+        const formField = this.formFields.get(result.id);
+        if (!formField) {
+            return;
+        }
+        formField.setProps({
+            errorMessage: result.errorMessage,
         });
     }
 
