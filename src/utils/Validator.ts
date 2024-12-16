@@ -1,20 +1,20 @@
+import { DataForValidate, ValidationResult } from './Mediator';
+
 export class Validator {
-    validate(data: FormData) {
-        const result: { id: string; errorMessage: string }[] = [];
-        for (const key of data.keys()) {
-            const value = data.get(key);
-            if (typeof value === 'string') {
-                const regexData = this.createRegexData(key);
-                if (regexData) {
-                    result.push({
-                        id: key,
-                        errorMessage: !regexData.regex.test(value)
-                            ? regexData.errorMessage
-                            : '',
-                    });
-                }
+    validate(data: DataForValidate[]): ValidationResult[] {
+        const result: ValidationResult[] = [];
+        data.forEach((element) => {
+            const { id, value } = element;
+            const regexData = this.createRegexData(id);
+            if (regexData) {
+                result.push({
+                    id,
+                    errorMessage: !regexData.regex.test(value)
+                        ? regexData.errorMessage
+                        : '',
+                });
             }
-        }
+        });
         return result;
     }
 

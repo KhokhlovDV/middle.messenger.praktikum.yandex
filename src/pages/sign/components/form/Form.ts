@@ -1,7 +1,7 @@
-import Block, { BlockProps } from '../../../../framework/Block';
+import { BlockProps } from '../../../../framework/Block';
+import { BlockWithValidation } from '../../../../framework/BlockWithValidation';
 import { Button } from '../../../../shared-components/button';
-import { helper } from '../../../../utils/helper';
-import { Mediator } from '../../../../utils/Mediator';
+import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 import { FormField } from '../form-field';
 
 export interface FormInputProps {
@@ -18,10 +18,8 @@ interface Props extends BlockProps {
     className?: string;
 }
 
-export class Form extends Block {
+export class Form extends BlockWithValidation {
     private formFields: Map<string, FormField>;
-
-    private mediator: Mediator;
 
     constructor(props: Props) {
         const formFields = new Map<string, FormField>();
@@ -33,44 +31,40 @@ export class Form extends Block {
                     label: field.label,
                     type: field.type,
                     errorMessage: '',
-                    onBlur: (target) => {
-                        const formData = new FormData();
-                        formData.set(target.id, target.value);
-                        this.onValidateForm(formData);
+                    onBlur: (value) => {
+                        this.validateField(value, field.id);
                     },
                 })
             )
         );
 
-        super({
-            className: props.className,
-            Button: new Button({
-                className: props.buttonClassName,
-                type: 'submit',
-                text: props.buttonText,
-            }),
-            events: {
-                submit: (e: SubmitEvent) => {
-                    e.preventDefault();
-                    const formData = new FormData(e.target as HTMLFormElement);
-                    this.onValidateForm(formData);
-                    helper.consoleFormData(formData);
+        super(
+            {
+                className: props.className,
+                Button: new Button({
+                    className: props.buttonClassName,
+                    type: 'submit',
+                    text: props.buttonText,
+                }),
+                events: {
+                    submit: (e: SubmitEvent) => {
+                        this.submitForm(e);
+                    },
                 },
+                FormField: [...formFields.values()],
             },
-            FormField: [...formFields.values()],
-        });
+            props.mediator
+        );
         this.formFields = formFields;
-        this.mediator = props.mediator;
     }
 
-    onValidateForm(data: FormData) {
-        this.mediator.validate(data).forEach((error) => {
-            const formField = this.formFields.get(error.id);
-            if (formField) {
-                formField.setProps({
-                    errorMessage: error.errorMessage,
-                });
-            }
+    onValidationResult(result: ValidationResult): void {
+        const formField = this.formFields.get(result.id);
+        if (!formField) {
+            return;
+        }
+        formField.setProps({
+            errorMessage: result.errorMessage,
         });
     }
 

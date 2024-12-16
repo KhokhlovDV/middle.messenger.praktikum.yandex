@@ -1,59 +1,52 @@
-import Block, { BlockProps } from '../../../../framework/Block';
+import { BlockProps } from '../../../../framework/Block';
+import { BlockWithValidation } from '../../../../framework/BlockWithValidation';
 import { Input } from '../../../../shared-components/input';
 import { RoundedButton } from '../../../../shared-components/rounded-button';
-import { helper } from '../../../../utils/helper';
-import { Mediator } from '../../../../utils/Mediator';
+import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 
 interface Props extends BlockProps {
     mediator: Mediator;
 }
 
-export class MessageForm extends Block {
-    private mediator: Mediator;
-
+export class MessageForm extends BlockWithValidation {
     private input: Input;
 
     constructor(props: Props) {
         const input = new Input({
             id: 'message',
             type: 'text',
-            onBlur: (target) => {
-                const formData = new FormData();
-                formData.set(target.id, target.value);
-                this.onValidateForm(formData);
+            onBlur: (value) => {
+                this.validateField(value, 'message');
             },
             attr: {
                 class: 'message-form__message',
             },
         });
 
-        super({
-            isError: false,
-            Input: input,
-            RoundedButton: new RoundedButton({
-                type: 'submit',
-                src: '/right_arrow.svg',
-            }),
-            events: {
-                submit: (e: SubmitEvent) => {
-                    e.preventDefault();
-                    const formData = new FormData(e.target as HTMLFormElement);
-                    this.onValidateForm(formData);
-                    helper.consoleFormData(formData);
+        super(
+            {
+                isError: false,
+                Input: input,
+                RoundedButton: new RoundedButton({
+                    type: 'submit',
+                    src: '/right_arrow.svg',
+                }),
+                events: {
+                    submit: (e: SubmitEvent) => {
+                        this.submitForm(e);
+                    },
                 },
             },
-        });
-        this.mediator = props.mediator;
+            props.mediator
+        );
         this.input = input;
     }
 
-    private onValidateForm(data: FormData) {
-        this.mediator.validate(data).forEach((error) => {
-            this.input.setAttributes({
-                class: error.errorMessage
-                    ? 'message-form__message message-form-error'
-                    : 'message-form__message',
-            });
+    onValidationResult(result: ValidationResult): void {
+        this.input.setAttributes({
+            class: result.errorMessage
+                ? 'message-form__message message-form-error'
+                : 'message-form__message',
         });
     }
 

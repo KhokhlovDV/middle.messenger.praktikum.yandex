@@ -1,13 +1,13 @@
-import Block from '../../../../framework/Block';
+import Block, { BlockProps } from '../../../../framework/Block';
 import { Input } from '../../../../shared-components/input';
 
-interface Props {
+interface Props extends BlockProps {
     label: string;
     id: string;
     type?: string;
     value?: string;
     errorMessage?: string;
-    onBlur: (target: HTMLInputElement) => void;
+    onBlur: (value: string) => void;
 }
 
 export class FormField extends Block {

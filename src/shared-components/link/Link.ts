@@ -4,7 +4,7 @@ import { Mediator } from '../../utils/Mediator';
 interface Props extends BlockProps {
     to: string;
     text: string;
-    classNames?: string;
+    className?: string;
     mediator: Mediator;
 }
 
@@ -17,7 +17,7 @@ export class Link extends Block {
                     e.preventDefault();
                     const target = e.target as HTMLAnchorElement;
                     if (target.dataset?.page) {
-                        props.mediator.navigateTo(target.dataset?.page);
+                        props.mediator.navigateTo(target.dataset.page);
                     }
                 },
             },
@@ -25,6 +25,6 @@ export class Link extends Block {
     }
 
     render() {
-        return `<a href='#' class='link {{classNames}}' data-page='{{to}}'>{{text}}</a>`;
+        return `<a href='#' class='link {{className}}' data-page='{{to}}'>{{text}}</a>`;
     }
 }

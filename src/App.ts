@@ -7,7 +7,7 @@ import {
     SignUpPage,
 } from './pages';
 import { Error } from './pages/error/Error';
-import { Mediator } from './utils/Mediator';
+import { DataForValidate, Mediator, ValidationResult } from './utils/Mediator';
 import { Router } from './utils/Router';
 import { Store } from './utils/Store';
 import { Validator } from './utils/Validator';
@@ -57,16 +57,16 @@ export class App implements Mediator {
         );
     }
 
+    validate(data: DataForValidate[]): ValidationResult[] {
+        return this.validator.validate(data);
+    }
+
     init() {
         this.router.init();
     }
 
     getAppData() {
         return this.store.getState();
-    }
-
-    validate(data: FormData): { id: string; errorMessage: string }[] {
-        return this.validator.validate(data);
     }
 
     navigateTo(path: string): void {
