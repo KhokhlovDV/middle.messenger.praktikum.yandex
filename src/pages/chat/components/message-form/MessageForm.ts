@@ -17,10 +17,8 @@ export class MessageForm extends Block {
         const input = new Input({
             id: 'message',
             type: 'text',
-            onBlur: (target) => {
-                const formData = new FormData();
-                formData.set(target.id, target.value);
-                this.onValidateForm(formData);
+            onBlur: (value) => {
+                this.onValidate(value);
             },
             attr: {
                 class: 'message-form__message',
@@ -38,8 +36,8 @@ export class MessageForm extends Block {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
-                    this.onValidateForm(formData);
                     helper.consoleFormData(formData);
+                    this.onValidate(formData.get('message') as string);
                 },
             },
         });
@@ -47,14 +45,16 @@ export class MessageForm extends Block {
         this.input = input;
     }
 
-    private onValidateForm(data: FormData) {
-        this.mediator.validate(data).forEach((error) => {
+    private onValidate(value: string) {
+        const results = this.mediator.validate([{ id: 'message', value }]);
+        const result = results.find((r) => r.id === 'message');
+        if (result) {
             this.input.setAttributes({
-                class: error.errorMessage
+                class: result.errorMessage
                     ? 'message-form__message message-form-error'
                     : 'message-form__message',
             });
-        });
+        }
     }
 
     render() {

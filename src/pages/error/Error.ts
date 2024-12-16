@@ -17,7 +17,7 @@ export class Error extends Block {
                 mediator: props.mediator,
                 text: 'Назад к чатам',
                 to: '/chat',
-                classNames: 'link-accent link-sm',
+                className: 'link-accent link-sm',
             }),
         });
     }

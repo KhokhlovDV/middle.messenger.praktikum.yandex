@@ -1,7 +1,7 @@
 import Block, { BlockProps } from '../../../../framework/Block';
 import { Button } from '../../../../shared-components/button';
 import { helper } from '../../../../utils/helper';
-import { Mediator } from '../../../../utils/Mediator';
+import { DataForValidate, Mediator } from '../../../../utils/Mediator';
 import { FormField } from '../form-field';
 
 export interface FormInputProps {
@@ -33,10 +33,8 @@ export class Form extends Block {
                     label: field.label,
                     type: field.type,
                     errorMessage: '',
-                    onBlur: (target) => {
-                        const formData = new FormData();
-                        formData.set(target.id, target.value);
-                        this.onValidateForm(formData);
+                    onBlur: (value) => {
+                        this.onValidate([{ id: field.id, value }]);
                     },
                 })
             )
@@ -53,7 +51,7 @@ export class Form extends Block {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
-                    this.onValidateForm(formData);
+                    this.onValidate(helper.convertFormDataToArray(formData));
                     helper.consoleFormData(formData);
                 },
             },
@@ -63,12 +61,12 @@ export class Form extends Block {
         this.mediator = props.mediator;
     }
 
-    onValidateForm(data: FormData) {
-        this.mediator.validate(data).forEach((error) => {
-            const formField = this.formFields.get(error.id);
+    onValidate(data: DataForValidate[]) {
+        this.mediator.validate(data).forEach((result) => {
+            const formField = this.formFields.get(result.id);
             if (formField) {
                 formField.setProps({
-                    errorMessage: error.errorMessage,
+                    errorMessage: result.errorMessage,
                 });
             }
         });

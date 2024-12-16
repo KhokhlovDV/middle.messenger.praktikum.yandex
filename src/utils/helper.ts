@@ -8,4 +8,12 @@ export const helper = {
         }
         console.log(result);
     },
+    convertFormDataToArray: (data: FormData) => {
+        const result: { id: string; value: string }[] = [];
+        for (const key of data.keys()) {
+            const value = data.get(key) as string;
+            result.push({ id: key, value });
+        }
+        return result;
+    },
 };

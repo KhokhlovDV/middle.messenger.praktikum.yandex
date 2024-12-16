@@ -1,12 +1,12 @@
-import Block from '../../framework/Block';
+import Block, { BlockProps } from '../../framework/Block';
 
-interface Props {
+interface Props extends BlockProps {
     id: string;
     disabled?: boolean;
     type?: string;
     value?: string;
     placeholder?: string;
-    onBlur?: (target: HTMLInputElement) => void;
+    onBlur?: (value: string) => void;
     attr?: Record<string, string>;
 }
 
@@ -17,8 +17,9 @@ export class Input extends Block {
             ...other,
             events: {
                 blur(e: Event) {
-                    if (onBlur && e.target instanceof HTMLInputElement) {
-                        onBlur(e.target);
+                    if (onBlur) {
+                        const target = e.target as HTMLInputElement;
+                        onBlur(target.value);
                     }
                 },
             },

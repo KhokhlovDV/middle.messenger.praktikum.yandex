@@ -27,7 +27,7 @@ export class SignLayout extends Block {
             Link: new Link({
                 text: props.linkText,
                 to: props.linkTo,
-                classNames: 'sign-layout__link link-accent link-sm',
+                className: 'sign-layout__link link-accent link-sm',
                 mediator: props.mediator,
             }),
         });

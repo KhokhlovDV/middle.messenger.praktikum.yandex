@@ -7,7 +7,7 @@ interface Props extends BlockProps {
     type: string;
     errorMessage: string;
     disabled: boolean;
-    onBlur: (target: HTMLInputElement) => void;
+    onBlur?: (value: string) => void;
     value?: string;
     placeholder?: string;
 }

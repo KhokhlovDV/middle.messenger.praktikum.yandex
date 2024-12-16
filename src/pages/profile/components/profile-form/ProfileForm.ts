@@ -1,7 +1,7 @@
 import Block, { BlockProps } from '../../../../framework/Block';
 import { Button } from '../../../../shared-components/button';
 import { helper } from '../../../../utils/helper';
-import { Mediator } from '../../../../utils/Mediator';
+import { DataForValidate, Mediator } from '../../../../utils/Mediator';
 import { InlineFormField } from '../inline-form-field';
 import { ProfileBlock } from '../profile-block';
 
@@ -39,10 +39,8 @@ export class ProfileForm extends Block {
                     disabled: field.disabled,
                     value: field.value,
                     placeholder: field.placeholder,
-                    onBlur: (target) => {
-                        const formData = new FormData();
-                        formData.set(target.id, target.value);
-                        this.onValidateForm(formData);
+                    onBlur: (value) => {
+                        this.onValidate([{ id: field.id, value }]);
                     },
                 })
             )
@@ -54,8 +52,8 @@ export class ProfileForm extends Block {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
                     const formData = new FormData(e.target as HTMLFormElement);
-                    this.onValidateForm(formData);
                     helper.consoleFormData(formData);
+                    this.onValidate(helper.convertFormDataToArray(formData));
                 },
             },
             ProfileBlock: new ProfileBlock({
@@ -67,12 +65,12 @@ export class ProfileForm extends Block {
         this.mediator = props.mediator;
     }
 
-    onValidateForm(data: FormData) {
-        this.mediator.validate(data).forEach((error) => {
-            const formField = this.formFields.get(error.id);
+    onValidate(data: DataForValidate[]) {
+        this.mediator.validate(data).forEach((result) => {
+            const formField = this.formFields.get(result.id);
             if (formField) {
                 formField.setProps({
-                    errorMessage: error.errorMessage,
+                    errorMessage: result.errorMessage,
                 });
             }
         });
