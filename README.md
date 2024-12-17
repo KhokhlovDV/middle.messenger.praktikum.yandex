@@ -12,6 +12,16 @@
 
 Запустить проект на localhost: `npm run start`
 
+## Дополнительные команды
+
+Запуск проверок ESLint: `npm run lint`
+
+Запуск проверок ESLint(с попыткой автоматического исправления ошибок): `npm run lint:fix`
+
+Запуск проверок StyleLint: `npm run lint:style`
+
+Запуск проверок StyleLint(с попыткой автоматического исправления ошибок): `npm run lint:style:fix`
+
 ## Ссылки:
 
 ### Прототип
@@ -32,7 +42,7 @@ Netlify: https://kdv-messenger.netlify.app/
 
 Страница 5\*\*: https://kdv-messenger.netlify.app/server-error
 
-Страница профиля: https://kdv-messenger.netlify.app/profile
+Страница профиля: https://kdv-messenger.netlify.app/profile-info
 
 Страница изменения данных профиля: https://kdv-messenger.netlify.app/change-profile
 

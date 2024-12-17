@@ -1,0 +1,31 @@
+module.exports = {
+    root: true,
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+        project: './tsconfig.json',
+    },
+    plugins: ['@typescript-eslint'],
+    extends: [
+        'airbnb/base',
+        'airbnb-typescript/base',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    ],
+    rules: {
+        '@typescript-eslint/indent': 'off',
+        '@typescript-eslint/comma-dangle': 'off',
+        '@typescript-eslint/quotes': 'off',
+        'class-methods-use-this': 'off',
+        'function-paren-newline': 'off',
+        'implicit-arrow-linebreak': 'off',
+        'import/prefer-default-export': 'off',
+        'linebreak-style': 'off',
+        'operator-linebreak': 'off',
+        'no-param-reassign': 'off',
+        'no-restricted-syntax': ['off', 'ForOfStatement'],
+        'no-underscore-dangle': 'off',
+    },
+    ignorePatterns: ['*.config.js'],
+};
