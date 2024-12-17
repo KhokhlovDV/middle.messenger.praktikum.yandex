@@ -12,19 +12,21 @@ interface Options {
     query?: Record<string, string>;
 }
 
+type HTTPMethod = (url: string, options?: Options) => Promise<XMLHttpRequest>;
+
 const DEFAULT_TIMEOUT = 5000;
 
 export class HttpTransport {
-    get = (url: string, options: Options = {}) =>
+    get: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.GET, options);
 
-    post = (url: string, options: Options = {}) =>
+    post: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.POST, options);
 
-    put = (url: string, options: Options = {}) =>
+    put: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.PUT, options);
 
-    delete = (url: string, options: Options = {}) =>
+    delete: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.DELETE, options);
 
     private request(url: string, method: Methods, options: Options) {
