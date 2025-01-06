@@ -1,5 +1,5 @@
-import Block, { BlockProps } from '../../../../framework/Block';
-import { RoundedButton } from '../../../../shared-components/rounded-button';
+import { Block, BlockProps } from '../../../../framework';
+import { RoundedButton } from '../../../../shared-components';
 import { AvatarPicker } from '../avatar-picker';
 
 interface Props extends BlockProps {

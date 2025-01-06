@@ -1,4 +1,4 @@
-import { BlockProps } from '../framework/Block';
+import { BlockProps } from '../framework';
 
 export interface DataForValidate {
     id: string;

@@ -1,7 +1,5 @@
-import { BlockProps } from '../../../../framework/Block';
-import { BlockWithValidation } from '../../../../framework/BlockWithValidation';
-import { Input } from '../../../../shared-components/input';
-import { RoundedButton } from '../../../../shared-components/rounded-button';
+import { BlockProps, BlockWithValidation } from '../../../../framework';
+import { Input, RoundedButton } from '../../../../shared-components';
 import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 
 interface Props extends BlockProps {

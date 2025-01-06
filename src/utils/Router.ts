@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../framework/Block';
+import { Block, BlockProps } from '../framework';
 import { Mediator } from './Mediator';
 
 type Component = { new (props: BlockProps): Block };

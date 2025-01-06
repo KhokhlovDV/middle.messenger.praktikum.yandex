@@ -1,6 +1,10 @@
-import { helper } from '../utils/helper';
-import { DataForValidate, Mediator, ValidationResult } from '../utils/Mediator';
-import Block, { BlockProps } from './Block';
+import { helper } from '../../utils/helper';
+import {
+    DataForValidate,
+    Mediator,
+    ValidationResult,
+} from '../../utils/Mediator';
+import { Block, BlockProps } from './Block';
 
 export abstract class BlockWithValidation extends Block {
     constructor(props: BlockProps, private mediator: Mediator) {

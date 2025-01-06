@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../../../../framework/Block';
+import { Block, BlockProps } from '../../../../framework';
 import { Mediator } from '../../../../utils/Mediator';
 import { MessageForm } from '../message-form';
 

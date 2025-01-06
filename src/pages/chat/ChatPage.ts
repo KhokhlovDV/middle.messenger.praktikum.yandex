@@ -1,13 +1,15 @@
-import Block, { BlockProps } from '../../framework/Block';
-import { Link } from '../../shared-components/link';
+import { Block, BlockProps } from '../../framework';
+import { Link } from '../../shared-components';
 import { helper } from '../../utils/helper';
 import { Mediator } from '../../utils/Mediator';
 import { AppData } from '../../utils/Store';
-import { ChatFeed } from './components/chat-feed';
-import { ChatHeader } from './components/chat-header';
-import { ChatMessageBox } from './components/chat-message-box';
-import { ChatMessages } from './components/chat-messages';
-import { SearchForm } from './components/search-form';
+import {
+    ChatFeed,
+    ChatHeader,
+    ChatMessageBox,
+    ChatMessages,
+    SearchForm,
+} from './components';
 
 interface Props extends BlockProps {
     mediator: Mediator;

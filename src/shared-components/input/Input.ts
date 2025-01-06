@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../../framework/Block';
+import { Block, BlockProps } from '../../framework';
 
 interface Props extends BlockProps {
     id: string;

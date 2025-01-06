@@ -1,13 +1,13 @@
-import Block, { BlockProps } from '../../../framework/Block';
-import { Link } from '../../../shared-components/link';
+import { Block, BlockProps } from '../../../framework';
+import { Link } from '../../../shared-components';
 import { Mediator } from '../../../utils/Mediator';
 import { AppData } from '../../../utils/Store';
-import { ProfileBlock } from '../components/profile-block';
 import {
     FormInputProps,
+    ProfileBlock,
     ProfileForm,
-} from '../components/profile-form/ProfileForm';
-import { ProfileLayout } from '../components/profile-layout';
+    ProfileLayout,
+} from '../components';
 
 interface Props extends BlockProps {
     mediator: Mediator;

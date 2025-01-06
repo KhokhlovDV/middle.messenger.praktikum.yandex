@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
+import { helper } from '../../utils/helper';
 import { Callback, EventBus } from './EventBus';
-import { helper } from '../utils/helper';
 
 type EventListener = (e: Event) => void;
 
@@ -10,7 +10,7 @@ export interface BlockProps {
     attr?: Record<string, string>;
 }
 
-export default abstract class Block {
+export abstract class Block {
     static EVENTS = {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',

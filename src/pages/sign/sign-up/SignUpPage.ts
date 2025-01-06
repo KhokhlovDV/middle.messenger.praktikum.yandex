@@ -1,7 +1,6 @@
-import Block, { BlockProps } from '../../../framework/Block';
+import { Block, BlockProps } from '../../../framework';
 import { Mediator } from '../../../utils/Mediator';
-import { FormInputProps } from '../components/form/Form';
-import { SignLayout } from '../components/sign-layout';
+import { FormInputProps, SignLayout } from '../components';
 
 const formFields: FormInputProps[] = [
     { id: 'email', label: 'Почта', type: 'email' },

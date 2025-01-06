@@ -1,1 +1,2 @@
-export { ProfileForm as Form } from './ProfileForm';
+export { ProfileForm } from './ProfileForm';
+export type { FormInputProps } from './ProfileForm';

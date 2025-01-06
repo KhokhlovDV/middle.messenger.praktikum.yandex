@@ -1,6 +1,5 @@
-import { BlockProps } from '../../../../framework/Block';
-import { BlockWithValidation } from '../../../../framework/BlockWithValidation';
-import { Button } from '../../../../shared-components/button';
+import { BlockProps, BlockWithValidation } from '../../../../framework';
+import { Button } from '../../../../shared-components';
 import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 import { InlineFormField } from '../inline-form-field';
 import { ProfileBlock } from '../profile-block';

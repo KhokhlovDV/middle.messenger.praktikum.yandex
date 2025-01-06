@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../../../../framework/Block';
+import { Block, BlockProps } from '../../../../framework';
 import { Chat } from '../../../../utils/Store';
 import { ChatFeedItem } from '../chat-feed-item';
 

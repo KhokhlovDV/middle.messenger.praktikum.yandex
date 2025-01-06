@@ -1,8 +1,7 @@
-import Block, { BlockProps } from '../../../../framework/Block';
-import { Link } from '../../../../shared-components/link';
+import { Block, BlockProps } from '../../../../framework';
+import { Link } from '../../../../shared-components';
 import { Mediator } from '../../../../utils/Mediator';
-import { Form } from '../form';
-import { FormInputProps } from '../form/Form';
+import { Form, FormInputProps } from '../form';
 
 interface Props extends BlockProps {
     headerText: string;

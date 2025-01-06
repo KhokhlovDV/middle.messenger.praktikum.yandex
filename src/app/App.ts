@@ -5,12 +5,12 @@ import {
     ProfilePersonalDataPage,
     SignInPage,
     SignUpPage,
-} from './pages';
-import { Error } from './pages/error/Error';
-import { DataForValidate, Mediator, ValidationResult } from './utils/Mediator';
-import { Router } from './utils/Router';
-import { Store } from './utils/Store';
-import { Validator } from './utils/Validator';
+} from '../pages';
+import { Error } from '../pages/error/Error';
+import { DataForValidate, Mediator, ValidationResult } from '../utils/Mediator';
+import { Router } from '../utils/Router';
+import { Store } from '../utils/Store';
+import { Validator } from '../utils/Validator';
 
 export class App implements Mediator {
     private router: Router;
