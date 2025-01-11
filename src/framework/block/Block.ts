@@ -1,6 +1,6 @@
 import Handlebars from 'handlebars';
 import { helper } from '../../utils/helper';
-import { Callback, EventBus } from './EventBus';
+import { Callback, EventBus } from '../eventbus';
 
 type EventListener = (e: Event) => void;
 
@@ -15,6 +15,7 @@ export abstract class Block {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
+        FLOW_CDUM: 'flow:component-did-ummount',
         FLOW_RENDER: 'flow:render',
     };
 
@@ -51,6 +52,10 @@ export abstract class Block {
 
     public dispatchComponentDidMount(): void {
         this.eventBus.emit(Block.EVENTS.FLOW_CDM);
+    }
+
+    public dispatchComponentDidUnmount(): void {
+        this.eventBus.emit(Block.EVENTS.FLOW_CDUM);
     }
 
     public setProps = (nextProps: BlockProps) => {
@@ -125,6 +130,10 @@ export abstract class Block {
         this.eventBus.on(
             Block.EVENTS.FLOW_CDU,
             this._componentDidUpdate.bind(this) as Callback
+        );
+        this.eventBus.on(
+            Block.EVENTS.FLOW_CDUM,
+            this._componentDidUnmount.bind(this) as Callback
         );
     }
 
@@ -225,7 +234,9 @@ export abstract class Block {
         });
     }
 
-    abstract render(): string;
+    public render(): string {
+        return '';
+    }
 
     private _componentDidMount() {
         this.componentDidMount();
@@ -247,4 +258,14 @@ export abstract class Block {
         oldProps: BlockProps,
         newProps: BlockProps
     ) => oldProps !== newProps;
+
+    private _componentDidUnmount() {
+        this.removeEvents();
+        this.componentDidUnmount();
+        Object.values(this.children).forEach((child) => {
+            child.dispatchComponentDidUnmount();
+        });
+    }
+
+    protected componentDidUnmount() {}
 }

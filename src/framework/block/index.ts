@@ -1,3 +1,3 @@
 export type { BlockProps } from './Block';
 export { Block } from './Block';
-export { BlockWithValidation } from './BlockWithValidation';
+// export { BlockWithValidation } from './BlockWithValidation';

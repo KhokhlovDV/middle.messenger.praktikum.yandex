@@ -26,6 +26,10 @@ module.exports = {
         'no-param-reassign': 'off',
         'no-restricted-syntax': ['off', 'ForOfStatement'],
         'no-underscore-dangle': 'off',
+        'no-confusing-arrow': 'off',
+        'no-prototype-builtins': 'off',
+        'no-continue': 'off',
+        'func-names': 'off',
     },
     ignorePatterns: ['*.config.js'],
 };

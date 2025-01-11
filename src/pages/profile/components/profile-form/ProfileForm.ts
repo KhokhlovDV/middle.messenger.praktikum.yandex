@@ -1,6 +1,5 @@
-import { BlockProps, BlockWithValidation } from '../../../../framework';
+import { Block, BlockProps } from '../../../../framework';
 import { Button } from '../../../../shared-components';
-import { Mediator, ValidationResult } from '../../../../utils/Mediator';
 import { InlineFormField } from '../inline-form-field';
 import { ProfileBlock } from '../profile-block';
 
@@ -15,12 +14,11 @@ export interface FormInputProps {
 
 interface Props extends BlockProps {
     formFields: FormInputProps[];
-    mediator: Mediator;
     button?: Button;
     className?: string;
 }
 
-export class ProfileForm extends BlockWithValidation {
+export class ProfileForm extends Block {
     private formFields: Map<string, InlineFormField>;
 
     constructor(props: Props) {
@@ -37,39 +35,36 @@ export class ProfileForm extends BlockWithValidation {
                     value: field.value,
                     placeholder: field.placeholder,
                     onBlur: (value) => {
-                        this.validateField(value, field.id);
+                        // this.validateField(value, field.id);
                     },
                 })
             )
         );
 
-        super(
-            {
-                className: props.className,
-                events: {
-                    submit: (e: SubmitEvent) => {
-                        this.submitForm(e);
-                    },
+        super({
+            className: props.className,
+            events: {
+                submit: (e: SubmitEvent) => {
+                    // this.submitForm(e);
                 },
-                ProfileBlock: new ProfileBlock({
-                    content: [...formFields.values()],
-                }),
-                Button: props.button,
             },
-            props.mediator
-        );
+            ProfileBlock: new ProfileBlock({
+                content: [...formFields.values()],
+            }),
+            Button: props.button,
+        });
         this.formFields = formFields;
     }
 
-    onValidationResult(result: ValidationResult): void {
-        const formField = this.formFields.get(result.id);
-        if (!formField) {
-            return;
-        }
-        formField.setProps({
-            errorMessage: result.errorMessage,
-        });
-    }
+    // onValidationResult(result: ValidationResult): void {
+    //     const formField = this.formFields.get(result.id);
+    //     if (!formField) {
+    //         return;
+    //     }
+    //     formField.setProps({
+    //         errorMessage: result.errorMessage,
+    //     });
+    // }
 
     render() {
         return `<form class="{{className}}">

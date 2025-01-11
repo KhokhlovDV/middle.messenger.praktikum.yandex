@@ -16,4 +16,12 @@ export const helper = {
         }
         return result;
     },
+    classnames: (...classes: string[]) =>
+        classes
+            .reduce(
+                (result, element) =>
+                    element ? `${result} ${element}` : result,
+                ''
+            )
+            ?.trim(),
 };
