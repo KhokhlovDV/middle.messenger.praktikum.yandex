@@ -1,23 +1,19 @@
-import { Indexed } from './store';
+const isArray = (value: unknown): value is [] => Array.isArray(value);
 
-function isIndexedObject(value: unknown): value is Indexed {
-    return (
-        typeof value === 'object' &&
-        value !== null &&
-        value.constructor === Object &&
-        Object.prototype.toString.call(value) === '[object Object]'
-    );
-}
+type PlainObject<T = unknown> = {
+    [k in string]: T;
+};
 
-function isArray(value: unknown): value is [] {
-    return Array.isArray(value);
-}
+const isPlainObject = (value: unknown): value is PlainObject =>
+    typeof value === 'object' &&
+    value !== null &&
+    value.constructor === Object &&
+    Object.prototype.toString.call(value) === '[object Object]';
 
-function isArrayOrObject(value: unknown): value is [] | Indexed {
-    return isIndexedObject(value) || isArray(value);
-}
+const isArrayOrObject = (value: unknown): value is [] | PlainObject =>
+    isPlainObject(value) || isArray(value);
 
-export function isEqual(lhs: Indexed, rhs: Indexed) {
+export const isEqual = (lhs: PlainObject, rhs: PlainObject) => {
     if (Object.keys(lhs).length !== Object.keys(rhs).length) {
         return false;
     }
@@ -25,7 +21,7 @@ export function isEqual(lhs: Indexed, rhs: Indexed) {
     for (const [key, value] of Object.entries(lhs)) {
         const rightValue = rhs[key];
         if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual(value, rightValue)) {
+            if (isEqual(value as PlainObject, rightValue as PlainObject)) {
                 continue;
             }
             return false;
@@ -37,4 +33,4 @@ export function isEqual(lhs: Indexed, rhs: Indexed) {
     }
 
     return true;
-}
+};
