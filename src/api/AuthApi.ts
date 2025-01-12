@@ -1,16 +1,22 @@
 import { BaseAPI } from './BaseApi';
-import { SignInDto, SignUpDto } from './types';
+import { SignInDto, SignUpDto, UserDto } from './types';
 
 class AuthApi extends BaseAPI {
-    private path = '/auth';
-
     signIn(data: SignInDto) {
-        return this.http.post(`${this.path}/signup`, { data });
+        return this.httpTransport.post(`/signin`, { data });
     }
 
-    signUp(data: SignUpDto) {}
+    signUp(data: SignUpDto) {
+        return this.httpTransport.post(`/signup`, { data });
+    }
 
-    logout() {}
+    logout() {
+        return this.httpTransport.post(`/logout`);
+    }
+
+    getUser() {
+        return this.httpTransport.get(`/user`) as Promise<UserDto>;
+    }
 }
 
-export const authApi = new AuthApi();
+export const authApi = new AuthApi('/auth');

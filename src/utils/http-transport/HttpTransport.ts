@@ -1,3 +1,5 @@
+import { HttpError } from './HttpError';
+
 enum Methods {
     GET = 'GET',
     PUT = 'PUT',
@@ -12,12 +14,27 @@ interface Options {
     query?: Record<string, string>;
 }
 
-type HTTPMethod = (url: string, options?: Options) => Promise<XMLHttpRequest>;
+type HTTPMethod = (url: string, options?: Options) => Promise<unknown>;
 
 const DEFAULT_TIMEOUT = 5000;
 
-class HttpTransport {
+interface ErrorWithReason {
+    reason: string;
+}
+
+function isResponeWithReason(value: unknown): value is ErrorWithReason {
+    return (
+        typeof value === 'object' &&
+        value !== null &&
+        'reason' in value &&
+        typeof value.reason === 'string'
+    );
+}
+
+export class HttpTransport {
     private BASE_URL = 'https://ya-praktikum.tech/api/v2';
+
+    constructor(private prefix: string) {}
 
     get: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.GET, options);
@@ -31,7 +48,7 @@ class HttpTransport {
     delete: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.DELETE, options);
 
-    private request(url: string, method: Methods, options: Options) {
+    private request<T>(url: string, method: Methods, options: Options) {
         const {
             query = {},
             headers = {},
@@ -39,23 +56,40 @@ class HttpTransport {
             data = null,
         } = options;
 
-        return new Promise<XMLHttpRequest>((resolve, reject) => {
+        return new Promise<T>((resolve, reject) => {
             const xhr = new XMLHttpRequest();
 
             xhr.open(
                 method,
-                `${this.BASE_URL}${url}${this.parseQueryObject(query)}`
+                `${this.BASE_URL}${this.prefix}${url}${this.parseQueryObject(
+                    query
+                )}`
             );
             xhr.timeout = timeout;
-            xhr.onabort = reject;
-            xhr.onerror = reject;
-            xhr.ontimeout = reject;
-            xhr.withCredentials = true;
-            xhr.onload = () => {
-                resolve(xhr);
+            xhr.onabort = () => {
+                reject(new HttpError('Abort request', xhr.status));
+            };
+            xhr.onerror = () => {
+                reject(new HttpError('Unexpected Internet Error', xhr.status));
+            };
+            xhr.ontimeout = () => {
+                reject(new HttpError('Request Timeout', xhr.status));
             };
 
-            if (!(data instanceof FormData)) {
+            xhr.onload = () => {
+                if (xhr.status < 400) {
+                    resolve(xhr.response as T);
+                } else {
+                    const message = isResponeWithReason(xhr.response)
+                        ? xhr.response.reason
+                        : 'Unexpected Api Error';
+                    reject(new HttpError(message, xhr.status));
+                }
+            };
+            xhr.withCredentials = true;
+            xhr.responseType = 'json';
+
+            if (data && !(data instanceof FormData)) {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
@@ -63,7 +97,7 @@ class HttpTransport {
                 xhr.setRequestHeader(k, v)
             );
 
-            if (method !== Methods.GET) {
+            if (method !== Methods.GET && data) {
                 xhr.send(
                     data instanceof FormData ? data : JSON.stringify(data)
                 );
@@ -87,5 +121,3 @@ class HttpTransport {
         );
     }
 }
-
-export const httpTransport = new HttpTransport();

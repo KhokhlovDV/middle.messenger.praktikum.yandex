@@ -1,11 +1,9 @@
 import { Block, BlockProps } from '../../framework';
 import { Link } from '../../shared-components';
-import { Mediator } from '../../utils/Mediator';
 
 interface Props extends BlockProps {
     errorCode: string;
     description: string;
-    mediator: Mediator;
 }
 
 export class Error extends Block {

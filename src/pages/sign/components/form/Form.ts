@@ -13,6 +13,7 @@ export interface FormInputProps {
 interface Props extends BlockProps {
     buttonText: string;
     formFields: FormInputProps[];
+    onFormSuccess: (form: HTMLFormElement) => void;
     buttonClassName?: string;
     className?: string;
 }
@@ -50,11 +51,13 @@ export class Form extends Block {
             events: {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
-                    const data = helper.convertFormToObject(
-                        e.target as HTMLFormElement
-                    );
+                    const target = e.target as HTMLFormElement;
+                    const data = helper.convertFormToObject(target);
                     const result = Validator.validate(data);
                     this.onValidate(result);
+                    if (!result.filter((el) => el.errorMessage !== '').length) {
+                        props.onFormSuccess(target);
+                    }
                 },
             },
             FormField: [...formFields.values()],

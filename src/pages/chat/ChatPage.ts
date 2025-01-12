@@ -1,8 +1,6 @@
-import { Block, BlockProps } from '../../framework';
+import { Block } from '../../framework';
 import { Link } from '../../shared-components';
 import { helper } from '../../utils/helper';
-import { Mediator } from '../../utils/Mediator';
-import { AppData } from '../../utils/Store';
 import {
     ChatFeed,
     ChatHeader,
@@ -11,44 +9,38 @@ import {
     SearchForm,
 } from './components';
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class ChatPage extends Block {
-    constructor(props: Props) {
-        const appData = props.mediator.getAppData() as AppData;
-        const {
-            chats,
-            currentChat: { chatInfo, messages },
-        } = appData;
+    constructor() {
+        // const {
+        //     chats,
+        //     currentChat: { chatInfo, messages },
+        // } = appData;
         super({
             ProfileLink: new Link({
-                mediator: props.mediator,
                 text: 'Профиль',
                 to: '/profile-info',
                 className: 'link-secondary link-m',
             }),
             SearchForm: new SearchForm({
                 onSubmit: (data) => {
-                    helper.consoleFormData(data);
+                    //helper.consoleFormData(data);
                 },
             }),
             ChatFeed: new ChatFeed({
-                chats,
+                chats: [],
                 onClick(chatId) {
                     console.log(`click on chat ${chatId}`);
                 },
             }),
-            ChatHeader: new ChatHeader({
-                chatInfo,
-            }),
-            ChatMessages: new ChatMessages({
-                messages,
-            }),
-            ChatMessageBox: new ChatMessageBox({
-                mediator: props.mediator,
-            }),
+            // ChatHeader: new ChatHeader({
+            //     chatInfo,
+            // }),
+            // ChatMessages: new ChatMessages({
+            //     messages,
+            // }),
+            // ChatMessageBox: new ChatMessageBox({
+            //     mediator: props.mediator,
+            // }),
         });
     }
 

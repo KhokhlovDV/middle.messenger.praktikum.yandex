@@ -1,10 +1,10 @@
 export interface SignUpDto {
-    email: string;
     first_name: string;
+    second_name: string;
     login: string;
+    email: string;
     password: string;
     phone: string;
-    second_name: string;
 }
 
 export interface SignInDto {
@@ -12,13 +12,13 @@ export interface SignInDto {
     password: string;
 }
 
-export interface UserInfoDto {
-    avatar: string;
-    display_name: string;
-    email: string;
-    first_name: string;
+export interface UserDto {
     id: number;
-    login: string;
-    phone: string;
+    first_name: string;
     second_name: string;
+    display_name: string;
+    phone: string;
+    login: string;
+    avatar: string;
+    email: string;
 }

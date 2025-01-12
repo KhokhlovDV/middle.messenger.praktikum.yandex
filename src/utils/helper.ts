@@ -15,12 +15,4 @@ export const helper = {
         });
         return result as T;
     },
-    classnames: (...classes: string[]) =>
-        classes
-            .reduce(
-                (result, element) =>
-                    element ? `${result} ${element}` : result,
-                ''
-            )
-            ?.trim(),
 };

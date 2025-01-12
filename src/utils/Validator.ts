@@ -35,8 +35,13 @@ export class Validator {
             case 'phone':
                 return [
                     {
-                        regex: /^\+?\d{10,15}$/,
-                        errorMessage: 'Неверный телефон',
+                        regex: /^\+?\d+$/,
+                        errorMessage:
+                            'Должен состоять из цирф(может начинаться с плюса)',
+                    },
+                    {
+                        regex: /^.{10,15}$/,
+                        errorMessage: 'Должен сожержать от 10 до 15 символов',
                     },
                 ];
             case 'password':
@@ -45,47 +50,61 @@ export class Validator {
             case 'newPassword':
                 return [
                     {
+                        regex: /^.{8,40}$/,
+                        errorMessage: 'Должен сожержать от 8 до 40 символов',
+                    },
+                    {
                         regex: /(?=.*[A-Z])(?=.*\d)/,
                         errorMessage:
                             'Должна быть хотя бы одна заглавная буква или цифра',
-                    },
-                    {
-                        regex: /^.{8,40}$/,
-                        errorMessage:
-                            'Пароль дожен сожержать от 8 до 40 символов',
                     },
                 ];
             case 'email':
                 return [
                     {
                         regex: /^[a-zA-Z0-9_-]+@[a-zA-Z]+\.[a-zA-Z]+$/,
-                        errorMessage: 'Неверный email',
+                        errorMessage: 'Неверный формат email',
                     },
                 ];
             case 'login':
                 return [
                     {
-                        regex: /^(?!\d+$)[a-zA-Z0-9_-]{3,20}$/,
-                        errorMessage: 'Неверный логин',
+                        regex: /^.{3,20}$/,
+                        errorMessage: 'Должен сожержать от 3 до 20 символов',
+                    },
+                    {
+                        regex: /^(?!\d+$).+/,
+                        errorMessage: 'Не должен состоять только из цифр',
+                    },
+                    {
+                        regex: /^[a-zA-Z0-9_-]+$/,
+                        errorMessage:
+                            'Допустимы только латинца, цирфы, дефис и нижнее подчеркивание',
                     },
                 ];
             case 'second_name':
             case 'first_name':
                 return [
                     {
-                        regex: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
+                    },
+                    {
+                        regex: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
                         errorMessage:
-                            key === 'first_name'
-                                ? 'Неверное имя'
-                                : 'Неверная фамилия',
+                            'Допустима латиница или кириллица и дефис',
+                    },
+                    {
+                        regex: /^[A-ZА-ЯЁ]/,
+                        errorMessage: 'Первая буква должна быть заглавной',
                     },
                 ];
 
             case 'message':
                 return [
                     {
-                        regex: /^(?!\s*$).+/,
-                        errorMessage: 'Неверное сообщение',
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
                     },
                 ];
             default:

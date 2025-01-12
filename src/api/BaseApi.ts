@@ -1,5 +1,9 @@
-import { httpTransport } from '../utils/HttpTransport';
+import { HttpTransport } from '../utils/http-transport';
 
 export abstract class BaseAPI {
-    constructor(protected http = httpTransport) {}
+    protected httpTransport: HttpTransport;
+
+    constructor(prefix: string) {
+        this.httpTransport = new HttpTransport(prefix);
+    }
 }

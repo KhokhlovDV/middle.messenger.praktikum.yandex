@@ -18,6 +18,7 @@ module.exports = {
         '@typescript-eslint/comma-dangle': 'off',
         '@typescript-eslint/quotes': 'off',
         '@typescript-eslint/no-redundant-type-constituents': 'off',
+        '@typescript-eslint/no-floating-promises': 'off',
         'class-methods-use-this': 'off',
         'function-paren-newline': 'off',
         'implicit-arrow-linebreak': 'off',

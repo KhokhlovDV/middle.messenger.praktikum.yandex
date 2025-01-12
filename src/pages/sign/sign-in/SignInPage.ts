@@ -1,5 +1,14 @@
+import { AuthController } from '../../../controllers/AuthController';
 import { Block } from '../../../framework';
+import { Router, Routes } from '../../../router';
+import { helper } from '../../../utils/helper';
 import { FormInputProps, SignLayout } from '../components';
+
+interface Form {
+    [key: string]: string;
+    password: string;
+    login: string;
+}
 
 const formFields: FormInputProps[] = [
     { id: 'login', label: 'Логин', type: 'text' },
@@ -7,15 +16,34 @@ const formFields: FormInputProps[] = [
 ];
 
 export class SignInPage extends Block {
+    private signLayout: SignLayout;
+
     constructor() {
+        const signLayout = new SignLayout({
+            buttonText: 'Войти',
+            headerText: 'Вход',
+            linkText: 'Нет аккаунта?',
+            formFields,
+            onFormSuccess: (form) => {
+                const data = helper.convertFormToObject<Form>(form);
+                AuthController.signIn(data).then(() => this.onSignInError());
+                // .catch((error: Error) => {
+                //     this.onSignInError(error.message);
+                // });
+            },
+            onLinkClick: () => {
+                Router.getInstance().go(Routes.SignUp);
+            },
+        });
         super({
-            SignLayout: new SignLayout({
-                buttonText: 'Войти',
-                headerText: 'Вход',
-                linkText: 'Нет аккаунта?',
-                linkTo: '/sign-up',
-                formFields,
-            }),
+            SignLayout: signLayout,
+        });
+        this.signLayout = signLayout;
+    }
+
+    onSignInError(message?: string) {
+        this.signLayout.setProps({
+            errorMessage: message,
         });
     }
 

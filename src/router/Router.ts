@@ -77,5 +77,6 @@ export class Router {
             throw new Error('Wrong use api. Call start method');
         }
         route.render(this.outlet);
+        this.currentRoute = route;
     }
 }
