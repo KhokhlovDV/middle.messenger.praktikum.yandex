@@ -234,7 +234,7 @@ export abstract class Block {
         });
     }
 
-    public render(): string {
+    protected render() {
         return '';
     }
 

@@ -1,0 +1,1 @@
+export { LinkController } from './LinkController';

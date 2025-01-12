@@ -1,6 +1,6 @@
+import { LinkController } from '../../controllers';
 import { Block, BlockProps } from '../../framework';
 import { helper } from '../../utils/helper';
-import { Controller } from './LinkController';
 
 interface Props extends BlockProps {
     to: string;
@@ -24,7 +24,7 @@ export class Link extends Block {
                     e.preventDefault();
                     const target = e.target as HTMLAnchorElement;
                     if (target.dataset?.page) {
-                        Controller.navigate(target.dataset?.page);
+                        LinkController.navigate(target.dataset?.page);
                     }
                 },
             },

@@ -5,12 +5,12 @@ export enum StoreEvents {
     Updated = 'updated',
 }
 
-export interface State {
-    [key: string]: unknown;
-}
+class Store<T extends Record<string, unknown>> extends EventBus {
+    private state: T;
 
-class Store extends EventBus {
-    private state: State = {};
+    public setInitalState(state: T) {
+        this.state = state;
+    }
 
     public getState() {
         return this.state;
@@ -23,3 +23,6 @@ class Store extends EventBus {
 }
 
 export const store = new Store();
+
+export const storeWithType = <T extends Record<string, unknown>>(): Store<T> =>
+    store as Store<T>;

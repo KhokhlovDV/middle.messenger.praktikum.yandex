@@ -1,9 +1,13 @@
-import { Router } from '../framework';
-import { SignInPage } from '../pages';
+import { SignInPage, SignUpPage } from '../pages';
+import { Router } from '../router';
 
 export class App {
     init() {
         const outlet = document.getElementById('app') as HTMLDivElement;
-        Router.getInstance().use('/', SignInPage).start(outlet);
+        const router = Router.getInstance();
+
+        router.use('/', SignInPage).use('/sign-up', SignUpPage);
+
+        router.start(outlet);
     }
 }

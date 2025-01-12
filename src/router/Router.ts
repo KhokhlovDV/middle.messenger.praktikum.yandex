@@ -10,6 +10,8 @@ export class Router {
 
     private routes: Route[] = [];
 
+    private notFoundRoute?: Route;
+
     private outlet?: HTMLDivElement;
 
     static getInstance() {
@@ -23,8 +25,8 @@ export class Router {
         this.history = window.history;
     }
 
-    use(pathname: string, component: Component) {
-        const route = new Route(pathname, component);
+    use(pathname: string, component: Component, isProtected: boolean = false) {
+        const route = new Route(pathname, component, isProtected);
         this.routes.push(route);
         return this;
     }
@@ -53,6 +55,16 @@ export class Router {
         this.history.forward();
     }
 
+    setNotFoundRoute(pathname: string, component: Component) {
+        const route = new Route(pathname, component, false);
+        this.notFoundRoute = route;
+        return this;
+    }
+
+    getRoute(pathname: string) {
+        return this.routes.find((route) => route.match(pathname));
+    }
+
     private onRoute(pathname: string) {
         const route = this.getRoute(pathname);
         if (!route) {
@@ -65,9 +77,5 @@ export class Router {
             throw new Error('Wrong use api. Call start method');
         }
         route.render(this.outlet);
-    }
-
-    private getRoute(pathname: string) {
-        return this.routes.find((route) => route.match(pathname));
     }
 }

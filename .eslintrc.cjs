@@ -31,6 +31,9 @@ module.exports = {
         'no-prototype-builtins': 'off',
         'no-continue': 'off',
         'func-names': 'off',
+        'arrow-body-style': 'off',
+        'no-plusplus': 'off',
+        'guard-for-in': 'off',
     },
     ignorePatterns: ['*.config.js'],
 };

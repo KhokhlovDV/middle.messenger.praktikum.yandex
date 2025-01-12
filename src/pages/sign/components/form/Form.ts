@@ -1,5 +1,7 @@
 import { Block, BlockProps } from '../../../../framework';
 import { Button } from '../../../../shared-components';
+import { helper } from '../../../../utils/helper';
+import { ValidationResult, Validator } from '../../../../utils/Validator';
 import { FormField } from '../form-field';
 
 export interface FormInputProps {
@@ -29,7 +31,10 @@ export class Form extends Block {
                     type: field.type,
                     errorMessage: '',
                     onBlur: (value) => {
-                        // this.validateField(value, field.id);
+                        const result = Validator.validate({
+                            [field.id]: value,
+                        });
+                        this.onValidate(result);
                     },
                 })
             )
@@ -44,7 +49,12 @@ export class Form extends Block {
             }),
             events: {
                 submit: (e: SubmitEvent) => {
-                    // this.submitForm(e);
+                    e.preventDefault();
+                    const data = helper.convertFormToObject(
+                        e.target as HTMLFormElement
+                    );
+                    const result = Validator.validate(data);
+                    this.onValidate(result);
                 },
             },
             FormField: [...formFields.values()],
@@ -52,15 +62,17 @@ export class Form extends Block {
         this.formFields = formFields;
     }
 
-    // onValidationResult(result: ValidationResult): void {
-    //     const formField = this.formFields.get(result.id);
-    //     if (!formField) {
-    //         return;
-    //     }
-    //     formField.setProps({
-    //         errorMessage: result.errorMessage,
-    //     });
-    // }
+    onValidate(results: ValidationResult[]) {
+        results.forEach((result) => {
+            const formField = this.formFields.get(result.id);
+            if (!formField) {
+                return;
+            }
+            formField.setProps({
+                errorMessage: result.errorMessage,
+            });
+        });
+    }
 
     render() {
         return `<form class="{{className}}">

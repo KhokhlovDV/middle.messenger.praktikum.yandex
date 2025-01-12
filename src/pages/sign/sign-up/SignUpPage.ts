@@ -1,5 +1,4 @@
-import { Block, BlockProps } from '../../../framework';
-import { Mediator } from '../../../utils/Mediator';
+import { Block } from '../../../framework';
 import { FormInputProps, SignLayout } from '../components';
 
 const formFields: FormInputProps[] = [
@@ -12,12 +11,8 @@ const formFields: FormInputProps[] = [
     { id: 'confirmedPassword', label: 'Пароль (еще раз)', type: 'password' },
 ];
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class SignUpPage extends Block {
-    constructor(props: Props) {
+    constructor() {
         super({
             SignLayout: new SignLayout({
                 buttonText: 'Зарегистрироваться',
@@ -25,7 +20,6 @@ export class SignUpPage extends Block {
                 linkText: 'Войти',
                 linkTo: '/',
                 formFields,
-                mediator: props.mediator,
             }),
         });
     }
