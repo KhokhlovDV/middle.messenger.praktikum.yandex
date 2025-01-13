@@ -1,13 +1,13 @@
-import { Block } from '../framework';
+import { Block, BlockProps } from '../framework';
 import { Component } from './types';
 
 export class Route {
     private block?: Block;
 
     constructor(
-        private pathname: string,
+        public readonly pathname: string,
         private BlockClass: Component,
-        private isProtected: boolean
+        private defaultProps: BlockProps = {}
     ) {}
 
     match(pathname: string) {
@@ -20,14 +20,11 @@ export class Route {
     }
 
     render(outlet: HTMLDivElement) {
-        if (!this.block) {
-            this.block = new this.BlockClass({});
+        if (this.block) {
+            this.leave();
         }
+        this.block = new this.BlockClass(this.defaultProps);
         outlet.replaceChildren(this.block.getContent());
         this.block.dispatchComponentDidMount();
-    }
-
-    isProtectedRoute() {
-        return this.isProtected;
     }
 }

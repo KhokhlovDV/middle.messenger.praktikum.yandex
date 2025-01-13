@@ -1,31 +1,28 @@
 import { authApi } from '../api';
 import { SignInDto, SignUpDto } from '../api/types';
-import { Router, Routes } from '../router';
+import { Routes } from '../constants';
+import { Router } from '../router';
 import { appStore } from '../store';
-import { HttpError } from '../utils/http-transport';
+import { handleError } from './utils';
 
 export class AuthController {
     static async signIn(data: SignInDto) {
-        // try {
-        await authApi.signIn(data);
-        await this.getUser();
-        Router.getInstance().go(Routes.Messenger);
-        // } catch (error) {
-        //     if (error instanceof HttpError) {
-        //         throw new Error(error.message);
-        //     }
-        // }
+        try {
+            await authApi.signIn(data);
+            await this.getUser();
+            Router.getInstance().go(Routes.Messenger);
+        } catch (error) {
+            handleError(error);
+        }
     }
 
     static async signUp(data: SignUpDto) {
         try {
             await authApi.signUp(data);
             await this.getUser();
-            //Router.getInstance().go(Routes.Messenger);
+            Router.getInstance().go(Routes.Messenger);
         } catch (error) {
-            if (error instanceof HttpError) {
-                throw new Error(error.message);
-            }
+            handleError(error);
         }
     }
 
@@ -33,13 +30,23 @@ export class AuthController {
         try {
             await authApi.logout();
         } catch (error) {
-            if (error instanceof HttpError) {
-                throw new Error(error.message);
-            }
+            handleError(error);
         }
     }
 
-    static async getUser() {
+    static async isUserAuthenticated() {
+        if (appStore.getState().user) {
+            return true;
+        }
+        try {
+            await this.getUser();
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    private static async getUser() {
         const result = await authApi.getUser();
         appStore.set('user', result);
     }

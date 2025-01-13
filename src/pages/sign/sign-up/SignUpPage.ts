@@ -1,6 +1,7 @@
+import { Routes } from '../../../constants';
 import { AuthController } from '../../../controllers/AuthController';
 import { Block } from '../../../framework';
-import { Router, Routes } from '../../../router';
+import { Router } from '../../../router';
 import { helper } from '../../../utils/helper';
 import { FormInputProps, SignLayout } from '../components';
 

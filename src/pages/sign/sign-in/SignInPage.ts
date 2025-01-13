@@ -1,6 +1,7 @@
+import { Routes } from '../../../constants';
 import { AuthController } from '../../../controllers/AuthController';
 import { Block } from '../../../framework';
-import { Router, Routes } from '../../../router';
+import { Router } from '../../../router';
 import { helper } from '../../../utils/helper';
 import { FormInputProps, SignLayout } from '../components';
 
@@ -26,10 +27,11 @@ export class SignInPage extends Block {
             formFields,
             onFormSuccess: (form) => {
                 const data = helper.convertFormToObject<Form>(form);
-                AuthController.signIn(data).then(() => this.onSignInError());
-                // .catch((error: Error) => {
-                //     this.onSignInError(error.message);
-                // });
+                AuthController.signIn(data)
+                    .then(() => this.onSignInError())
+                    .catch((error: Error) => {
+                        this.onSignInError(error.message);
+                    });
             },
             onLinkClick: () => {
                 Router.getInstance().go(Routes.SignUp);
