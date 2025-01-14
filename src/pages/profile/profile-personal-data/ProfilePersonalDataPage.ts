@@ -1,66 +1,57 @@
-import { Block, BlockProps } from '../../../framework';
+import { Block } from '../../../framework';
+import { Router } from '../../../router';
 import { Button } from '../../../shared-components';
-import { Mediator } from '../../../utils/Mediator';
-import { AppData } from '../../../utils/Store';
 import { FormInputProps, ProfileForm, ProfileLayout } from '../components';
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class ProfilePersonalDataPage extends Block {
-    constructor(props: Props) {
-        const appData = props.mediator.getAppData() as AppData;
-        const { profileInfo } = appData;
-
+    constructor() {
         const formFields: FormInputProps[] = [];
         formFields.push({
             id: 'email',
             type: 'email',
             label: 'Почта',
             disabled: false,
-            value: profileInfo.email,
+            value: 'kohkhlov.dv@gmail.com',
         });
         formFields.push({
             id: 'login',
             type: 'text',
             label: 'Логин',
             disabled: false,
-            value: profileInfo.login,
+            value: 'login',
         });
         formFields.push({
             id: 'first_name',
             type: 'text',
             label: 'Имя',
             disabled: false,
-            value: profileInfo.firstName,
+            value: 'first_name',
         });
         formFields.push({
             id: 'second_name',
             type: 'text',
             label: 'Фамилия',
             disabled: false,
-            value: profileInfo.secondName,
+            value: 'first_name',
         });
         formFields.push({
             id: 'phone',
             type: 'tel',
             label: 'Телефон',
             disabled: false,
-            value: profileInfo.phone,
+            value: 'first_name',
         });
 
         super({
             ProfileLayout: new ProfileLayout({
-                firstName: profileInfo.firstName,
-                avatar: profileInfo.avatar,
+                firstName: 'fsd',
+                avatar: 'fds',
                 className: 'profile-personal-data',
                 onBackClick: () => {
-                    props.mediator.navigateTo('/profile-info');
+                    Router.getInstance().back();
                 },
                 content: [
                     new ProfileForm({
-                        mediator: props.mediator,
                         formFields,
                         button: new Button({
                             text: 'Сохранить',

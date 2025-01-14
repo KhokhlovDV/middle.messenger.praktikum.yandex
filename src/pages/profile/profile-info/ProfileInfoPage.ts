@@ -1,7 +1,7 @@
-import { Block, BlockProps } from '../../../framework';
+import { Routes } from '../../../constants';
+import { Block } from '../../../framework';
+import { Router } from '../../../router';
 import { Link } from '../../../shared-components';
-import { Mediator } from '../../../utils/Mediator';
-import { AppData } from '../../../utils/Store';
 import {
     FormInputProps,
     ProfileBlock,
@@ -9,85 +9,82 @@ import {
     ProfileLayout,
 } from '../components';
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class ProfileInfoPage extends Block {
-    constructor(props: Props) {
-        const appData = props.mediator.getAppData() as AppData;
-        const { profileInfo } = appData;
-
+    constructor() {
         const formFields: FormInputProps[] = [];
         formFields.push({
             id: 'email',
             type: 'email',
             label: 'Почта',
-            value: profileInfo.email,
+            value: 'kohkhlov.dv@gmail.com',
             disabled: true,
         });
         formFields.push({
             id: 'login',
             type: 'text',
             label: 'Логин',
-            value: profileInfo.login,
+            value: 'login val',
             disabled: true,
         });
         formFields.push({
             id: 'first_name',
             type: 'text',
             label: 'Имя',
-            value: profileInfo.firstName,
+            value: 'first_name val',
             disabled: true,
         });
         formFields.push({
             id: 'second_name',
             type: 'text',
             label: 'Фамилия',
-            value: profileInfo.secondName,
+            value: 'second_name val',
             disabled: true,
         });
         formFields.push({
             id: 'phone',
             type: 'tel',
             label: 'Телефон',
-            value: profileInfo.phone,
+            value: 'phone val',
             disabled: true,
         });
 
         super({
             ProfileLayout: new ProfileLayout({
-                firstName: profileInfo.firstName,
-                avatar: profileInfo.avatar,
+                firstName: 'first_name',
+                avatar: 'fdsfsd',
                 className: 'profile',
-                onBackClick: () => {
-                    props.mediator.navigateTo('/chat');
+                onBackClick() {
+                    Router.getInstance().back();
                 },
                 content: [
                     new ProfileForm({
                         className: 'profile__form',
-                        mediator: props.mediator,
                         formFields,
                     }),
                     new ProfileBlock({
                         content: [
                             new Link({
-                                mediator: props.mediator,
                                 text: 'Изменить данные',
-                                to: '/change-profile',
                                 className: 'link-accent link-l',
+                                onLinkClick() {
+                                    Router.getInstance().go(Routes.ProfileData);
+                                },
                             }),
                             new Link({
-                                mediator: props.mediator,
                                 text: 'Изменить пароль',
-                                to: '/change-password',
                                 className: 'link-accent link-l',
+                                onLinkClick() {
+                                    Router.getInstance().go(
+                                        Routes.ProfilePassword
+                                    );
+                                },
                             }),
                             new Link({
-                                mediator: props.mediator,
                                 text: 'Выйти',
-                                to: '/',
                                 className: 'link-tertiary link-l',
+                                onLinkClick() {
+                                    //Router.getInstance().go(Routes.ProfileData);
+                                },
                             }),
                         ],
                     }),

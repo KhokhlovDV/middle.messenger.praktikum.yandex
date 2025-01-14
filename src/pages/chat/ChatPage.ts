@@ -1,4 +1,6 @@
+import { Routes } from '../../constants';
 import { Block } from '../../framework';
+import { Router } from '../../router';
 import { Link } from '../../shared-components';
 import { helper } from '../../utils/helper';
 import {
@@ -18,8 +20,11 @@ export class ChatPage extends Block {
         super({
             ProfileLink: new Link({
                 text: 'Профиль',
-                to: '/profile-info',
                 className: 'link-secondary link-m',
+                onLinkClick: () => {
+                    //Router.getInstance().go(Routes.Settings);
+                    Router.getInstance().go(Routes.ProfileInfo);
+                },
             }),
             SearchForm: new SearchForm({
                 onSubmit: (data) => {

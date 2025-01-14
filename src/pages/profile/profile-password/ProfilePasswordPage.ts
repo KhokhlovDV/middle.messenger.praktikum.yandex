@@ -1,18 +1,10 @@
-import { Block, BlockProps } from '../../../framework';
+import { Block } from '../../../framework';
+import { Router } from '../../../router';
 import { Button } from '../../../shared-components';
-import { Mediator } from '../../../utils/Mediator';
-import { AppData } from '../../../utils/Store';
 import { FormInputProps, ProfileForm, ProfileLayout } from '../components';
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class ProfilePasswordPage extends Block {
-    constructor(props: Props) {
-        const appData = props.mediator.getAppData() as AppData;
-        const { profileInfo } = appData;
-
+    constructor() {
         const formFields: FormInputProps[] = [];
         formFields.push({
             id: 'oldPassword',
@@ -38,15 +30,14 @@ export class ProfilePasswordPage extends Block {
 
         super({
             ProfileLayout: new ProfileLayout({
-                firstName: profileInfo.firstName,
-                avatar: profileInfo.avatar,
+                firstName: 'Dmitry',
+                avatar: 'Avatar',
                 className: 'profile-password',
                 onBackClick: () => {
-                    props.mediator.navigateTo('/profile-info');
+                    Router.getInstance().back();
                 },
                 content: [
                     new ProfileForm({
-                        mediator: props.mediator,
                         formFields,
                         button: new Button({
                             text: 'Сохранить',

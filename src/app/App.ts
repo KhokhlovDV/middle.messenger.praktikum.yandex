@@ -1,5 +1,13 @@
 import { AuthController } from '../controllers/AuthController';
-import { ChatPage, ErrorPage, SignInPage, SignUpPage } from '../pages';
+import {
+    ChatPage,
+    ErrorPage,
+    ProfileInfoPage,
+    ProfilePasswordPage,
+    ProfilePersonalDataPage,
+    SignInPage,
+    SignUpPage,
+} from '../pages';
 import { Router } from '../router';
 import { Routes } from '../constants';
 
@@ -21,6 +29,9 @@ export class App {
             .use(Routes.Default, SignInPage)
             .use(Routes.SignUp, SignUpPage)
             .use(Routes.Messenger, ChatPage)
+            .use(Routes.ProfileInfo, ProfileInfoPage)
+            .use(Routes.ProfileData, ProfilePersonalDataPage)
+            .use(Routes.ProfilePassword, ProfilePasswordPage)
             .setNotFoundRoute(Routes.NotFound, ErrorPage, {
                 errorCode: '404',
                 description: 'Не туда попали',
