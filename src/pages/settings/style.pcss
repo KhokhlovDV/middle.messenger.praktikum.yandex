@@ -1,0 +1,42 @@
+.settings {
+    display: flex;
+    height: 100vh;
+}
+
+.settings__nav {
+    align-items: center;
+    background: var(--surface-color);
+    display: flex;
+    justify-content: center;
+    width: 64px;
+}
+
+.settings__content {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.settings__avatar {
+    margin-bottom: 21px;
+    margin-top: 60px;
+}
+
+.settings__first-name {
+    margin-bottom: 60px;
+}
+
+.settings__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 510px;
+
+    & > * {
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+    }
+}

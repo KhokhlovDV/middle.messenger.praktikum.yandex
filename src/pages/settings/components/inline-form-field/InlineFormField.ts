@@ -5,9 +5,9 @@ interface Props extends BlockProps {
     id: string;
     label: string;
     type: string;
-    errorMessage: string;
-    disabled: boolean;
-    onBlur?: (value: string) => void;
+    disabled?: boolean;
+    errorMessage?: string;
+    onBlur?: (value: string, id: string) => void;
     value?: string;
     placeholder?: string;
 }
@@ -28,7 +28,7 @@ export class InlineFormField extends Block {
                 },
                 onBlur: (target) => {
                     if (props.onBlur) {
-                        props.onBlur(target);
+                        props.onBlur(target, props.id);
                     }
                 },
             }),

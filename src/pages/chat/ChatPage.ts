@@ -22,8 +22,7 @@ export class ChatPage extends Block {
                 text: 'Профиль',
                 className: 'link-secondary link-m',
                 onLinkClick: () => {
-                    //Router.getInstance().go(Routes.Settings);
-                    Router.getInstance().go(Routes.ProfileInfo);
+                    Router.getInstance().go(Routes.Settings);
                 },
             }),
             SearchForm: new SearchForm({

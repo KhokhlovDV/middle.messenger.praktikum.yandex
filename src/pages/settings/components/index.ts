@@ -1,5 +1,4 @@
-export { ProfileBlock } from './profile-block';
 export { ProfileForm } from './profile-form';
-export { ProfileLayout } from './profile-layout';
+export { AvatarPicker } from './avatar-picker';
 
 export type { FormInputProps } from './profile-form';

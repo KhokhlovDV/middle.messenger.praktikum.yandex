@@ -2,9 +2,7 @@ import { AuthController } from '../controllers/AuthController';
 import {
     ChatPage,
     ErrorPage,
-    ProfileInfoPage,
-    ProfilePasswordPage,
-    ProfilePersonalDataPage,
+    SettigsPage,
     SignInPage,
     SignUpPage,
 } from '../pages';
@@ -29,9 +27,7 @@ export class App {
             .use(Routes.Default, SignInPage)
             .use(Routes.SignUp, SignUpPage)
             .use(Routes.Messenger, ChatPage)
-            .use(Routes.ProfileInfo, ProfileInfoPage)
-            .use(Routes.ProfileData, ProfilePersonalDataPage)
-            .use(Routes.ProfilePassword, ProfilePasswordPage)
+            .use(Routes.Settings, SettigsPage)
             .setNotFoundRoute(Routes.NotFound, ErrorPage, {
                 errorCode: '404',
                 description: 'Не туда попали',
