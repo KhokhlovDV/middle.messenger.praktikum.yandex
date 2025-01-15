@@ -9,11 +9,12 @@ interface Props extends BlockProps {
     onBlur?: (value: string) => void;
     attr?: Record<string, string>;
     accept?: string;
+    isSubmitFormOnChange?: boolean;
 }
 
 export class Input extends Block {
     constructor(props: Props) {
-        const { onBlur, ...other } = props;
+        const { onBlur, isSubmitFormOnChange, ...other } = props;
         super({
             ...other,
             events: {
@@ -21,6 +22,13 @@ export class Input extends Block {
                     if (onBlur) {
                         const target = e.target as HTMLInputElement;
                         onBlur(target.value);
+                    }
+                },
+                change(e: Event) {
+                    if (isSubmitFormOnChange) {
+                        const target = e.target as HTMLInputElement;
+                        const form = target.closest('form') as HTMLFormElement;
+                        form.requestSubmit();
                     }
                 },
             },

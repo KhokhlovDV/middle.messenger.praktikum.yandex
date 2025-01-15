@@ -7,5 +7,6 @@ export enum Routes {
     Settings = '/settings',
 }
 
-export const HOST = 'https://ya-praktikum.tech';
+const HOST = 'https://ya-praktikum.tech';
 export const BASE_URL = `${HOST}/api/v2`;
+export const RESOURCES = `${BASE_URL}/resources`;
