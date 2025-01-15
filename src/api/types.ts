@@ -22,3 +22,16 @@ export interface UserDto {
     avatar: string;
     email: string;
 }
+
+export interface UpdateUserPersonalDataDto {
+    first_name: string;
+    second_name: string;
+    login: string;
+    email: string;
+    phone: string;
+}
+
+export interface UpdateUserPasswordDto {
+    oldPassword: string;
+    newPassword: string;
+}

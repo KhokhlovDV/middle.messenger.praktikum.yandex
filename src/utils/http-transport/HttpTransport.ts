@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../constants';
 import { HttpError } from './HttpError';
 
 enum Methods {
@@ -32,8 +33,6 @@ function isResponeWithReason(value: unknown): value is ErrorWithReason {
 }
 
 export class HttpTransport {
-    private BASE_URL = 'https://ya-praktikum.tech/api/v2';
-
     constructor(private prefix: string) {}
 
     get: HTTPMethod = (url, options = {}) =>
@@ -61,9 +60,7 @@ export class HttpTransport {
 
             xhr.open(
                 method,
-                `${this.BASE_URL}${this.prefix}${url}${this.parseQueryObject(
-                    query
-                )}`
+                `${BASE_URL}${this.prefix}${url}${this.parseQueryObject(query)}`
             );
             xhr.timeout = timeout;
             xhr.onabort = () => {

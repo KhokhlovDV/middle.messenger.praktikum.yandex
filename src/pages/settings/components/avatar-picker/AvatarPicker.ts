@@ -11,8 +11,9 @@ export class AvatarPicker extends Block {
         super({
             ...props,
             Input: new Input({
-                id: 'file-input',
+                id: 'avatar',
                 type: 'file',
+                accept: 'image/*',
                 attr: {
                     class: 'avatar-picker__input',
                 },
@@ -22,7 +23,7 @@ export class AvatarPicker extends Block {
 
     render() {
         return `<form class='avatar-picker {{className}}'>
-                    <label for='file-input' class='avatar-picker__label'>
+                    <label for='avatar' class='avatar-picker__label'>
                         {{#if src}}
                             <img src='{{src}}' class='avatar-picker__image' alt='avatar' />
                         {{else}}

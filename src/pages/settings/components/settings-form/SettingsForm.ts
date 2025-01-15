@@ -1,4 +1,4 @@
-import { authController } from '../../../../controllers';
+import { authController, userController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
 import { Button, Link } from '../../../../shared-components';
 import { AppStoreType } from '../../../../store';
@@ -193,11 +193,26 @@ class Form extends Block {
     }
 
     private onSubmitPasswordForm(data: PasswordForm) {
-        console.log({ data });
+        this.onSubmitResult(userController.password(data));
     }
 
     private onSubmitPersonalDataForm(data: PersonalDataForm) {
-        console.log({ data });
+        this.onSubmitResult(userController.profile(data));
+    }
+
+    private onSubmitResult(result: Promise<unknown>) {
+        result
+            .then(() => {
+                this.updateLayout({
+                    isInEditMode: false,
+                    isPasswordFields: false,
+                });
+            })
+            .catch((e: Error) => {
+                this.setProps({
+                    errorMessage: e.message,
+                });
+            });
     }
 }
 

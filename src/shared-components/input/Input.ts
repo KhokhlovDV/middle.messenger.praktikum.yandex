@@ -8,6 +8,7 @@ interface Props extends BlockProps {
     placeholder?: string;
     onBlur?: (value: string) => void;
     attr?: Record<string, string>;
+    accept?: string;
 }
 
 export class Input extends Block {
@@ -36,6 +37,9 @@ export class Input extends Block {
                     placeholder='{{placeholder}}'
                     {{#if disabled}}
                         disabled
+                    {{/if}}
+                    {{#if accept}}
+                        accept='{{accept}}'
                     {{/if}}
                 />`;
     }
