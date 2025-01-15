@@ -1,5 +1,5 @@
 import { Routes } from '../../../constants';
-import { AuthController } from '../../../controllers/AuthController';
+import { authController } from '../../../controllers';
 import { Block } from '../../../framework';
 import { Router } from '../../../router';
 import { helper } from '../../../utils/helper';
@@ -37,7 +37,8 @@ export class SignUpPage extends Block {
             formFields,
             onFormSuccess: (form) => {
                 const data = helper.convertFormToObject<Form>(form);
-                AuthController.signUp(data)
+                authController
+                    .signUp(data)
                     .then(() => this.onSignUpError())
                     .catch((error: Error) => {
                         this.onSignUpError(error.message);

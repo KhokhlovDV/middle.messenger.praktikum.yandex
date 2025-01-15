@@ -1,4 +1,3 @@
-import { AuthController } from '../controllers/AuthController';
 import {
     ChatPage,
     ErrorPage,
@@ -8,6 +7,7 @@ import {
 } from '../pages';
 import { Router } from '../router';
 import { Routes } from '../constants';
+import { authController } from '../controllers';
 
 export class App {
     init() {
@@ -34,7 +34,7 @@ export class App {
             })
             .setChangeRouteHook(async (pathname) => {
                 const isUserAuthenticated =
-                    await AuthController.isUserAuthenticated();
+                    await authController.isUserAuthenticated();
                 if (isUserAuthenticated && noAuthRoutes.has(pathname)) {
                     return Routes.Messenger;
                 }

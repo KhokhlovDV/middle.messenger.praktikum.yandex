@@ -1,5 +1,5 @@
 import { Routes } from '../../constants';
-import { AuthController } from '../../controllers/AuthController';
+import { authController } from '../../controllers';
 import { Block, BlockProps } from '../../framework';
 import { Router } from '../../router';
 import { Link } from '../../shared-components';
@@ -27,7 +27,7 @@ export class Error extends Block {
 
     async onLinkClick() {
         const router = Router.getInstance();
-        const result = await AuthController.isUserAuthenticated();
+        const result = await authController.isUserAuthenticated();
         if (result) {
             router.go(Routes.Messenger);
         } else {

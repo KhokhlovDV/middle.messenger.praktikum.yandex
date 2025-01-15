@@ -3,38 +3,40 @@ import { SignInDto, SignUpDto } from '../api/types';
 import { Routes } from '../constants';
 import { Router } from '../router';
 import { appStore } from '../store';
-import { handleError } from './utils';
+import { BaseController } from './BaseController';
 
-export class AuthController {
-    static async signIn(data: SignInDto) {
+class AuthController extends BaseController {
+    async signIn(data: SignInDto) {
         try {
             await authApi.signIn(data);
             await this.getUser();
             Router.getInstance().go(Routes.Messenger);
         } catch (error) {
-            handleError(error);
+            this.handleError(error);
         }
     }
 
-    static async signUp(data: SignUpDto) {
+    async signUp(data: SignUpDto) {
         try {
             await authApi.signUp(data);
             await this.getUser();
             Router.getInstance().go(Routes.Messenger);
         } catch (error) {
-            handleError(error);
+            this.handleError(error);
         }
     }
 
-    static async logout() {
+    async logout() {
         try {
             await authApi.logout();
+            appStore.setInitalState({});
+            Router.getInstance().go(Routes.Default);
         } catch (error) {
-            handleError(error);
+            this.handleError(error);
         }
     }
 
-    static async isUserAuthenticated() {
+    async isUserAuthenticated() {
         if (appStore.getState().user) {
             return true;
         }
@@ -46,8 +48,10 @@ export class AuthController {
         }
     }
 
-    private static async getUser() {
+    private async getUser() {
         const result = await authApi.getUser();
         appStore.set('user', result);
     }
 }
+
+export const authController = new AuthController();

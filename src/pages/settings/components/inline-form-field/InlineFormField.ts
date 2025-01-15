@@ -26,9 +26,9 @@ export class InlineFormField extends Block {
                 attr: {
                     class: 'inline-form-field__input',
                 },
-                onBlur: (target) => {
+                onBlur: (value) => {
                     if (props.onBlur) {
-                        props.onBlur(target, props.id);
+                        props.onBlur(value, props.id);
                     }
                 },
             }),
@@ -36,14 +36,16 @@ export class InlineFormField extends Block {
     }
 
     render() {
-        return `<div class="inline-form-field">
-                    <div class="inline-form-field__container">
-                        <label for='{{id}}'>{{label}}</label>
-                        {{#if errorMessage}}
-                            <div class='inline-form-field__error'>{{errorMessage}}</div>
-                        {{/if}}
+        return `<div>
+                    <div class="inline-form-field">
+                        <div class="inline-form-field__container">
+                            <label for='{{id}}'>{{label}}</label>
+                        </div>
+                        {{{Input}}}
                     </div>
-                    {{{Input}}}
+                    {{#if errorMessage}}
+                        <div class='inline-form-field__error'>{{errorMessage}}</div>
+                    {{/if}}
                 </div>`;
     }
 }

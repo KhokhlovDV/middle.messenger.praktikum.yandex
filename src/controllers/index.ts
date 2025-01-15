@@ -1,1 +1,1 @@
-export { LinkController } from './LinkController';
+export { authController } from './AuthController';

@@ -1,12 +1,15 @@
 export interface ValidationResult {
     id: string;
     errorMessage: string;
+    value: string;
 }
 
 interface RegexData {
     regex: RegExp;
     errorMessage: string;
 }
+
+const PairFields = [['password', 'confirmedPassword']];
 
 export class Validator {
     static validate(data: Record<string, string>): ValidationResult[] {
@@ -25,6 +28,7 @@ export class Validator {
             result.push({
                 id: key,
                 errorMessage,
+                value,
             });
         }
         return result;

@@ -27,6 +27,7 @@ class Settigs extends Block {
             first_name: props.first_name,
             Form: new SettingsForm({
                 isInEditMode: false,
+                errorMessage: '',
             }),
         });
         this.avatar = avatar;

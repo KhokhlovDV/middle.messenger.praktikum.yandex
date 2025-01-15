@@ -1,5 +1,5 @@
 import { Routes } from '../../../constants';
-import { AuthController } from '../../../controllers/AuthController';
+import { authController } from '../../../controllers';
 import { Block } from '../../../framework';
 import { Router } from '../../../router';
 import { helper } from '../../../utils/helper';
@@ -27,7 +27,8 @@ export class SignInPage extends Block {
             formFields,
             onFormSuccess: (form) => {
                 const data = helper.convertFormToObject<Form>(form);
-                AuthController.signIn(data)
+                authController
+                    .signIn(data)
                     .then(() => this.onSignInError())
                     .catch((error: Error) => {
                         this.onSignInError(error.message);

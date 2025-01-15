@@ -1,11 +1,29 @@
+import { authController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
 import { Button, Link } from '../../../../shared-components';
 import { AppStoreType } from '../../../../store';
+import { helper } from '../../../../utils/helper';
+import { ValidationResult, Validator } from '../../../../utils/Validator';
 import { InlineFormField } from '../inline-form-field';
 import { createFormFields, FieldsData } from './utils';
 
+interface PasswordForm extends Record<string, string> {
+    oldPassword: string;
+    newPassword: string;
+    confirmedPassword: string;
+}
+
+interface PersonalDataForm extends Record<string, string> {
+    email: string;
+    login: string;
+    first_name: string;
+    second_name: string;
+    phone: string;
+}
+
 interface Props extends BlockProps, FieldsData {
     isInEditMode: boolean;
+    errorMessage: string;
 }
 
 class Form extends Block {
@@ -17,8 +35,8 @@ class Form extends Block {
         const formFields = createFormFields({
             disabled: true,
             isPasswordFields: false,
-            onBlur: (id, value) => {
-                this.onBlur(id, value);
+            onBlur: (value, id) => {
+                this.onBlur(value, id);
             },
             data: props,
         });
@@ -28,7 +46,19 @@ class Form extends Block {
             events: {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
-                    alert('te');
+                    const target = e.target as HTMLFormElement;
+                    const data = helper.convertFormToObject(target);
+                    const result = Validator.validate(data);
+                    this.onValidate(result);
+                    if (!result.filter((el) => el.errorMessage !== '').length) {
+                        if (this.isPasswordFields) {
+                            this.onSubmitPasswordForm(data as PasswordForm);
+                        } else {
+                            this.onSubmitPersonalDataForm(
+                                data as PersonalDataForm
+                            );
+                        }
+                    }
                 },
             },
             FormFields: [...formFields.values()],
@@ -69,7 +99,9 @@ class Form extends Block {
                 new Link({
                     text: 'Выйти',
                     className: 'link-tertiary link-l',
-                    onLinkClick: () => {},
+                    onLinkClick: () => {
+                        authController.logout();
+                    },
                 }),
             ],
         });
@@ -95,6 +127,9 @@ class Form extends Block {
 
     render() {
         return `<div>
+                    {{#if errorMessage}}
+                        <div class='settings-form__error'>{{errorMessage}}</div>
+                    {{/if}}
                     <form class="settings-form">
                         <div class="settings-form__block">
                             {{{FormFields}}}
@@ -131,13 +166,39 @@ class Form extends Block {
         this.isPasswordFields = isPasswordFields;
         this.setProps({
             isInEditMode,
+            errorMessage: '',
         });
         this.setLists({
             FormFields: [...this.formFields.values()],
         });
     }
 
-    private onBlur(id: string, value: string) {}
+    private onBlur(value: string, id: string) {
+        const result = Validator.validate({
+            [id]: value,
+        });
+        this.onValidate(result);
+    }
+
+    private onValidate(results: ValidationResult[]) {
+        results.forEach((result) => {
+            const formField = this.formFields.get(result.id);
+            if (!formField) {
+                return;
+            }
+            formField.setProps({
+                errorMessage: result.errorMessage,
+            });
+        });
+    }
+
+    private onSubmitPasswordForm(data: PasswordForm) {
+        console.log({ data });
+    }
+
+    private onSubmitPersonalDataForm(data: PersonalDataForm) {
+        console.log({ data });
+    }
 }
 
 export const SettingsForm = connect<AppStoreType>((state) =>
