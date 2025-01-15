@@ -5,9 +5,7 @@ import { AppStoreType, UserData } from '../../store/Store';
 import { AvatarPicker } from './components/avatar-picker';
 import { SettingsForm } from './components/settings-form';
 
-interface Props
-    extends BlockProps,
-        Partial<Pick<UserData, 'avatar' | 'first_name'>> {}
+interface Props extends BlockProps, Pick<UserData, 'avatar' | 'first_name'> {}
 
 class Settigs extends Block {
     private avatar: AvatarPicker;
@@ -18,6 +16,7 @@ class Settigs extends Block {
             className: 'settings__avatar',
         });
         super({
+            ...props,
             BackButton: new RoundedButton({
                 src: '/left_arrow.svg',
                 onClick() {
@@ -27,7 +26,7 @@ class Settigs extends Block {
             AvatarPicker: avatar,
             first_name: props.first_name,
             Form: new SettingsForm({
-                isInEditMode: true,
+                isInEditMode: false,
             }),
         });
         this.avatar = avatar;

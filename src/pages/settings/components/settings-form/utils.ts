@@ -11,7 +11,7 @@ const infoFormFields = [
 
 const passwordFormFields = [
     { id: 'oldPassword', label: 'Старый пароль', type: 'password' },
-    { id: 'confirmedPassword', label: 'Новый пароль', type: 'password' },
+    { id: 'newPassword', label: 'Новый пароль', type: 'password' },
     {
         id: 'confirmedPassword',
         label: 'Повторите новый пароль',

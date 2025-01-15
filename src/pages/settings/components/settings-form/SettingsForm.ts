@@ -11,6 +11,8 @@ interface Props extends BlockProps, FieldsData {
 class Form extends Block {
     private formFields: Map<string, InlineFormField> = new Map();
 
+    private isPasswordFields = false;
+
     constructor(props: Props) {
         const formFields = createFormFields({
             disabled: true,
@@ -22,7 +24,7 @@ class Form extends Block {
         });
 
         super({
-            isInEditMode: props.isInEditMode,
+            ...props,
             events: {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
@@ -32,19 +34,37 @@ class Form extends Block {
             FormFields: [...formFields.values()],
             SubmitButton: new Button({
                 text: 'Сохранить',
-                className: 'settings-form__button',
                 type: 'submit',
+            }),
+            CancelButton: new Button({
+                text: 'Отменить',
+                onClick: () => {
+                    this.updateLayout({
+                        isInEditMode: false,
+                        isPasswordFields: false,
+                    });
+                },
             }),
             Links: [
                 new Link({
                     text: 'Изменить данные',
                     className: 'link-accent link-l',
-                    onLinkClick: () => {},
+                    onLinkClick: () => {
+                        this.updateLayout({
+                            isInEditMode: true,
+                            isPasswordFields: false,
+                        });
+                    },
                 }),
                 new Link({
                     text: 'Изменить пароль',
                     className: 'link-accent link-l',
-                    onLinkClick: () => {},
+                    onLinkClick: () => {
+                        this.updateLayout({
+                            isInEditMode: true,
+                            isPasswordFields: true,
+                        });
+                    },
                 }),
                 new Link({
                     text: 'Выйти',
@@ -56,31 +76,68 @@ class Form extends Block {
         this.formFields = formFields;
     }
 
-    onBlur(id: string, value: string) {}
-
     protected override componentDidUpdate = (
         oldProps: Props,
         newProps: Props
     ) => {
+        for (const key in oldProps) {
+            const oldValue = oldProps[key];
+            const newValue = newProps[key];
+            if (oldValue !== newValue && this.formFields.has(key)) {
+                const InputField = this.formFields.get(key)!;
+                InputField.setProps({
+                    value: newValue,
+                });
+            }
+        }
         return true;
     };
 
     render() {
         return `<div>
                     <form class="settings-form">
-                        <div class="settings__block">
+                        <div class="settings-form__block">
                             {{{FormFields}}}
                         </div>
                         {{#if isInEditMode}}
-                            {{{SubmitButton}}}
+                            <div class="settings-form__buttons">
+                                {{{SubmitButton}}}
+                                {{{CancelButton}}}
+                            </div>
                         {{else}}
-                        <div class="settings__block">
+                        <div class="settings-form__block">
                             {{{Links}}}
                         </div>
                         {{/if}}
                     </form>
                 </div>`;
     }
+
+    private updateLayout({
+        isInEditMode,
+        isPasswordFields,
+    }: {
+        isInEditMode: boolean;
+        isPasswordFields: boolean;
+    }) {
+        this.formFields = createFormFields({
+            disabled: !isInEditMode,
+            isPasswordFields,
+            onBlur: (id, value) => {
+                this.onBlur(id, value);
+            },
+            data: this.props as Props,
+        });
+        this.isPasswordFields = isPasswordFields;
+        this.setProps({
+            isInEditMode,
+        });
+        this.setLists({
+            FormFields: [...this.formFields.values()],
+        });
+    }
+
+    private onBlur(id: string, value: string) {}
 }
 
 export const SettingsForm = connect<AppStoreType>((state) =>
@@ -90,7 +147,7 @@ export const SettingsForm = connect<AppStoreType>((state) =>
               second_name: state.user.second_name,
               phone: state.user.phone,
               login: state.user.login,
-              email: state.user.first_name,
+              email: state.user.email,
           }
         : {}
 )(Form);

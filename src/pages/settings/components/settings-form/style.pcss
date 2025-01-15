@@ -5,6 +5,21 @@
     justify-content: space-between;
 }
 
-.settings-form__button {
-    margin: 0 auto;
+.settings-form__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 510px;
+
+    & > * {
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.settings-form__buttons {
+    display: flex;
+    justify-content: space-between;
 }
