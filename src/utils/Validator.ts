@@ -111,6 +111,13 @@ export class Validator {
                         errorMessage: 'Не должно быть пустым',
                     },
                 ];
+            case 'title':
+                return [
+                    {
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
+                    },
+                ];
             default:
                 return [];
         }

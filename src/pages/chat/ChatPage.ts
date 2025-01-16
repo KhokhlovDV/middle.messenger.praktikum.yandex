@@ -2,21 +2,11 @@ import { Routes } from '../../constants';
 import { Block } from '../../framework';
 import { Router } from '../../router';
 import { Link } from '../../shared-components';
-import { helper } from '../../utils/helper';
-import {
-    ChatFeed,
-    ChatHeader,
-    ChatMessageBox,
-    ChatMessages,
-    SearchForm,
-} from './components';
+import { ChatFeed } from './components';
+import { AddChat } from './components/add-chat';
 
 export class ChatPage extends Block {
     constructor() {
-        // const {
-        //     chats,
-        //     currentChat: { chatInfo, messages },
-        // } = appData;
         super({
             ProfileLink: new Link({
                 text: 'Профиль',
@@ -25,26 +15,13 @@ export class ChatPage extends Block {
                     Router.getInstance().go(Routes.Settings);
                 },
             }),
-            SearchForm: new SearchForm({
-                onSubmit: (data) => {
-                    //helper.consoleFormData(data);
-                },
-            }),
+            AddChat: new AddChat({}),
             ChatFeed: new ChatFeed({
                 chats: [],
                 onClick(chatId) {
                     console.log(`click on chat ${chatId}`);
                 },
             }),
-            // ChatHeader: new ChatHeader({
-            //     chatInfo,
-            // }),
-            // ChatMessages: new ChatMessages({
-            //     messages,
-            // }),
-            // ChatMessageBox: new ChatMessageBox({
-            //     mediator: props.mediator,
-            // }),
         });
     }
 
@@ -55,7 +32,7 @@ export class ChatPage extends Block {
                             {{{ProfileLink}}}
                             <img src="/navigate.svg" alt="navigate">
                         </div>
-                        {{{SearchForm}}}
+                        {{{AddChat}}}
                         <div class="chat-layout__chats_feed">
                             {{{ChatFeed}}}
                         </div>

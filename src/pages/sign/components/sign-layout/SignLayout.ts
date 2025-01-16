@@ -1,6 +1,6 @@
 import { Block, BlockProps } from '../../../../framework';
 import { Link } from '../../../../shared-components';
-import { Form, FormInputProps } from '../form';
+import { Form, FormInputProps } from '../../../../shared-components/form';
 
 interface Props extends BlockProps {
     headerText: string;

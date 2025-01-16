@@ -19,6 +19,7 @@ module.exports = {
         '@typescript-eslint/quotes': 'off',
         '@typescript-eslint/no-redundant-type-constituents': 'off',
         '@typescript-eslint/no-floating-promises': 'off',
+        '@typescript-eslint/dot-notation': 'off',
         'class-methods-use-this': 'off',
         'function-paren-newline': 'off',
         'implicit-arrow-linebreak': 'off',

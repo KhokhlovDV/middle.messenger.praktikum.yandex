@@ -1,5 +1,5 @@
-import { Block, BlockProps } from '../../../../framework';
-import { Input } from '../../../../shared-components';
+import { Block, BlockProps } from '../../framework';
+import { Input } from '../input';
 
 interface Props extends BlockProps {
     label: string;

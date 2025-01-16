@@ -1,7 +1,7 @@
-import { Block, BlockProps } from '../../../../framework';
-import { Button } from '../../../../shared-components';
-import { helper } from '../../../../utils/helper';
-import { ValidationResult, Validator } from '../../../../utils/Validator';
+import { Block, BlockProps } from '../../framework';
+import { helper } from '../../utils/helper';
+import { ValidationResult, Validator } from '../../utils/Validator';
+import { Button } from '../button';
 import { FormField } from '../form-field';
 
 export interface FormInputProps {
