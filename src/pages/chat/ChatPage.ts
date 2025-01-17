@@ -1,13 +1,19 @@
 import { Routes } from '../../constants';
-import { Block } from '../../framework';
+import { Block, BlockProps, connect } from '../../framework';
 import { Router } from '../../router';
 import { Link } from '../../shared-components';
+import { AppStoreType } from '../../store';
 import { ChatFeed } from './components';
 import { AddChat } from './components/add-chat';
 
-export class ChatPage extends Block {
-    constructor() {
+interface Props extends BlockProps {
+    id?: number;
+}
+
+class Chat extends Block {
+    constructor(props: Props) {
         super({
+            ...props,
             ProfileLink: new Link({
                 text: 'Профиль',
                 className: 'link-secondary link-m',
@@ -16,12 +22,7 @@ export class ChatPage extends Block {
                 },
             }),
             AddChat: new AddChat({}),
-            ChatFeed: new ChatFeed({
-                chats: [],
-                onClick(chatId) {
-                    console.log(`click on chat ${chatId}`);
-                },
-            }),
+            ChatFeed: new ChatFeed({}),
         });
     }
 
@@ -30,7 +31,6 @@ export class ChatPage extends Block {
                     <aside class='chat-layout__side-content'>
                         <div class="chat-layout__profile">
                             {{{ProfileLink}}}
-                            <img src="/navigate.svg" alt="navigate">
                         </div>
                         {{{AddChat}}}
                         <div class="chat-layout__chats_feed">
@@ -38,10 +38,18 @@ export class ChatPage extends Block {
                         </div>
                     </aside>
                     <section class='chat-layout__chat'>
-                        {{{ChatHeader}}}
-                        {{{ChatMessages}}}
-                        {{{ChatMessageBox}}}
+                        {{#if id}}
+                            {{{ChatHeader}}}
+                            {{{ChatMessages}}}
+                            {{{ChatMessageBox}}}
+                        {{else}}
+                            <div class='chat-layout__empty_chat'>Выберите чат чтобы отправить сообщение</div>
+                        {{/if}}
                     </section>
                 </main>`;
     }
 }
+
+export const ChatPage = connect<AppStoreType>((state) => ({
+    ...state.currentChat,
+}))(Chat);

@@ -40,13 +40,17 @@ export interface CreateChatDto {
     title: string;
 }
 
+export interface CreateChatDtoResponse {
+    id: number;
+}
+
 interface ChatDto {
     id: number;
     title: string;
-    avatar: string;
+    avatar?: string;
     unread_count: number;
     created_by: number;
-    last_message: {
+    last_message?: {
         user: {
             first_name: string;
             second_name: string;

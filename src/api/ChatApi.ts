@@ -1,9 +1,15 @@
 import { BaseAPI } from './BaseApi';
-import { CreateChatDto } from './types';
+import { ChatsDto, CreateChatDto, CreateChatDtoResponse } from './types';
 
 class ChatApi extends BaseAPI {
     createChat(data: CreateChatDto) {
-        return this.httpTransport.post(``, { data });
+        return this.httpTransport.post(``, {
+            data,
+        }) as Promise<CreateChatDtoResponse>;
+    }
+
+    getChats() {
+        return this.httpTransport.get(``) as Promise<ChatsDto>;
     }
 }
 

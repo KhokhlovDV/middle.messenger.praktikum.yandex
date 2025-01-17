@@ -1,6 +1,5 @@
 import { Block, BlockProps } from '../../../../framework';
 import { CurrentChatInfoType } from '../../../../utils/Store';
-import { Avatar } from '../avatar';
 
 interface Props extends BlockProps {
     chatInfo: CurrentChatInfoType;
@@ -8,13 +7,9 @@ interface Props extends BlockProps {
 
 export class ChatHeader extends Block {
     constructor(props: Props) {
-        const { avatar, name } = props.chatInfo;
+        const { name } = props.chatInfo;
         super({
             name,
-            Avatar: new Avatar({
-                className: 'avatar-sm',
-                src: avatar,
-            }),
         });
     }
 

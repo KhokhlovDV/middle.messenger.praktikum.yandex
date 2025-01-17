@@ -11,26 +11,29 @@ export interface UserData {
     email: string;
 }
 
-interface ChatData {
+export interface ChatData {
     id: number;
     title: string;
     unread_count: number;
-    last_message: {
-        time: string;
-        content: string;
-    };
+    last_message_time: string;
+    last_message_content: string;
+    avatar: string;
 }
 
-export type ChatsData = ChatData[];
+type ChatsData = ChatData[];
 
 export interface AppStoreType {
     [key: string]: unknown;
     user?: UserData;
     chats: ChatsData;
+    currentChat: {
+        id?: number;
+    };
 }
 
-const initialState: AppStoreType = {
+export const initialState: AppStoreType = {
     chats: [],
+    currentChat: {},
 };
 
 export const appStore = storeWithType<AppStoreType>();

@@ -5,7 +5,9 @@ import { AppStoreType, UserData } from '../../store/Store';
 import { AvatarPicker } from './components/avatar-picker';
 import { SettingsForm } from './components/settings-form';
 
-interface Props extends BlockProps, Pick<UserData, 'avatar' | 'first_name'> {}
+interface Props
+    extends BlockProps,
+        Partial<Pick<UserData, 'avatar' | 'first_name'>> {}
 
 class Settigs extends Block {
     private avatar: AvatarPicker;
@@ -24,7 +26,7 @@ class Settigs extends Block {
                 },
             }),
             AvatarPicker: avatar,
-            first_name: props.first_name,
+            first_name: props.first_name ?? '',
             Form: new SettingsForm({
                 isInEditMode: false,
                 errorMessage: '',
