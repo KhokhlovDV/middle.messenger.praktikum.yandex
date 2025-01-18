@@ -1,14 +1,11 @@
 import { Block, BlockProps } from '../../../../framework';
-import { ChatMessageType } from '../../../../utils/Store';
 
-interface Props extends BlockProps {
-    message: ChatMessageType;
-}
+interface Props extends BlockProps {}
 
 export class ChatMessage extends Block {
     constructor(props: Props) {
         super({
-            ...props.message,
+            ...props,
         });
     }
 

@@ -1,5 +1,6 @@
 import { Block, BlockProps, connect } from '../../../../framework';
 import { AppStoreType } from '../../../../store';
+import { helper } from '../../../../utils/helper';
 import { Avatar } from '../avatar';
 import { PopupWindow } from '../popup-window';
 import { Actions } from './actions';
@@ -40,6 +41,7 @@ class ChatHeaderBlock extends Block {
             Avatar: new Avatar({
                 className: 'avatar-sm',
                 src: props.avatar ?? '',
+                isChangeable: true,
             }),
             More: new More({
                 onClick: () => {
@@ -135,6 +137,7 @@ class ChatHeaderBlock extends Block {
         return {
             ...result,
             errorMessage: '',
+            formId: helper.generateRandomId(),
         };
     }
 }

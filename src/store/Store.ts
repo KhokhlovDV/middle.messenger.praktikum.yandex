@@ -32,4 +32,4 @@ export interface AppStoreType {
 }
 
 export const appStore = storeWithType<AppStoreType>();
-appStore.setInitalState({ chats: [], currentChat: {} });
+appStore.setInitalState({ chats: [], currentChat: { id: 43985 } });

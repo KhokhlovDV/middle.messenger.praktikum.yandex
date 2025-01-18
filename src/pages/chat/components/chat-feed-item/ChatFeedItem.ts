@@ -13,6 +13,7 @@ export class ChatFeedItem extends Block {
         const avatar = new Avatar({
             className: 'avatar-m chat-feed-item__avatar',
             src: props.avatar,
+            isChangeable: false,
         });
         super({
             ...props,

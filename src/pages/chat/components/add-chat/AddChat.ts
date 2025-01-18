@@ -16,20 +16,7 @@ export class AddChat extends Block {
     private popupWindow?: PopupWindow;
 
     constructor({ isPopupOpen = false }: Props) {
-        super({
-            isPopupOpen,
-            Button: new Button({
-                text: 'Добавить чат',
-                className: 'add-chat__button',
-                onClick: () => {
-                    this.createPopup();
-                },
-            }),
-        });
-    }
-
-    private createPopup() {
-        this.popupWindow = new PopupWindow({
+        const popupWindow = new PopupWindow({
             buttonText: 'Создать',
             header: 'Создать чат',
             id: 'title',
@@ -40,11 +27,25 @@ export class AddChat extends Block {
             onClose: () => {
                 this.closePopup();
             },
+            formId: helper.generateRandomId(),
         });
-        this.children.PopupWindow = this.popupWindow;
-        this.setProps({
-            isPopupOpen: true,
+        super({
+            PopupWindow: popupWindow,
+            isPopupOpen,
+            Button: new Button({
+                text: 'Добавить чат',
+                className: 'add-chat__button',
+                onClick: () => {
+                    this.setProps({
+                        isPopupOpen: true,
+                    });
+                    this.popupWindow?.setProps({
+                        formId: helper.generateRandomId(),
+                    });
+                },
+            }),
         });
+        this.popupWindow = popupWindow;
     }
 
     private closePopup() {

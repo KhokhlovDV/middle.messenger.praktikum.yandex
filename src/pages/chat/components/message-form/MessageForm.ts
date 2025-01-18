@@ -1,10 +1,10 @@
-import { Block } from '../../../../framework';
+import { Block, BlockProps } from '../../../../framework';
 import { Input, RoundedButton } from '../../../../shared-components';
 
 export class MessageForm extends Block {
     private input: Input;
 
-    constructor() {
+    constructor(props: BlockProps) {
         const input = new Input({
             id: 'message',
             type: 'text',
