@@ -6,6 +6,7 @@ interface Props extends BlockProps {
 export class More extends Block {
     constructor(props: Props) {
         super({
+            ...props,
             events: {
                 click: props.onClick,
             },

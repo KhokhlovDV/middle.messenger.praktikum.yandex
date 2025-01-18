@@ -1,43 +1,19 @@
-import { chatController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
 import { AppStoreType } from '../../../../store';
-import { helper } from '../../../../utils';
 import { Avatar } from '../avatar';
-import { PopupWindow } from '../popup-window';
-import { Actions, ActionType } from './actions';
-import { More } from './more';
+import { MoreModals } from './more-modals';
 
 interface Props extends BlockProps {
     id?: number;
     title?: string;
     avatar?: string;
     users?: string;
-    isPopupOpen: boolean;
-    isActionsOpen: boolean;
 }
 
 class ChatHeaderBlock extends Block {
-    private popupWindow: PopupWindow;
-
-    private action: ActionType = ActionType.ADD_USER;
-
     private avatar: Avatar;
 
     constructor(props: Props) {
-        const popupPros = ChatHeaderBlock.createPopupProps(ActionType.ADD_USER);
-        const popupWindow = new PopupWindow({
-            id: 'login',
-            label: 'Логин',
-            onClose: () => {
-                this.setProps({
-                    isPopupOpen: false,
-                });
-            },
-            onFormSuccess: (form) => {
-                this.onSuccessForm(form);
-            },
-            ...popupPros,
-        });
         const avatar = new Avatar({
             className: 'avatar-sm',
             src: props.avatar ?? '',
@@ -46,73 +22,13 @@ class ChatHeaderBlock extends Block {
         });
         super({
             ...props,
-            PopupWindow: popupWindow,
             Avatar: avatar,
-            More: new More({
-                onClick: () => {
-                    this.setProps({
-                        isActionsOpen: true,
-                    });
-                },
-            }),
-            Actions: new Actions({
-                onClose: () => {
-                    this.setProps({
-                        isActionsOpen: false,
-                    });
-                },
-                onClick: (type) => {
-                    this.onSelectAction(type);
-                },
+            MoreModals: new MoreModals({
+                isActionsOpen: false,
+                isPopupOpen: false,
             }),
         });
         this.avatar = avatar;
-        this.popupWindow = popupWindow;
-    }
-
-    private onSelectAction(type: ActionType) {
-        switch (type) {
-            case ActionType.DELETE_CHAT: {
-                this.deleteChat();
-                this.setProps({
-                    isActionsOpen: false,
-                });
-                break;
-            }
-            default: {
-                this.action = type;
-                const updatedProps = ChatHeaderBlock.createPopupProps(
-                    this.action
-                );
-                this.popupWindow.setProps({
-                    ...updatedProps,
-                });
-                this.setProps({
-                    isActionsOpen: false,
-                    isPopupOpen: true,
-                });
-                break;
-            }
-        }
-    }
-
-    private onSuccessForm(form: HTMLFormElement) {
-        if (this.action === ActionType.ADD_USER) {
-            this.onSuccessAddUserForm(form);
-        } else {
-            this.onSuccessDeleteUserForm(form);
-        }
-    }
-
-    private onSuccessAddUserForm(form: HTMLFormElement) {
-        alert('on success add user form');
-    }
-    private onSuccessDeleteUserForm(form: HTMLFormElement) {
-        alert('on success delete user form');
-    }
-
-    private deleteChat() {
-        chatController.deleteChat({ chatId: this.props.id as number });
     }
 
     protected override componentDidUpdate = (
@@ -136,32 +52,8 @@ class ChatHeaderBlock extends Block {
                     {{{Avatar}}}
                     <h3>{{title}}</h3>
                     <span>{{users}}</span>
-                    {{{More}}}
-                    {{#if isPopupOpen}}
-                        {{{PopupWindow}}}
-                    {{/if}}
-                    {{#if isActionsOpen}}
-                        {{{Actions}}}
-                    {{/if}}
+                    {{{MoreModals}}}
                 </header>`;
-    }
-
-    static createPopupProps(type: ActionType) {
-        const result =
-            type === ActionType.ADD_USER
-                ? {
-                      buttonText: 'Добавить',
-                      header: 'Добавить пользователя',
-                  }
-                : {
-                      buttonText: 'Удалить',
-                      header: 'Удалить пользователя',
-                  };
-        return {
-            ...result,
-            errorMessage: '',
-            formId: helper.generateRandomId(),
-        };
     }
 }
 

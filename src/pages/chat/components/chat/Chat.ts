@@ -12,10 +12,7 @@ class ChatBlock extends Block {
     constructor(props: Props) {
         super({
             ...props,
-            ChatHeader: new ChatHeader({
-                isPopupOpen: false,
-                isActionsOpen: false,
-            }),
+            ChatHeader: new ChatHeader({}),
             ChatMessages: new ChatMessages({}),
             ChatMessageBox: new ChatMessageBox({}),
         });
