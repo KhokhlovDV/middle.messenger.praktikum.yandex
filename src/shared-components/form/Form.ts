@@ -1,5 +1,5 @@
 import { Block, BlockProps } from '../../framework';
-import { helper, Validator } from '../../utils';
+import { helper, ValidationResult, Validator } from '../../utils';
 import { Button } from '../button';
 import { FormField } from '../form-field';
 
