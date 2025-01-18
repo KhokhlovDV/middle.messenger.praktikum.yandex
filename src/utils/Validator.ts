@@ -109,6 +109,14 @@ export class Validator {
                         errorMessage: 'Не должно быть пустым',
                     },
                 ];
+            case 'id':
+                return [
+                    {
+                        regex: /^\d+$/,
+                        errorMessage:
+                            'Не должно быть пустым и состоять только из цифр',
+                    },
+                ];
             case 'title':
                 return [
                     {

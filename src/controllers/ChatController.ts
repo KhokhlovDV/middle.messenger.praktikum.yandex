@@ -1,11 +1,17 @@
-import { chatApi, ChatDto, CreateChatDto, DeleteChatDto } from '../api';
+import {
+    chatApi,
+    ChatDto,
+    CreateChatDto,
+    DeleteChatDto,
+    DeleteChatUsersDto,
+} from '../api';
 import { appStore, ChatData } from '../store';
 import { BaseController } from './BaseController';
 
 class ChatController extends BaseController {
-    async createChat(data: CreateChatDto) {
+    async create(data: CreateChatDto) {
         try {
-            const result = await chatApi.createChat(data);
+            const result = await chatApi.create(data);
             const stateChats = appStore.getState().chats;
             const newChat = {
                 id: result.id,
@@ -21,9 +27,9 @@ class ChatController extends BaseController {
         }
     }
 
-    async getChats() {
+    async get() {
         try {
-            const chats = await this._getChats();
+            const chats = await chatApi.get();
             const stateChats: ChatData[] = chats.map((chat) =>
                 this.convertChatDto(chat)
             );
@@ -33,30 +39,19 @@ class ChatController extends BaseController {
         }
     }
 
-    async setCurrentChat(chatId: number) {
+    setCurrent(chatId: number) {
         const currentChat = appStore.getState().currentChat.id;
         if (currentChat === chatId) {
             return;
         }
         appStore.set('currentChat', { id: chatId, users: undefined });
-        try {
-            const result = await chatApi.getChatUsers(chatId);
-            const users = result.map((el) => el.login).join(',');
-            appStore.set('currentChat', { id: chatId, users: `(${users})` });
-        } catch (error) {
-            this.handleError(error);
-        }
+        this.updateCurrentChatUsers(chatId);
     }
 
-    async deleteChat(data: DeleteChatDto) {
+    async delete(data: DeleteChatDto) {
         try {
-            await chatApi.deleteChat(data);
-            appStore.set('currentChat', { id: undefined });
-            const stateChats = appStore.getState().chats;
-            appStore.set(
-                'chats',
-                stateChats.filter((chat) => chat.id !== data.chatId)
-            );
+            await chatApi.delete(data);
+            this.deleteChat(data.chatId);
         } catch (error) {
             this.handleError(error);
         }
@@ -77,9 +72,43 @@ class ChatController extends BaseController {
         }
     }
 
-    private async _getChats() {
-        const chats = await chatApi.getChats();
-        return chats;
+    async deleteUsers(data: DeleteChatUsersDto) {
+        try {
+            await chatApi.deleteUsers(data);
+            this.updateCurrentChatUsers(data.chatId);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    async addUsers(data: DeleteChatUsersDto) {
+        try {
+            await chatApi.addUsers(data);
+            this.updateCurrentChatUsers(data.chatId);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    private async updateCurrentChatUsers(chatId: number) {
+        try {
+            const result = await chatApi.getUsers(chatId);
+            const users = result
+                .map((el) => `${el.login}/id:${el.id}`)
+                .join(',');
+            appStore.set('currentChat', { users: `(${users})` });
+        } catch {
+            this.deleteChat(chatId);
+        }
+    }
+
+    private deleteChat(chatId: number) {
+        appStore.set('currentChat', { id: undefined });
+        const stateChats = appStore.getState().chats;
+        appStore.set(
+            'chats',
+            stateChats.filter((chat) => chat.id !== chatId)
+        );
     }
 
     private convertChatDto(chatDto: ChatDto): ChatData {

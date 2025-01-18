@@ -57,7 +57,7 @@ export class AddChat extends Block {
     private onSuccessForm(form: HTMLFormElement) {
         const result = helper.convertFormToObject<Form>(form);
         chatController
-            .createChat(result)
+            .create(result)
             .then(() => {
                 this.closePopup();
             })

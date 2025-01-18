@@ -9,7 +9,7 @@ import { More } from '../more';
 interface Props extends BlockProps {
     isPopupOpen: boolean;
     isActionsOpen: boolean;
-    id?: number;
+    id: number;
 }
 class MoreModalsBlock extends Block {
     private popupWindow: PopupWindow;
@@ -19,8 +19,8 @@ class MoreModalsBlock extends Block {
     constructor(props: Props) {
         const popupPros = MoreModalsBlock.createPopupProps(ActionType.ADD_USER);
         const popupWindow = new PopupWindow({
-            id: 'login',
-            label: 'Логин',
+            id: 'id',
+            label: 'Идентификатор',
             onClose: () => {
                 this.setProps({
                     isPopupOpen: false,
@@ -82,22 +82,37 @@ class MoreModalsBlock extends Block {
     }
 
     private onSuccessForm(form: HTMLFormElement) {
-        if (this.action === ActionType.ADD_USER) {
-            this.onSuccessAddUserForm(form);
-        } else {
-            this.onSuccessDeleteUserForm(form);
-        }
+        const userId = Number(new FormData(form).get('id'));
+        const chatId = this.props.id as number;
+        const result =
+            this.action === ActionType.ADD_USER
+                ? this.onSuccessAddUserForm(chatId, userId)
+                : this.onSuccessDeleteUserForm(chatId, userId);
+        result
+            .then(() => {
+                this.setProps({
+                    isPopupOpen: false,
+                });
+            })
+            .catch((e: Error) => this.onError(e));
     }
 
-    private onSuccessAddUserForm(form: HTMLFormElement) {
-        alert('on success add user form');
+    private onSuccessAddUserForm(chatId: number, userId: number) {
+        return chatController.addUsers({ users: [userId], chatId });
     }
-    private onSuccessDeleteUserForm(form: HTMLFormElement) {
-        alert('on success delete user form');
+
+    private onSuccessDeleteUserForm(chatId: number, userId: number) {
+        return chatController.deleteUsers({ users: [userId], chatId });
+    }
+
+    private onError(e: Error) {
+        this.popupWindow.setProps({
+            errorMessage: e.message,
+        });
     }
 
     private deleteChat() {
-        chatController.deleteChat({ chatId: this.props.id as number });
+        chatController.delete({ chatId: this.props.id as number });
     }
 
     render() {

@@ -29,7 +29,7 @@ class ChatFeedBlock extends Block {
     }
 
     protected override componentDidMount = () => {
-        chatController.getChats();
+        chatController.get();
     };
 
     protected override componentDidUpdate = (_: Props, newProps: Props) => {
@@ -52,7 +52,7 @@ class ChatFeedBlock extends Block {
     };
 
     private onChatClick(chatId: number) {
-        chatController.setCurrentChat(chatId);
+        chatController.setCurrent(chatId);
     }
 
     render() {

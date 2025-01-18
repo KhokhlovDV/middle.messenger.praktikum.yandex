@@ -6,20 +6,21 @@ import {
     CreateChatDto,
     CreateChatDtoResponse,
     DeleteChatDto,
+    CnahgeChatUsersDto,
 } from './types';
 
 class ChatApi extends BaseAPI {
-    createChat(data: CreateChatDto) {
+    create(data: CreateChatDto) {
         return this.httpTransport.post(``, {
             data,
         }) as Promise<CreateChatDtoResponse>;
     }
 
-    getChats() {
+    get() {
         return this.httpTransport.get(``) as Promise<ChatsDto>;
     }
 
-    deleteChat(data: DeleteChatDto) {
+    delete(data: DeleteChatDto) {
         return this.httpTransport.delete('', { data });
     }
 
@@ -29,10 +30,18 @@ class ChatApi extends BaseAPI {
         }) as Promise<ChatDto>;
     }
 
-    getChatUsers(chatId: number) {
+    getUsers(chatId: number) {
         return this.httpTransport.get(
             `/${chatId}/users`
         ) as Promise<ChatUsersDto>;
+    }
+
+    deleteUsers(data: CnahgeChatUsersDto) {
+        return this.httpTransport.delete('/users', { data });
+    }
+
+    addUsers(data: CnahgeChatUsersDto) {
+        return this.httpTransport.put('/users', { data });
     }
 }
 

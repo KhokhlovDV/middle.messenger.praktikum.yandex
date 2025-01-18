@@ -81,3 +81,8 @@ interface ChatUserDto {
 }
 
 export type ChatUsersDto = ChatUserDto[];
+
+export interface CnahgeChatUsersDto {
+    users: number[];
+    chatId: number;
+}
