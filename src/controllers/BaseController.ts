@@ -4,6 +4,7 @@ import { HttpError } from '../utils';
 
 export abstract class BaseController {
     protected handleError(error: unknown) {
+        // alert(error);
         if (error instanceof HttpError) {
             if (error.status >= 500) {
                 Router.getInstance().go(Routes.Error);

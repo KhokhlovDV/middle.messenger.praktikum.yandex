@@ -1,1 +1,2 @@
-export { Attach } from './Attach';
+export { Attach } from './attach';
+export { MessageForm } from './message-form';
