@@ -41,7 +41,7 @@ export class AddChat extends Block {
                 this.closePopup();
             },
         });
-        this.children['PopupWindow'] = this.popupWindow;
+        this.children.PopupWindow = this.popupWindow;
         this.setProps({
             isPopupOpen: true,
         });

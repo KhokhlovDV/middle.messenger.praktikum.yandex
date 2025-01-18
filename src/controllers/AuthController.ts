@@ -3,7 +3,6 @@ import { SignInDto, SignUpDto } from '../api/types';
 import { Routes } from '../constants';
 import { Router } from '../router';
 import { appStore } from '../store';
-import { initialState } from '../store/Store';
 import { BaseController } from './BaseController';
 
 class AuthController extends BaseController {
@@ -30,7 +29,7 @@ class AuthController extends BaseController {
     async logout() {
         try {
             await authApi.logout();
-            appStore.setInitalState(initialState);
+            appStore.setInitalState({ chats: [], currentChat: {} });
             Router.getInstance().go(Routes.Default);
         } catch (error) {
             this.handleError(error);

@@ -8,27 +8,43 @@ interface Props extends BlockProps {
     value?: string;
     errorMessage?: string;
     onBlur: (value: string) => void;
+    formId?: number;
 }
 
 export class FormField extends Block {
+    private input: Input;
+
     constructor(props: Props) {
-        super({
-            id: props.id,
-            label: props.label,
-            errorMessage: props.errorMessage,
-            Input: new Input({
-                id: props.id,
-                type: props.type,
-                value: props.value,
-                onBlur: (target) => {
-                    props.onBlur(target);
-                },
-                attr: {
-                    class: 'form-field__input',
-                },
-            }),
+        const { onBlur, ...other } = props;
+        const input = new Input({
+            id: other.id,
+            type: other.type,
+            value: other.value,
+            onBlur: (target) => {
+                onBlur(target);
+            },
+            attr: {
+                class: 'form-field__input',
+            },
         });
+        super({
+            ...other,
+            Input: input,
+        });
+        this.input = input;
     }
+
+    protected override componentDidUpdate = (
+        oldProps: Props,
+        newProps: Props
+    ) => {
+        if (oldProps.formId !== newProps.formId) {
+            this.input.setProps({
+                value: '',
+            });
+        }
+        return true;
+    };
 
     render() {
         return `<div class='form-field'>

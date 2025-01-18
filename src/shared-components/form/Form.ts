@@ -16,15 +16,19 @@ interface Props extends BlockProps {
     onFormSuccess: (form: HTMLFormElement) => void;
     buttonClassName?: string;
     className?: string;
+    formId?: number;
 }
 
 export class Form extends Block {
     private formFields: Map<string, FormField>;
 
+    private button: Button;
+
     constructor(props: Props) {
-        const formFields = new Map<string, FormField>();
-        props.formFields.forEach((field) =>
-            formFields.set(
+        const formFieldsMap = new Map<string, FormField>();
+        const { formFields, onFormSuccess, ...other } = props;
+        formFields.forEach((field) =>
+            formFieldsMap.set(
                 field.id,
                 new FormField({
                     id: field.id,
@@ -41,13 +45,15 @@ export class Form extends Block {
             )
         );
 
+        const button = new Button({
+            className: other.buttonClassName,
+            type: 'submit',
+            text: other.buttonText,
+        });
+
         super({
-            className: props.className,
-            Button: new Button({
-                className: props.buttonClassName,
-                type: 'submit',
-                text: props.buttonText,
-            }),
+            ...other,
+            Button: button,
             events: {
                 submit: (e: SubmitEvent) => {
                     e.preventDefault();
@@ -56,13 +62,14 @@ export class Form extends Block {
                     const result = Validator.validate(data);
                     this.onValidate(result);
                     if (!result.filter((el) => el.errorMessage !== '').length) {
-                        props.onFormSuccess(target);
+                        onFormSuccess(target);
                     }
                 },
             },
-            FormField: [...formFields.values()],
+            FormField: [...formFieldsMap.values()],
         });
-        this.formFields = formFields;
+        this.formFields = formFieldsMap;
+        this.button = button;
     }
 
     onValidate(results: ValidationResult[]) {
@@ -76,6 +83,26 @@ export class Form extends Block {
             });
         });
     }
+
+    protected override componentDidUpdate = (
+        oldProps: Props,
+        newProps: Props
+    ) => {
+        if (oldProps.buttonText !== newProps.buttonText) {
+            this.button.setProps({
+                text: newProps.buttonText,
+            });
+        }
+        if (oldProps.formId !== newProps.formId) {
+            [...this.formFields.values()].forEach((field) => {
+                field.setProps({
+                    formId: newProps.formId,
+                    errorMessage: '',
+                });
+            });
+        }
+        return true;
+    };
 
     render() {
         return `<form class="{{className}}">

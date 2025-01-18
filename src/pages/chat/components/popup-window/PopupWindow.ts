@@ -2,28 +2,36 @@ import { Block, BlockProps } from '../../../../framework';
 import { Form } from '../../../../shared-components/form';
 
 interface Props extends BlockProps {
-    buttonText: string;
+    onClose: () => void;
     onFormSuccess: (form: HTMLFormElement) => void;
+    buttonText: string;
     header: string;
     label: string;
     id: string;
-    onClose: () => void;
     errorMessage?: string;
+    formId: number;
 }
 
 export class PopupWindow extends Block {
-    constructor({
-        buttonText,
-        onFormSuccess,
-        id,
-        label,
-        header,
-        errorMessage,
-        onClose,
-    }: Props) {
+    private form: Form;
+
+    constructor(props: Props) {
+        const { onClose, onFormSuccess, ...other } = props;
+        const form = new Form({
+            formId: other.formId,
+            buttonClassName: 'popup-window__button',
+            buttonText: other.buttonText,
+            formFields: [
+                {
+                    id: other.id,
+                    label: other.label,
+                    type: 'text',
+                },
+            ],
+            onFormSuccess,
+        });
         super({
-            header,
-            errorMessage,
+            ...other,
             events: {
                 click: (e: Event) => {
                     const target = e.target as HTMLElement;
@@ -32,20 +40,27 @@ export class PopupWindow extends Block {
                     }
                 },
             },
-            Form: new Form({
-                buttonClassName: 'popup-window__button',
-                buttonText,
-                formFields: [
-                    {
-                        id,
-                        label,
-                        type: 'text',
-                    },
-                ],
-                onFormSuccess,
-            }),
+            Form: form,
         });
+        this.form = form;
     }
+
+    protected override componentDidUpdate = (
+        oldProps: Props,
+        newProps: Props
+    ) => {
+        if (oldProps.buttonText !== newProps.buttonText) {
+            this.form.setProps({
+                buttonText: newProps.buttonText,
+            });
+        }
+        if (oldProps.formId !== newProps.formId) {
+            this.form.setProps({
+                formId: newProps.formId,
+            });
+        }
+        return true;
+    };
 
     render() {
         return `<div class='popup-window'>

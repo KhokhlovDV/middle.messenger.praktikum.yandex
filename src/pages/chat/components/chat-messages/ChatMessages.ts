@@ -2,20 +2,11 @@ import { Block, BlockProps } from '../../../../framework';
 import { ChatMessageType } from '../../../../utils/Store';
 import { ChatMessage } from '../chat-message';
 
-interface Props extends BlockProps {
-    messages: ChatMessageType[];
-}
+interface Props extends BlockProps {}
 
 export class ChatMessages extends Block {
     constructor(props: Props) {
-        super({
-            ChatMessages: props.messages.map(
-                (message) =>
-                    new ChatMessage({
-                        message,
-                    })
-            ),
-        });
+        super({});
     }
 
     render() {

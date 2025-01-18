@@ -1,18 +1,9 @@
 import { Block, BlockProps } from '../../../../framework';
-import { Mediator } from '../../../../utils/Mediator';
 import { MessageForm } from '../message-form';
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class ChatMessageBox extends Block {
-    constructor(props: Props) {
-        super({
-            MessageForm: new MessageForm({
-                mediator: props.mediator,
-            }),
-        });
+    constructor(props: BlockProps) {
+        super({});
     }
 
     render() {
@@ -20,7 +11,6 @@ export class ChatMessageBox extends Block {
                     <button class='chat-message-box__attach'>
                         <img src="/attach.svg" alt="attach">
                     </button>
-                    {{{MessageForm}}}
                 </footer>`;
     }
 }
