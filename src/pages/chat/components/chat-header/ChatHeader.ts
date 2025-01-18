@@ -1,16 +1,17 @@
+import { chatController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
 import { AppStoreType } from '../../../../store';
-import { helper } from '../../../../utils/helper';
+import { helper } from '../../../../utils';
 import { Avatar } from '../avatar';
 import { PopupWindow } from '../popup-window';
-import { Actions } from './actions';
-import { ActionType } from './actions/Actions';
+import { Actions, ActionType } from './actions';
 import { More } from './more';
 
 interface Props extends BlockProps {
     id?: number;
     title?: string;
     avatar?: string;
+    users?: string;
     isPopupOpen: boolean;
     isActionsOpen: boolean;
 }
@@ -19,6 +20,8 @@ class ChatHeaderBlock extends Block {
     private popupWindow: PopupWindow;
 
     private action: ActionType = ActionType.ADD_USER;
+
+    private avatar: Avatar;
 
     constructor(props: Props) {
         const popupPros = ChatHeaderBlock.createPopupProps(ActionType.ADD_USER);
@@ -35,14 +38,16 @@ class ChatHeaderBlock extends Block {
             },
             ...popupPros,
         });
+        const avatar = new Avatar({
+            className: 'avatar-sm',
+            src: props.avatar ?? '',
+            isChangeable: true,
+            chatId: props.id,
+        });
         super({
             ...props,
             PopupWindow: popupWindow,
-            Avatar: new Avatar({
-                className: 'avatar-sm',
-                src: props.avatar ?? '',
-                isChangeable: true,
-            }),
+            Avatar: avatar,
             More: new More({
                 onClick: () => {
                     this.setProps({
@@ -61,6 +66,7 @@ class ChatHeaderBlock extends Block {
                 },
             }),
         });
+        this.avatar = avatar;
         this.popupWindow = popupWindow;
     }
 
@@ -106,13 +112,30 @@ class ChatHeaderBlock extends Block {
     }
 
     private deleteChat() {
-        alert('delete chat');
+        chatController.deleteChat({ chatId: this.props.id as number });
     }
+
+    protected override componentDidUpdate = (
+        oldProps: Props,
+        newProps: Props
+    ) => {
+        if (
+            oldProps.avatar !== newProps.avatar ||
+            oldProps.id !== newProps.id
+        ) {
+            this.avatar.setProps({
+                src: newProps.avatar,
+                chatId: newProps.id,
+            });
+        }
+        return true;
+    };
 
     render() {
         return `<header class='chat-header'>
                     {{{Avatar}}}
                     <h3>{{title}}</h3>
+                    <span>{{users}}</span>
                     {{{More}}}
                     {{#if isPopupOpen}}
                         {{{PopupWindow}}}
@@ -151,6 +174,7 @@ export const ChatHeader = connect<AppStoreType>((state) => {
               id: currentChat.id,
               title: currentChat.title,
               avatar: currentChat.avatar,
+              users: state.currentChat.users,
           }
         : {};
 })(ChatHeaderBlock);

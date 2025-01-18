@@ -2,8 +2,8 @@ import { Routes } from '../../../constants';
 import { authController } from '../../../controllers';
 import { Block } from '../../../framework';
 import { Router } from '../../../router';
-import { FormInputProps } from '../../../shared-components/form';
-import { helper } from '../../../utils/helper';
+import { FormInputProps } from '../../../shared-components';
+import { helper } from '../../../utils';
 import { SignLayout } from '../components';
 
 const formFields: FormInputProps[] = [

@@ -9,8 +9,6 @@ interface RegexData {
     errorMessage: string;
 }
 
-const PairFields = [['password', 'confirmedPassword']];
-
 export class Validator {
     static validate(data: Record<string, string>): ValidationResult[] {
         const result: ValidationResult[] = [];

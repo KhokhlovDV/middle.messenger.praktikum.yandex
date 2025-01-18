@@ -1,5 +1,12 @@
 import { BaseAPI } from './BaseApi';
-import { ChatsDto, CreateChatDto, CreateChatDtoResponse } from './types';
+import {
+    ChatDto,
+    ChatsDto,
+    ChatUsersDto,
+    CreateChatDto,
+    CreateChatDtoResponse,
+    DeleteChatDto,
+} from './types';
 
 class ChatApi extends BaseAPI {
     createChat(data: CreateChatDto) {
@@ -10,6 +17,22 @@ class ChatApi extends BaseAPI {
 
     getChats() {
         return this.httpTransport.get(``) as Promise<ChatsDto>;
+    }
+
+    deleteChat(data: DeleteChatDto) {
+        return this.httpTransport.delete('', { data });
+    }
+
+    avatar(data: FormData) {
+        return this.httpTransport.put(`/avatar`, {
+            data,
+        }) as Promise<ChatDto>;
+    }
+
+    getChatUsers(chatId: number) {
+        return this.httpTransport.get(
+            `/${chatId}/users`
+        ) as Promise<ChatUsersDto>;
     }
 }
 

@@ -1,4 +1,5 @@
 import { RESOURCES } from '../../../../constants';
+import { chatController } from '../../../../controllers';
 import { Block, BlockProps } from '../../../../framework';
 import { Input } from '../../../../shared-components';
 
@@ -6,6 +7,7 @@ interface Props extends BlockProps {
     src: string;
     className: string;
     isChangeable: boolean;
+    chatId?: number;
 }
 
 export class Avatar extends Block {
@@ -18,7 +20,8 @@ export class Avatar extends Block {
                     e.preventDefault();
                     const target = e.target as HTMLFormElement;
                     const data = new FormData(target);
-                    alert('chat avatar');
+                    data.append('chatId', String(this.props.chatId));
+                    chatController.avatar(data);
                 },
             },
             Input: new Input({
@@ -47,7 +50,7 @@ export class Avatar extends Block {
                     </form>
                 {{else}}
                     {{#if src}}
-                        <img src='{{src}}' class='avatar {{className}}' alt='avatar' />
+                        <img src='{{host}}{{src}}' class='avatar {{className}}' alt='avatar' />
                     {{else}}
                         <div class='avatar {{className}}'></div>
                     {{/if}}

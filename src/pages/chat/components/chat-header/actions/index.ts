@@ -1,3 +1,3 @@
 import './style.pcss';
 
-export { Actions } from './Actions';
+export { Actions, ActionType } from './Actions';

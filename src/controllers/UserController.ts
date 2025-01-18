@@ -1,5 +1,8 @@
-import { userApi } from '../api';
-import { UpdateUserPasswordDto, UpdateUserPersonalDataDto } from '../api/types';
+import {
+    UpdateUserPasswordDto,
+    UpdateUserPersonalDataDto,
+    userApi,
+} from '../api';
 import { appStore } from '../store';
 import { BaseController } from './BaseController';
 

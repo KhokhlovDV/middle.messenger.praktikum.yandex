@@ -36,6 +36,7 @@ module.exports = {
         'arrow-body-style': 'off',
         'no-plusplus': 'off',
         'guard-for-in': 'off',
+        'object-curly-newline': 'off',
     },
     ignorePatterns: ['*.config.js'],
 };

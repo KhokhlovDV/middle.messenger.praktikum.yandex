@@ -1,6 +1,6 @@
 import { Routes } from '../constants';
 import { Router } from '../router';
-import { HttpError } from '../utils/http-transport';
+import { HttpError } from '../utils';
 
 export abstract class BaseController {
     protected handleError(error: unknown) {

@@ -1,4 +1,3 @@
-export { ProfileForm } from './profile-form';
 export { AvatarPicker } from './avatar-picker';
-
-export type { FormInputProps } from './profile-form';
+export { InlineFormField } from './inline-form-field';
+export { SettingsForm } from './settings-form';

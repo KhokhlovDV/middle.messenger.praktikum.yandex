@@ -2,8 +2,7 @@ import { Block, BlockProps, connect } from '../../framework';
 import { Router } from '../../router';
 import { RoundedButton } from '../../shared-components';
 import { AppStoreType, UserData } from '../../store/Store';
-import { AvatarPicker } from './components/avatar-picker';
-import { SettingsForm } from './components/settings-form';
+import { AvatarPicker, SettingsForm } from './components';
 
 interface Props
     extends BlockProps,

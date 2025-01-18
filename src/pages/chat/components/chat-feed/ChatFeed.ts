@@ -1,6 +1,6 @@
 import { chatController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
-import { AppStoreType, ChatData } from '../../../../store/Store';
+import { AppStoreType, ChatData } from '../../../../store';
 import { ChatFeedItem } from '../chat-feed-item';
 
 interface Props extends BlockProps {

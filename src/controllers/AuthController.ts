@@ -1,5 +1,4 @@
-import { authApi } from '../api';
-import { SignInDto, SignUpDto } from '../api/types';
+import { authApi, SignInDto, SignUpDto } from '../api';
 import { Routes } from '../constants';
 import { Router } from '../router';
 import { appStore } from '../store';

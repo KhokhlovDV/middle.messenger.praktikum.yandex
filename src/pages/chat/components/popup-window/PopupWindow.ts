@@ -1,5 +1,5 @@
 import { Block, BlockProps } from '../../../../framework';
-import { Form } from '../../../../shared-components/form';
+import { Form } from '../../../../shared-components';
 
 interface Props extends BlockProps {
     onClose: () => void;

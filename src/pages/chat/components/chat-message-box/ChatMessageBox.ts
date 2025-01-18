@@ -1,6 +1,6 @@
 import { Block, BlockProps } from '../../../../framework';
 import { MessageForm } from '../message-form';
-import { Attach } from './components/Attach';
+import { Attach } from './components';
 
 export class ChatMessageBox extends Block {
     constructor(props: BlockProps) {

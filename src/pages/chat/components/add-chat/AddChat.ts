@@ -1,7 +1,7 @@
 import { chatController } from '../../../../controllers';
 import { Block, BlockProps } from '../../../../framework';
 import { Button } from '../../../../shared-components';
-import { helper } from '../../../../utils/helper';
+import { helper } from '../../../../utils';
 import { PopupWindow } from '../popup-window';
 
 interface Form extends Record<string, string> {

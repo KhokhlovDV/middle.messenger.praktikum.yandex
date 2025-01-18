@@ -2,8 +2,7 @@ import { authController, userController } from '../../../../controllers';
 import { Block, BlockProps, connect } from '../../../../framework';
 import { Button, Link } from '../../../../shared-components';
 import { AppStoreType } from '../../../../store';
-import { helper } from '../../../../utils/helper';
-import { ValidationResult, Validator } from '../../../../utils/Validator';
+import { helper, ValidationResult, Validator } from '../../../../utils';
 import { InlineFormField } from '../inline-form-field';
 import { createFormFields, FieldsData } from './utils';
 

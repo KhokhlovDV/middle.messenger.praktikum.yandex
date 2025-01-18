@@ -1,2 +1,2 @@
 export { appStore } from './Store';
-export type { AppStoreType } from './Store';
+export type { AppStoreType, ChatData } from './Store';

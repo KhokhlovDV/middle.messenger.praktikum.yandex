@@ -44,7 +44,11 @@ export interface CreateChatDtoResponse {
     id: number;
 }
 
-interface ChatDto {
+export interface DeleteChatDto {
+    chatId: number;
+}
+
+export interface ChatDto {
     id: number;
     title: string;
     avatar?: string;
@@ -65,3 +69,15 @@ interface ChatDto {
 }
 
 export type ChatsDto = ChatDto[];
+
+interface ChatUserDto {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    login: string;
+    avatar: string;
+    role: string;
+}
+
+export type ChatUsersDto = ChatUserDto[];
