@@ -7,54 +7,77 @@ export enum WebSocketEvents {
     ERROR = 'error',
 }
 
-const PING_TIME = 10000;
+const PING_TIME = 30000;
 
-class WebSocketTransport extends EventBus {
-    private webSocket?: WebSocket;
+export class WebSocketTransport extends EventBus {
+    private socket?: WebSocket;
 
-    private pingInterval: number = 0;
+    private pingInterval?: number;
 
-    public connect(url: string) {
-        this.close();
-        this.webSocket = new WebSocket(url);
+    constructor(private url: string) {
+        super();
+    }
 
-        this.webSocket.addEventListener(WebSocketEvents.OPEN, () => {
+    public send(data: string | number | object) {
+        if (!this.socket) {
+            throw new Error('Socket is not connected');
+        }
+        this.socket.send(JSON.stringify(data));
+    }
+
+    public connect(): Promise<void> {
+        if (this.socket) {
+            throw new Error('The socket is already connected');
+        }
+
+        this.socket = new WebSocket(this.url);
+
+        this.socket.addEventListener(WebSocketEvents.OPEN, () => {
             this.emit(WebSocketEvents.OPEN);
             this.pingInterval = setInterval(() => {
                 this.send({ type: 'ping' });
             }, PING_TIME);
         });
 
-        this.webSocket.addEventListener(WebSocketEvents.CLOSE, (event) => {
+        this.socket.addEventListener(WebSocketEvents.CLOSE, (event) => {
             clearInterval(this.pingInterval);
             this.pingInterval = 0;
-            this.webSocket = undefined;
+            this.socket = undefined;
             this.emit(WebSocketEvents.CLOSE, event);
         });
 
-        this.webSocket.addEventListener(WebSocketEvents.MESSAGE, (event) => {
-            this.emit(WebSocketEvents.MESSAGE, event);
+        this.socket.addEventListener(
+            WebSocketEvents.MESSAGE,
+            (message: MessageEvent<unknown>) => {
+                const { data } = message;
+                if (typeof data === 'string') {
+                    const parsedResult = JSON.parse(data) as object;
+                    if (
+                        'type' in parsedResult &&
+                        typeof parsedResult.type === 'string' &&
+                        ['pong', 'user connected'].includes(parsedResult.type)
+                    ) {
+                        return;
+                    }
+                    this.emit(WebSocketEvents.MESSAGE, parsedResult);
+                }
+            }
+        );
+
+        this.socket.addEventListener(WebSocketEvents.ERROR, (event) => {
+            this.emit(WebSocketEvents.ERROR, event);
         });
 
-        this.webSocket.addEventListener(WebSocketEvents.ERROR, (event) => {
-            this.emit(WebSocketEvents.ERROR, event);
+        return new Promise((resolve, reject) => {
+            this.on(WebSocketEvents.ERROR, reject);
+            this.on(WebSocketEvents.OPEN, () => {
+                this.off(WebSocketEvents.ERROR, reject);
+                resolve();
+            });
         });
     }
 
     public close() {
-        if (!this.webSocket) {
-            return;
-        }
-        this.webSocket.close();
-        this.webSocket = undefined;
-    }
-
-    public send(data: unknown) {
-        if (!this.webSocket) {
-            throw new Error('No connection');
-        }
-        this.webSocket.send(JSON.stringify(data));
+        this.socket?.close();
     }
 }
-
-export const webSocketTransport = new WebSocketTransport();
