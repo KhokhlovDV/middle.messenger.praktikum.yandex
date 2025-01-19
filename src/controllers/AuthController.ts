@@ -28,17 +28,13 @@ class AuthController extends BaseController {
     async logout() {
         try {
             await authApi.logout();
-            appStore.setInitalState({ chats: [], currentChat: {} });
-            Router.getInstance().go(Routes.Default);
+            this.logoutInternal();
         } catch (error) {
             this.handleError(error);
         }
     }
 
     async isUserAuthenticated() {
-        if (appStore.getState().user) {
-            return true;
-        }
         try {
             await this.getUser();
             return true;

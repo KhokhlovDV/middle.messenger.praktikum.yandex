@@ -2,8 +2,6 @@ import { BlockProps } from '../framework';
 import { Route } from './Route';
 import { Component } from './types';
 
-type RouteHook = (pathname: string) => Promise<string>;
-
 export class Router {
     private history: History;
 
@@ -16,8 +14,6 @@ export class Router {
     private notFoundRoute?: Route;
 
     private outlet?: HTMLDivElement;
-
-    private asyncChangeRouteHook?: RouteHook;
 
     static getInstance() {
         if (!Router.instance) {
@@ -70,27 +66,20 @@ export class Router {
         return this;
     }
 
-    setChangeRouteHook(hook: RouteHook) {
-        this.asyncChangeRouteHook = hook;
-        return this;
+    setPath(pathname: string) {
+        window.history.replaceState({}, '', pathname);
     }
 
-    private setPath(pathname: string) {
-        window.history.replaceState({}, '', pathname);
+    getCurrentRoute() {
+        return this.getRoute(window.location.pathname);
     }
 
     private getRoute(pathname: string) {
         return this.routes.find((route) => route.match(pathname));
     }
 
-    private async onRoute(pathname: string) {
-        const checkedPathname = this.asyncChangeRouteHook
-            ? await this.asyncChangeRouteHook(pathname)
-            : pathname;
-        if (checkedPathname !== pathname) {
-            this.setPath(checkedPathname);
-        }
-        const route = this.getRoute(checkedPathname);
+    private onRoute(pathname: string) {
+        const route = this.getRoute(pathname);
         if (this.currentRoute) {
             this.currentRoute.leave();
         }

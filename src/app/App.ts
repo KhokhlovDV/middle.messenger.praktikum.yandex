@@ -10,7 +10,7 @@ import { Routes } from '../constants';
 import { authController } from '../controllers';
 
 export class App {
-    init() {
+    async init() {
         const outlet = document.getElementById('app') as HTMLDivElement;
         const router = Router.getInstance();
         const needAuthRoutes = new Set<string>([
@@ -31,18 +31,22 @@ export class App {
             .setNotFoundRoute(Routes.NotFound, ErrorPage, {
                 errorCode: '404',
                 description: 'Не туда попали',
-            })
-            .setChangeRouteHook(async (pathname) => {
-                const isUserAuthenticated =
-                    await authController.isUserAuthenticated();
-                if (isUserAuthenticated && noAuthRoutes.has(pathname)) {
-                    return Routes.Messenger;
-                }
-                if (!isUserAuthenticated && needAuthRoutes.has(pathname)) {
-                    return Routes.Default;
-                }
-                return pathname;
-            })
-            .start(outlet);
+            });
+
+        const isAuthenticated = await authController.isUserAuthenticated();
+        const currentRoute = router.getCurrentRoute();
+
+        if (currentRoute) {
+            if (isAuthenticated && noAuthRoutes.has(currentRoute.pathname)) {
+                router.setPath(Routes.Messenger);
+            } else if (
+                !isAuthenticated &&
+                needAuthRoutes.has(currentRoute.pathname)
+            ) {
+                router.setPath(Routes.Default);
+            }
+        }
+
+        router.start(outlet);
     }
 }
