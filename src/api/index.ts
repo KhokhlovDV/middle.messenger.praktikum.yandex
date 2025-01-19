@@ -10,5 +10,5 @@ export type {
     DeleteChatDto,
     UpdateUserPasswordDto,
     UpdateUserPersonalDataDto,
-    CnahgeChatUsersDto as DeleteChatUsersDto,
+    CnahgeChatUsersDto,
 } from './types';

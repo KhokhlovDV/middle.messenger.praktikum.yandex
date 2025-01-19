@@ -86,3 +86,11 @@ export interface CnahgeChatUsersDto {
     users: number[];
     chatId: number;
 }
+
+export interface ChatTokenDto {
+    token: string;
+}
+
+export interface UnreadMessagesDto {
+    token: string;
+}

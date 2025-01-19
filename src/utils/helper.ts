@@ -15,4 +15,9 @@ export const helper = {
         });
         return result as T;
     },
+    converTime: (datetime: string) =>
+        new Date(datetime).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+        }),
 };

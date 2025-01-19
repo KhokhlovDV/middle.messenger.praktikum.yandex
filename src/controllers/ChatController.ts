@@ -3,9 +3,10 @@ import {
     ChatDto,
     CreateChatDto,
     DeleteChatDto,
-    DeleteChatUsersDto,
+    CnahgeChatUsersDto,
 } from '../api';
 import { appStore, ChatData } from '../store';
+import { helper } from '../utils';
 import { BaseController } from './BaseController';
 
 class ChatController extends BaseController {
@@ -46,6 +47,8 @@ class ChatController extends BaseController {
         }
         appStore.set('currentChat', { id: chatId, users: undefined });
         this.updateCurrentChatUsers(chatId);
+        this.getToken(chatId);
+        this.getUnreadMessageCount(chatId);
     }
 
     async delete(data: DeleteChatDto) {
@@ -72,7 +75,7 @@ class ChatController extends BaseController {
         }
     }
 
-    async deleteUsers(data: DeleteChatUsersDto) {
+    async deleteUsers(data: CnahgeChatUsersDto) {
         try {
             await chatApi.deleteUsers(data);
             this.updateCurrentChatUsers(data.chatId);
@@ -81,10 +84,26 @@ class ChatController extends BaseController {
         }
     }
 
-    async addUsers(data: DeleteChatUsersDto) {
+    async addUsers(data: CnahgeChatUsersDto) {
         try {
             await chatApi.addUsers(data);
             this.updateCurrentChatUsers(data.chatId);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    private async getToken(chatId: number) {
+        try {
+            await chatApi.getToken(chatId);
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    private async getUnreadMessageCount(chatId: number) {
+        try {
+            await chatApi.getUnreadMessageCount(chatId);
         } catch (error) {
             this.handleError(error);
         }
@@ -115,7 +134,9 @@ class ChatController extends BaseController {
         return {
             ...chatDto,
             avatar: chatDto.avatar ?? '',
-            last_message_time: chatDto.last_message?.time ?? '',
+            last_message_time: chatDto.last_message
+                ? helper.converTime(chatDto.last_message.time)
+                : '',
             last_message_content: chatDto.last_message?.content ?? '',
         };
     }
