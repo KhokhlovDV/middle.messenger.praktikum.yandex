@@ -22,6 +22,19 @@ export interface ChatData {
 
 type ChatsData = ChatData[];
 
+export interface Message {
+    id: number;
+    time: string;
+    user_id: number;
+    content: string;
+    path: string;
+}
+
+interface ChatMessages {
+    id: number;
+    messages: Message[];
+}
+
 export interface AppStoreType {
     [key: string]: unknown;
     user?: UserData;
@@ -30,7 +43,8 @@ export interface AppStoreType {
         id?: number;
         users?: string;
     };
+    chatsMessages: ChatMessages[];
 }
 
 export const appStore = storeWithType<AppStoreType>();
-appStore.setInitalState({ chats: [], currentChat: {} });
+appStore.setInitalState({ chats: [], currentChat: {}, chatsMessages: [] });

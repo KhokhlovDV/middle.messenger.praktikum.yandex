@@ -92,5 +92,5 @@ export interface ChatTokenDto {
 }
 
 export interface UnreadMessagesDto {
-    token: string;
+    unread_count: number;
 }

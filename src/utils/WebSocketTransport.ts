@@ -7,7 +7,7 @@ export enum WebSocketEvents {
     ERROR = 'error',
 }
 
-const PING_TIME = 30000;
+const PING_TIME = 10000;
 
 export class WebSocketTransport extends EventBus {
     private socket?: WebSocket;

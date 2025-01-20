@@ -2,10 +2,11 @@ import { Routes } from '../constants';
 import { Router } from '../router';
 import { appStore } from '../store';
 import { HttpError } from '../utils';
+import { webSocketController } from './WebSockerController';
 
 export abstract class BaseController {
     protected handleError(error: unknown) {
-        // alert(error);
+        alert(error);
         if (error instanceof HttpError) {
             if (error.status >= 500) {
                 Router.getInstance().go(Routes.Error);
@@ -22,6 +23,11 @@ export abstract class BaseController {
 
     protected logoutInternal() {
         Router.getInstance().go(Routes.Default);
-        appStore.setInitalState({ chats: [], currentChat: {} });
+        appStore.setInitalState({
+            chats: [],
+            currentChat: {},
+            chatsMessages: [],
+        });
+        webSocketController.close();
     }
 }

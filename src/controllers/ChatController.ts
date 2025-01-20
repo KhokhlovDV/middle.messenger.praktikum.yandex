@@ -8,6 +8,7 @@ import {
 import { appStore, ChatData } from '../store';
 import { helper } from '../utils';
 import { BaseController } from './BaseController';
+import { webSocketController } from './WebSockerController';
 
 class ChatController extends BaseController {
     async create(data: CreateChatDto) {
@@ -40,15 +41,26 @@ class ChatController extends BaseController {
         }
     }
 
-    setCurrent(chatId: number) {
+    async setCurrent(chatId: number) {
         const currentChat = appStore.getState().currentChat.id;
         if (currentChat === chatId) {
             return;
         }
         appStore.set('currentChat', { id: chatId, users: undefined });
-        this.updateCurrentChatUsers(chatId);
-        this.getToken(chatId);
-        this.getUnreadMessageCount(chatId);
+        try {
+            this.updateCurrentChatUsers(chatId);
+            const tokenDto = await this.getToken(chatId);
+            const messageCountDto = await this.getUnreadMessageCount(chatId);
+            const userId = appStore.getState().user!.id;
+            webSocketController.connect(
+                chatId,
+                userId,
+                tokenDto.token,
+                messageCountDto.unread_count
+            );
+        } catch (error) {
+            this.handleError(error);
+        }
     }
 
     async delete(data: DeleteChatDto) {
@@ -93,20 +105,21 @@ class ChatController extends BaseController {
         }
     }
 
+    sendMessage(message: string) {
+        webSocketController.send({
+            type: 'message',
+            content: message,
+        });
+    }
+
     private async getToken(chatId: number) {
-        try {
-            await chatApi.getToken(chatId);
-        } catch (error) {
-            this.handleError(error);
-        }
+        const result = await chatApi.getToken(chatId);
+        return result;
     }
 
     private async getUnreadMessageCount(chatId: number) {
-        try {
-            await chatApi.getUnreadMessageCount(chatId);
-        } catch (error) {
-            this.handleError(error);
-        }
+        const result = await chatApi.getUnreadMessageCount(chatId);
+        return result;
     }
 
     private async updateCurrentChatUsers(chatId: number) {

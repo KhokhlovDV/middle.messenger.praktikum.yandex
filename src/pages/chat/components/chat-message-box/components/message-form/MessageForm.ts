@@ -1,3 +1,4 @@
+import { chatController } from '../../../../../../controllers';
 import { Block, BlockProps } from '../../../../../../framework';
 import { Input, RoundedButton } from '../../../../../../shared-components';
 import { helper, ValidationResult, Validator } from '../../../../../../utils';
@@ -34,6 +35,15 @@ export class MessageForm extends Block {
                     const data = helper.convertFormToObject(target);
                     const result = Validator.validate(data);
                     this.onValidate(result);
+                    if (result.filter((el) => el.errorMessage).length === 0) {
+                        const message = new FormData(target).get(
+                            'message'
+                        ) as string;
+                        chatController.sendMessage(message);
+                    }
+                    this.input.setProps({
+                        value: '',
+                    });
                 },
             },
         });
