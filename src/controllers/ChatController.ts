@@ -48,6 +48,14 @@ class ChatController extends BaseController {
             return;
         }
         appStore.set('currentChat', { id: chatId, users: undefined });
+        appStore.set(
+            'chats',
+            appStore
+                .getState()
+                .chats.map((chat) =>
+                    chat.id === chatId ? { ...chat, unread_count: 0 } : chat
+                )
+        );
         try {
             this.updateCurrentChatUsers(chatId);
             const tokenDto = await this.getToken(chatId);
