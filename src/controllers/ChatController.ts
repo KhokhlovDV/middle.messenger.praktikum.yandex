@@ -4,6 +4,7 @@ import {
     CreateChatDto,
     DeleteChatDto,
     CnahgeChatUsersDto,
+    resourcesApi,
 } from '../api';
 import { appStore, ChatData } from '../store';
 import { helper } from '../utils';
@@ -110,6 +111,18 @@ class ChatController extends BaseController {
             type: 'message',
             content: message,
         });
+    }
+
+    async sendFile(data: FormData) {
+        try {
+            const result = await resourcesApi.upload(data);
+            webSocketController.send({
+                type: 'file',
+                content: result.id,
+            });
+        } catch (error) {
+            this.handleError(error);
+        }
     }
 
     private async getToken(chatId: number) {

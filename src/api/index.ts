@@ -1,6 +1,7 @@
 export { authApi } from './AuthApi';
 export { userApi } from './UserApi';
 export { chatApi } from './ChatApi';
+export { resourcesApi } from './ResourcesApi';
 
 export type {
     SignInDto,
@@ -11,4 +12,5 @@ export type {
     UpdateUserPasswordDto,
     UpdateUserPersonalDataDto,
     CnahgeChatUsersDto,
+    ResourceDto,
 } from './types';
