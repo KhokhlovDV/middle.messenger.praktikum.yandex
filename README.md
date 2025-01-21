@@ -2,8 +2,6 @@
 
 Данное приложение позволяет пользователям общаться между собой.
 
-Также в первом спринте временно сделан простенький роутер и навешены хэндлеры на события click, submit для удобства перемещения по приложению.
-
 ## Установка
 
 Установить зависимости проекта: `npm install`
@@ -40,12 +38,8 @@ Netlify: https://kdv-messenger.netlify.app/
 
 Страница регистрации: https://kdv-messenger.netlify.app/sign-up
 
-Страница 5\*\*: https://kdv-messenger.netlify.app/server-error
+Страница 5\*\*: https://kdv-messenger.netlify.app/500
 
-Страница профиля: https://kdv-messenger.netlify.app/profile-info
+Страница профиля: https://kdv-messenger.netlify.app/settings
 
-Страница изменения данных профиля: https://kdv-messenger.netlify.app/change-profile
-
-Страница изменения пароля: https://kdv-messenger.netlify.app/change-password
-
-Страница чата: https://kdv-messenger.netlify.app/chat
+Страница чата: https://kdv-messenger.netlify.app/messenger

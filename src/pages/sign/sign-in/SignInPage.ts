@@ -1,32 +1,57 @@
-import Block, { BlockProps } from '../../../framework/Block';
-import { Mediator } from '../../../utils/Mediator';
-import { FormInputProps } from '../components/form/Form';
-import { SignLayout } from '../components/sign-layout';
+import { Routes } from '../../../constants';
+import { authController } from '../../../controllers';
+import { Block } from '../../../framework';
+import { Router } from '../../../router';
+import { FormInputProps } from '../../../shared-components';
+import { helper } from '../../../utils';
+import { SignLayout } from '../components';
+
+interface Form {
+    [key: string]: string;
+    password: string;
+    login: string;
+}
 
 const formFields: FormInputProps[] = [
     { id: 'login', label: 'Логин', type: 'text' },
     { id: 'password', label: 'Пароль', type: 'password' },
 ];
 
-interface Props extends BlockProps {
-    mediator: Mediator;
-}
-
 export class SignInPage extends Block {
-    constructor(props: Props) {
+    private signLayout: SignLayout;
+
+    constructor() {
+        const signLayout = new SignLayout({
+            buttonText: 'Войти',
+            headerText: 'Вход',
+            linkText: 'Нет аккаунта?',
+            formFields,
+            onFormSuccess: (form) => {
+                const data = helper.convertFormToObject<Form>(form);
+                authController
+                    .signIn(data)
+                    .then(() => this.onSignInError())
+                    .catch((error: Error) => {
+                        this.onSignInError(error.message);
+                    });
+            },
+            onLinkClick: () => {
+                Router.getInstance().go(Routes.SignUp);
+            },
+        });
         super({
-            SignLayout: new SignLayout({
-                buttonText: 'Войти',
-                headerText: 'Вход',
-                linkText: 'Нет аккаунта?',
-                linkTo: '/sign-up',
-                formFields,
-                mediator: props.mediator,
-            }),
+            SignLayout: signLayout,
+        });
+        this.signLayout = signLayout;
+    }
+
+    onSignInError(message?: string) {
+        this.signLayout.setProps({
+            errorMessage: message,
         });
     }
 
-    render() {
+    override render() {
         return `<div class='modal-window sign-in'>{{{SignLayout}}}</div>`;
     }
 }

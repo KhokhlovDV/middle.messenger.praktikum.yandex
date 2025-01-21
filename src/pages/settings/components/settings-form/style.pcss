@@ -1,0 +1,32 @@
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    height: 280px;
+    justify-content: space-between;
+}
+
+.settings-form__block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 510px;
+
+    & > * {
+        &:not(:last-child) {
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+    }
+}
+
+.settings-form__buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings-form__error {
+    color: var(--error-color);
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-align: center;
+}

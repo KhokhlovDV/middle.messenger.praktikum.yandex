@@ -1,7 +1,10 @@
-import Block, { BlockProps } from '../../../framework/Block';
-import { Mediator } from '../../../utils/Mediator';
-import { FormInputProps } from '../components/form/Form';
-import { SignLayout } from '../components/sign-layout';
+import { Routes } from '../../../constants';
+import { authController } from '../../../controllers';
+import { Block } from '../../../framework';
+import { Router } from '../../../router';
+import { FormInputProps } from '../../../shared-components';
+import { helper } from '../../../utils';
+import { SignLayout } from '../components';
 
 const formFields: FormInputProps[] = [
     { id: 'email', label: 'Почта', type: 'email' },
@@ -13,21 +16,48 @@ const formFields: FormInputProps[] = [
     { id: 'confirmedPassword', label: 'Пароль (еще раз)', type: 'password' },
 ];
 
-interface Props extends BlockProps {
-    mediator: Mediator;
+interface Form {
+    [key: string]: string;
+    email: string;
+    login: string;
+    first_name: string;
+    second_name: string;
+    phone: string;
+    password: string;
+    confirmedPassord: string;
 }
 
 export class SignUpPage extends Block {
-    constructor(props: Props) {
+    private signLayout: SignLayout;
+
+    constructor() {
+        const signLayout = new SignLayout({
+            buttonText: 'Зарегистрироваться',
+            headerText: 'Регистрация',
+            linkText: 'Войти',
+            formFields,
+            onFormSuccess: (form) => {
+                const data = helper.convertFormToObject<Form>(form);
+                authController
+                    .signUp(data)
+                    .then(() => this.onSignUpError())
+                    .catch((error: Error) => {
+                        this.onSignUpError(error.message);
+                    });
+            },
+            onLinkClick: () => {
+                Router.getInstance().go(Routes.Default);
+            },
+        });
         super({
-            SignLayout: new SignLayout({
-                buttonText: 'Зарегистрироваться',
-                headerText: 'Регистрация',
-                linkText: 'Войти',
-                linkTo: '/',
-                formFields,
-                mediator: props.mediator,
-            }),
+            SignLayout: signLayout,
+        });
+        this.signLayout = signLayout;
+    }
+
+    onSignUpError(message?: string) {
+        this.signLayout.setProps({
+            errorMessage: message,
         });
     }
 
