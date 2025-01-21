@@ -39,12 +39,13 @@ class ChatMessagesBlock extends Block {
                         ...newMessage,
                     }),
                 }));
-            this.items = [...this.items, ...newMessages];
+            this.items = [...newMessages, ...this.items];
             this.setLists({
                 ChatMessages: this.items.map((item) => item.message),
             });
+            return true;
         }
-        return true;
+        return false;
     };
 
     render() {

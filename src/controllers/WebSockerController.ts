@@ -82,7 +82,7 @@ class WebSocketController {
         this.oldMessages = [...this.oldMessages, ...slicedMessages];
         if (this.unreadMessagesCount <= 0) {
             const lastMessage = this.oldMessages[0];
-            const messagesToAdd = this.oldMessages.reverse();
+            const messagesToAdd = this.oldMessages;
             this.oldMessages = [];
             this.setChatLastMessage(lastMessage);
             this.setChatMessages(messagesToAdd);
