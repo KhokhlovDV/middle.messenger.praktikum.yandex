@@ -18,9 +18,19 @@ class ChatMessagesBlock extends Block {
     private items: { id: number; message: ChatMessage }[] = [];
 
     constructor(props: Props) {
+        const items = props.chatData.messages
+            .map((newMessage) => ({
+                id: newMessage.id,
+                message: new ChatMessage({
+                    ...newMessage,
+                }),
+            }))
+            .reverse();
         super({
             ...props,
+            ChatMessages: items.map((item) => item.message),
         });
+        this.items = items;
     }
 
     protected override componentDidUpdate = (_: Props, newProps: Props) => {
