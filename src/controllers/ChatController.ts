@@ -11,6 +11,8 @@ import { helper } from '../utils';
 import { BaseController } from './BaseController';
 import { webSocketController } from './WebSockerController';
 
+const UPDATE_CHAT_TIMEOUT = 5000;
+
 class ChatController extends BaseController {
     async create(data: CreateChatDto) {
         try {
@@ -30,7 +32,17 @@ class ChatController extends BaseController {
         }
     }
 
-    async get() {
+    get() {
+        if (this.updateChatInterval) {
+            return;
+        }
+        this._getChats();
+        this.updateChatInterval = setInterval(() => {
+            this._getChats();
+        }, UPDATE_CHAT_TIMEOUT);
+    }
+
+    private async _getChats() {
         try {
             const chats = await chatApi.get();
             const stateChats: ChatData[] = chats.map((chat) =>
@@ -162,6 +174,7 @@ class ChatController extends BaseController {
             'chats',
             stateChats.filter((chat) => chat.id !== chatId)
         );
+        webSocketController.close();
     }
 
     private convertChatDto(chatDto: ChatDto): ChatData {

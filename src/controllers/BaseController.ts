@@ -5,6 +5,8 @@ import { HttpError } from '../utils';
 import { webSocketController } from './WebSockerController';
 
 export abstract class BaseController {
+    protected updateChatInterval: number = 0;
+
     protected handleError(error: unknown) {
         if (error instanceof HttpError) {
             if (error.status >= 500) {
@@ -28,5 +30,7 @@ export abstract class BaseController {
             chatsMessages: [],
         });
         webSocketController.close();
+        clearInterval(this.updateChatInterval);
+        this.updateChatInterval = 0;
     }
 }
