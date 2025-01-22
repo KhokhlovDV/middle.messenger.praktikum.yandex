@@ -8,7 +8,6 @@ import {
     DeleteChatDto,
     CnahgeChatUsersDto,
     ChatTokenDto,
-    UnreadMessagesDto,
 } from './types';
 
 class ChatApi extends BaseAPI {
@@ -38,11 +37,11 @@ class ChatApi extends BaseAPI {
         ) as Promise<ChatUsersDto>;
     }
 
-    deleteUsers(data: CnahgeChatUsersDto) {
+    deleteUser(data: CnahgeChatUsersDto) {
         return this.httpTransport.delete('/users', { data });
     }
 
-    addUsers(data: CnahgeChatUsersDto) {
+    addUser(data: CnahgeChatUsersDto) {
         return this.httpTransport.put('/users', { data });
     }
 
@@ -50,12 +49,6 @@ class ChatApi extends BaseAPI {
         return this.httpTransport.post(
             `/token/${chatId}`
         ) as Promise<ChatTokenDto>;
-    }
-
-    getUnreadMessageCount(chatId: number) {
-        return this.httpTransport.get(
-            `/new/${chatId}`
-        ) as Promise<UnreadMessagesDto>;
     }
 }
 

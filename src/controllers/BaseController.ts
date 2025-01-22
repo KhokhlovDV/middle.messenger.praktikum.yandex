@@ -19,6 +19,8 @@ export abstract class BaseController {
             } else {
                 throw new Error(error.message);
             }
+        } else if (error instanceof Error) {
+            throw new Error(error.message);
         }
     }
 

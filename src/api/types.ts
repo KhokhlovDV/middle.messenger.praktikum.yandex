@@ -91,10 +91,6 @@ export interface ChatTokenDto {
     token: string;
 }
 
-export interface UnreadMessagesDto {
-    unread_count: number;
-}
-
 export interface ResourceDto {
     id: number;
     user_id: number;
@@ -104,3 +100,20 @@ export interface ResourceDto {
     content_size: number;
     upload_date: string;
 }
+
+export interface UserSearchDto {
+    login: string;
+}
+
+interface UserSearchResultDto {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    phone: string;
+    login: string;
+    avatar: string;
+    email: string;
+}
+
+export type UserSearchResultsDto = UserSearchResultDto[];

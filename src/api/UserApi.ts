@@ -3,6 +3,8 @@ import {
     UpdateUserPasswordDto,
     UpdateUserPersonalDataDto,
     UserDto,
+    UserSearchDto,
+    UserSearchResultsDto,
 } from './types';
 
 class UserApi extends BaseAPI {
@@ -18,6 +20,12 @@ class UserApi extends BaseAPI {
 
     password(data: UpdateUserPasswordDto) {
         return this.httpTransport.put(`/password`, { data });
+    }
+
+    search(data: UserSearchDto) {
+        return this.httpTransport.post(`/search`, {
+            data,
+        }) as Promise<UserSearchResultsDto>;
     }
 }
 
