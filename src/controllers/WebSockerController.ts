@@ -29,24 +29,14 @@ type OldChatMessagesDto = OldChatMessageDto[];
 class WebSocketController {
     private webSocketTransport?: WebSocketTransport;
 
-    private unreadMessagesCount: number = 0;
-
-    private oldMessages: OldChatMessagesDto = [];
-
     send(data: string | number | object) {
         if (this.webSocketTransport) {
             this.webSocketTransport.send(data);
         }
     }
 
-    connect(
-        chatId: number,
-        userId: number,
-        token: string,
-        unreadMessagesCount: number
-    ) {
+    connect(chatId: number, userId: number, token: string) {
         this.close();
-        this.unreadMessagesCount = unreadMessagesCount;
         this.webSocketTransport = new WebSocketTransport(
             `${BASE_URL}/${userId}/${chatId}/${token}`
         );
@@ -55,9 +45,7 @@ class WebSocketController {
                 WebSocketEvents.MESSAGE,
                 this.reciveMessage.bind(this) as Callback
             );
-            if (unreadMessagesCount) {
-                this.fetchOldMessages(0);
-            }
+            this.fetchOldMessages();
         });
     }
 
@@ -69,27 +57,18 @@ class WebSocketController {
         }
     }
 
-    private fetchOldMessages(from: number) {
+    private fetchOldMessages() {
         this.send({
-            content: from,
+            content: '0',
             type: 'get old',
         });
     }
 
     private receiveOldMessages(data: OldChatMessagesDto) {
-        const slicedMessages = data.slice(0, this.unreadMessagesCount);
-        this.unreadMessagesCount -= slicedMessages.length;
-        this.oldMessages = [...this.oldMessages, ...slicedMessages];
-        if (this.unreadMessagesCount <= 0) {
-            const lastMessage = this.oldMessages[0];
-            const messagesToAdd = this.oldMessages;
-            this.oldMessages = [];
-            this.setChatLastMessage(lastMessage);
-            this.setChatMessages(messagesToAdd);
-            return;
+        if (data.length > 0) {
+            this.setChatLastMessage(data[0]);
+            this.setChatMessages([...data]);
         }
-        const lastMessageId = slicedMessages[slicedMessages.length - 1].id;
-        this.fetchOldMessages(lastMessageId);
     }
 
     private receiveMessage(data: ChatMessageDto) {
@@ -159,14 +138,12 @@ class WebSocketController {
 
     close() {
         if (this.webSocketTransport) {
-            this.unreadMessagesCount = 0;
             this.webSocketTransport.close();
             this.webSocketTransport.off(
                 WebSocketEvents.MESSAGE,
                 this.reciveMessage.bind(this) as Callback
             );
             this.webSocketTransport = undefined;
-            this.oldMessages = [];
         }
     }
 }

@@ -71,14 +71,8 @@ class ChatController extends BaseController {
         try {
             this.updateCurrentChatUsers(chatId);
             const tokenDto = await this.getToken(chatId);
-            const messageCountDto = await this.getUnreadMessageCount(chatId);
             const userId = appStore.getState().user!.id;
-            webSocketController.connect(
-                chatId,
-                userId,
-                tokenDto.token,
-                messageCountDto.unread_count
-            );
+            webSocketController.connect(chatId, userId, tokenDto.token);
         } catch (error) {
             this.handleError(error);
         }
@@ -147,11 +141,6 @@ class ChatController extends BaseController {
 
     private async getToken(chatId: number) {
         const result = await chatApi.getToken(chatId);
-        return result;
-    }
-
-    private async getUnreadMessageCount(chatId: number) {
-        const result = await chatApi.getUnreadMessageCount(chatId);
         return result;
     }
 

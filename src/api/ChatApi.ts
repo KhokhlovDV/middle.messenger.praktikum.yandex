@@ -51,12 +51,6 @@ class ChatApi extends BaseAPI {
             `/token/${chatId}`
         ) as Promise<ChatTokenDto>;
     }
-
-    getUnreadMessageCount(chatId: number) {
-        return this.httpTransport.get(
-            `/new/${chatId}`
-        ) as Promise<UnreadMessagesDto>;
-    }
 }
 
 export const chatApi = new ChatApi('/chats');
