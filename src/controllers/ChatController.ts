@@ -3,8 +3,8 @@ import {
     ChatDto,
     CreateChatDto,
     DeleteChatDto,
-    CnahgeChatUsersDto,
     resourcesApi,
+    userApi,
 } from '../api';
 import { appStore, ChatData } from '../store';
 import { helper } from '../utils';
@@ -102,19 +102,21 @@ class ChatController extends BaseController {
         }
     }
 
-    async deleteUsers(data: CnahgeChatUsersDto) {
+    async deleteUser(chatId: number, login: string) {
         try {
-            await chatApi.deleteUsers(data);
-            this.updateCurrentChatUsers(data.chatId);
+            const userId = await this.getUserIdByLogin(login);
+            await chatApi.deleteUser({ chatId, users: [userId] });
+            this.updateCurrentChatUsers(chatId);
         } catch (error) {
             this.handleError(error);
         }
     }
 
-    async addUsers(data: CnahgeChatUsersDto) {
+    async addUser(chatId: number, login: string) {
         try {
-            await chatApi.addUsers(data);
-            this.updateCurrentChatUsers(data.chatId);
+            const userId = await this.getUserIdByLogin(login);
+            await chatApi.addUser({ chatId, users: [userId] });
+            this.updateCurrentChatUsers(chatId);
         } catch (error) {
             this.handleError(error);
         }
@@ -137,6 +139,14 @@ class ChatController extends BaseController {
         } catch (error) {
             this.handleError(error);
         }
+    }
+
+    private async getUserIdByLogin(login: string) {
+        const result = await userApi.search({ login });
+        if (!result.length) {
+            throw new Error('User not found');
+        }
+        return result[0].id;
     }
 
     private async getToken(chatId: number) {

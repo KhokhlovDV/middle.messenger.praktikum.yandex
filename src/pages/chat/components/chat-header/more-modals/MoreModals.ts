@@ -19,8 +19,8 @@ class MoreModalsBlock extends Block {
     constructor(props: Props) {
         const popupPros = MoreModalsBlock.createPopupProps(ActionType.ADD_USER);
         const popupWindow = new PopupWindow({
-            id: 'id',
-            label: 'Идентификатор',
+            id: 'login',
+            label: 'Логин',
             onClose: () => {
                 this.setProps({
                     isPopupOpen: false,
@@ -82,12 +82,12 @@ class MoreModalsBlock extends Block {
     }
 
     private onSuccessForm(form: HTMLFormElement) {
-        const userId = Number(new FormData(form).get('id'));
+        const login = new FormData(form).get('login') as string;
         const chatId = this.props.id as number;
         const result =
             this.action === ActionType.ADD_USER
-                ? this.onSuccessAddUserForm(chatId, userId)
-                : this.onSuccessDeleteUserForm(chatId, userId);
+                ? this.onSuccessAddUserForm(chatId, login)
+                : this.onSuccessDeleteUserForm(chatId, login);
         result
             .then(() => {
                 this.setProps({
@@ -97,12 +97,12 @@ class MoreModalsBlock extends Block {
             .catch((e: Error) => this.onError(e));
     }
 
-    private onSuccessAddUserForm(chatId: number, userId: number) {
-        return chatController.addUsers({ users: [userId], chatId });
+    private onSuccessAddUserForm(chatId: number, login: string) {
+        return chatController.addUser(chatId, login);
     }
 
-    private onSuccessDeleteUserForm(chatId: number, userId: number) {
-        return chatController.deleteUsers({ users: [userId], chatId });
+    private onSuccessDeleteUserForm(chatId: number, login: string) {
+        return chatController.deleteUser(chatId, login);
     }
 
     private onError(e: Error) {
@@ -112,7 +112,9 @@ class MoreModalsBlock extends Block {
     }
 
     private deleteChat() {
-        chatController.delete({ chatId: this.props.id as number });
+        chatController
+            .delete({ chatId: this.props.id as number })
+            .catch(() => {});
     }
 
     render() {
