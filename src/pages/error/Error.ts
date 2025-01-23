@@ -1,11 +1,11 @@
-import Block, { BlockProps } from '../../framework/Block';
-import { Link } from '../../shared-components/link';
-import { Mediator } from '../../utils/Mediator';
+import { Routes } from '../../constants';
+import { Block, BlockProps } from '../../framework';
+import { Router } from '../../router';
+import { Link } from '../../shared-components';
 
 interface Props extends BlockProps {
     errorCode: string;
     description: string;
-    mediator: Mediator;
 }
 
 export class Error extends Block {
@@ -14,12 +14,19 @@ export class Error extends Block {
             errorCode: props.errorCode,
             description: props.description,
             Link: new Link({
-                mediator: props.mediator,
                 text: 'Назад к чатам',
                 to: '/chat',
                 className: 'link-accent link-sm',
+                onLinkClick: () => {
+                    this.onLinkClick();
+                },
             }),
         });
+    }
+
+    onLinkClick() {
+        const router = Router.getInstance();
+        router.go(Routes.Messenger);
     }
 
     render() {

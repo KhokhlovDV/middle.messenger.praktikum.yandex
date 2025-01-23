@@ -1,21 +1,30 @@
-import Block, { BlockProps } from '../../../../framework/Block';
-import { ChatMessageType } from '../../../../utils/Store';
+import { RESOURCES } from '../../../../constants';
+import { Block, BlockProps } from '../../../../framework';
 
 interface Props extends BlockProps {
-    message: ChatMessageType;
+    isMyMessage: boolean;
+    id: number;
+    time: string;
+    content: string;
+    path: string;
 }
 
 export class ChatMessage extends Block {
     constructor(props: Props) {
         super({
-            ...props.message,
+            host: RESOURCES,
+            ...props,
         });
     }
 
     render() {
-        return `<div {{#if myMessage}} class='chat-message chat-message-my' {{else}} class='chat-message chat-message-opponent'{{/if}}>
-                    {{messageText}}
-                    <div class="chat-message__time">{{messageTime}}</div>
+        return `<div {{#if isMyMessage}} class='chat-message chat-message-my' {{else}} class='chat-message chat-message-opponent'{{/if}}>
+                    {{#if path}}
+                        <img src='{{host}}{{path}}' class='chat-message__image' alt='image' />
+                    {{else}}
+                        {{content}}
+                    {{/if}}
+                    <div class="chat-message__time">{{time}}</div>
                 </div>
                 `;
     }

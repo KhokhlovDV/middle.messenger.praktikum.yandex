@@ -1,30 +1,28 @@
-import Block, { BlockProps } from '../../framework/Block';
-import { Mediator } from '../../utils/Mediator';
+import { Block, BlockProps } from '../../framework';
 
 interface Props extends BlockProps {
-    to: string;
     text: string;
+    onLinkClick: () => void;
     className?: string;
-    mediator: Mediator;
+    attr?: Record<string, string>;
 }
 
 export class Link extends Block {
     constructor(props: Props) {
         super({
-            ...props,
+            to: props.to,
+            text: props.text,
+            className: props.className,
             events: {
                 click(e: Event) {
                     e.preventDefault();
-                    const target = e.target as HTMLAnchorElement;
-                    if (target.dataset?.page) {
-                        props.mediator.navigateTo(target.dataset.page);
-                    }
+                    props.onLinkClick();
                 },
             },
         });
     }
 
     render() {
-        return `<a href='#' class='link {{className}}' data-page='{{to}}'>{{text}}</a>`;
+        return `<a href='#' class='link {{className}}'>{{text}}</a>`;
     }
 }

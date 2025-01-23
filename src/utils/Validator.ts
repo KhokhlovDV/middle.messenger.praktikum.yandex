@@ -1,65 +1,131 @@
-import { DataForValidate, ValidationResult } from './Mediator';
+export interface ValidationResult {
+    id: string;
+    errorMessage: string;
+    value: string;
+}
+
+interface RegexData {
+    regex: RegExp;
+    errorMessage: string;
+}
 
 export class Validator {
-    validate(data: DataForValidate[]): ValidationResult[] {
+    static validate(data: Record<string, string>): ValidationResult[] {
         const result: ValidationResult[] = [];
-        data.forEach((element) => {
-            const { id, value } = element;
-            const regexData = this.createRegexData(id);
-            if (regexData) {
-                result.push({
-                    id,
-                    errorMessage: !regexData.regex.test(value)
-                        ? regexData.errorMessage
-                        : '',
-                });
+        for (const key in data) {
+            const value = data[key];
+            const regexData = this.createRegexData(key);
+            let errorMessage = '';
+            for (let i = 0; i <= regexData.length - 1; i++) {
+                const reg = regexData[i];
+                if (!reg.regex.test(value)) {
+                    errorMessage = reg.errorMessage;
+                    break;
+                }
             }
-        });
+            result.push({
+                id: key,
+                errorMessage,
+                value,
+            });
+        }
         return result;
     }
 
-    private createRegexData(key: string) {
+    private static createRegexData(key: string): RegexData[] {
         switch (key) {
             case 'phone':
-                return {
-                    regex: /^\+?\d{10,15}$/,
-                    errorMessage: 'Неверный телефон',
-                };
+                return [
+                    {
+                        regex: /^\+?\d+$/,
+                        errorMessage:
+                            'Должен состоять из цирф(может начинаться с плюса)',
+                    },
+                    {
+                        regex: /^.{10,15}$/,
+                        errorMessage: 'Должен сожержать от 10 до 15 символов',
+                    },
+                ];
             case 'password':
             case 'confirmedPassword':
             case 'oldPassword':
             case 'newPassword':
-                return {
-                    regex: /^(?=(.*[A-Z]))(?=(.*\d)).{8,40}$/,
-                    errorMessage: 'Неверный пароль',
-                };
+                return [
+                    {
+                        regex: /^.{8,40}$/,
+                        errorMessage: 'Должен сожержать от 8 до 40 символов',
+                    },
+                    {
+                        regex: /(?=.*[A-Z])(?=.*\d)/,
+                        errorMessage:
+                            'Должна быть хотя бы одна заглавная буква или цифра',
+                    },
+                ];
             case 'email':
-                return {
-                    regex: /^[a-zA-Z0-9_-]+@[a-zA-Z]+\.[a-zA-Z]+$/,
-                    errorMessage: 'Неверный email',
-                };
+                return [
+                    {
+                        regex: /^[a-zA-Z0-9_-]+@[a-zA-Z]+\.[a-zA-Z]+$/,
+                        errorMessage: 'Неверный формат email',
+                    },
+                ];
             case 'login':
-                return {
-                    regex: /^(?!\d+$)[a-zA-Z0-9_-]{3,20}$/,
-                    errorMessage: 'Неверный логин',
-                };
+                return [
+                    {
+                        regex: /^.{3,20}$/,
+                        errorMessage: 'Должен сожержать от 3 до 20 символов',
+                    },
+                    {
+                        regex: /^(?!\d+$).+/,
+                        errorMessage: 'Не должен состоять только из цифр',
+                    },
+                    {
+                        regex: /^[a-zA-Z0-9_-]+$/,
+                        errorMessage:
+                            'Допустимы только латинца, цирфы, дефис и нижнее подчеркивание',
+                    },
+                ];
             case 'second_name':
             case 'first_name':
-                return {
-                    regex: /^[A-ZА-ЯЁ][a-zа-яё-]*$/,
-                    errorMessage:
-                        key === 'first_name'
-                            ? 'Неверное имя'
-                            : 'Неверная фамилия',
-                };
+                return [
+                    {
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
+                    },
+                    {
+                        regex: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+                        errorMessage:
+                            'Допустима латиница или кириллица и дефис',
+                    },
+                    {
+                        regex: /^[A-ZА-ЯЁ]/,
+                        errorMessage: 'Первая буква должна быть заглавной',
+                    },
+                ];
 
             case 'message':
-                return {
-                    regex: /^(?!\s*$).+/,
-                    errorMessage: 'Неверное сообщение',
-                };
+                return [
+                    {
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
+                    },
+                ];
+            case 'id':
+                return [
+                    {
+                        regex: /^\d+$/,
+                        errorMessage:
+                            'Не должно быть пустым и состоять только из цифр',
+                    },
+                ];
+            case 'title':
+                return [
+                    {
+                        regex: /^.+$/,
+                        errorMessage: 'Не должно быть пустым',
+                    },
+                ];
             default:
-                return null;
+                return [];
         }
     }
 }
