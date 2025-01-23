@@ -38,7 +38,7 @@ Netlify: https://kdv-messenger.netlify.app/
 
 Страница регистрации: https://kdv-messenger.netlify.app/sign-up
 
-Страница 5\*\*: https://kdv-messenger.netlify.app/500
+Страница 500: https://kdv-messenger.netlify.app/500
 
 Страница профиля: https://kdv-messenger.netlify.app/settings
 
