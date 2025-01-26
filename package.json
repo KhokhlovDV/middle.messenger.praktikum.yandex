@@ -14,7 +14,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
-    "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
+    "lint:style:fix": "stylelint \"**/*.pcss\" --fix",
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
@@ -28,7 +29,6 @@
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
-    "husky": "^9.1.7",
     "postcss": "^8.4.49",
     "postcss-preset-env": "^10.1.1",
     "stylelint": "^16.11.0",
