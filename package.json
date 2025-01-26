@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "npm run build && node server.cjs",
+    "lint:all": "npm run lint && npm run lint:style",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
@@ -22,6 +23,7 @@
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
+    "husky": "^9.1.7",
     "postcss": "^8.4.49",
     "postcss-preset-env": "^10.1.1",
     "stylelint": "^16.11.0",
@@ -33,5 +35,10 @@
   "dependencies": {
     "express": "^4.21.1",
     "handlebars": "^4.7.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:all"
+    }
   }
 }
