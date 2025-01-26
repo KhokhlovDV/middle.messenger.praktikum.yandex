@@ -16,6 +16,11 @@
     "lint:style": "stylelint \"**/*.pcss\"",
     "lint:style:fix": "stylelint \"**/*.pcss\" --fix"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:all"
+    }
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
@@ -35,10 +40,5 @@
   "dependencies": {
     "express": "^4.21.1",
     "handlebars": "^4.7.8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:all"
-    }
   }
 }
