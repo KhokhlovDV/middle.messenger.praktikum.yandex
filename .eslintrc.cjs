@@ -38,5 +38,5 @@ module.exports = {
         'guard-for-in': 'off',
         'object-curly-newline': 'off',
     },
-    ignorePatterns: ['*.config.js'],
+    ignorePatterns: ['*.config.js', 'mochaSetup.cjs'],
 };

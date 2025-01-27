@@ -10,7 +10,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "npm run build && node server.cjs",
-    "lint:all": "npm run lint && npm run lint:style",
+    "test": "mocha",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "lint:style": "stylelint \"**/*.pcss\"",
