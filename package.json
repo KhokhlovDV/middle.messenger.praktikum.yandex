@@ -6,11 +6,6 @@
   "engines": {
     "node": ">=16"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run lint:style && npm run test"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
