@@ -5,7 +5,7 @@ import { HttpError } from '../utils';
 import { webSocketController } from './WebSockerController';
 
 export abstract class BaseController {
-    protected updateChatInterval: number = 0;
+    protected updateChatInterval?: ReturnType<typeof setInterval>;
 
     protected handleError(error: unknown) {
         if (error instanceof HttpError) {
@@ -33,6 +33,6 @@ export abstract class BaseController {
         });
         webSocketController.close();
         clearInterval(this.updateChatInterval);
-        this.updateChatInterval = 0;
+        this.updateChatInterval = undefined;
     }
 }
