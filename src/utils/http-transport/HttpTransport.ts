@@ -86,7 +86,7 @@ export class HttpTransport {
             xhr.withCredentials = true;
             xhr.responseType = 'json';
 
-            if (data && !(data instanceof FormData)) {
+            if (data !== undefined && !(data instanceof FormData)) {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
@@ -94,7 +94,7 @@ export class HttpTransport {
                 xhr.setRequestHeader(k, v)
             );
 
-            if (method !== Methods.GET && data) {
+            if (method !== Methods.GET && data !== undefined) {
                 xhr.send(
                     data instanceof FormData ? data : JSON.stringify(data)
                 );
