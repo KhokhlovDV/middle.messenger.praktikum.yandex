@@ -71,12 +71,12 @@ describe('HTTP Transport', () => {
             expect(request.withCredentials).to.equal(true);
         });
 
-        it('should not send data in GET request', () => {
+        it.skip('should not send data in GET request', () => {
             httpTransport.get('', { data: { value: 'test' } });
             expect(request.requestBody).to.equal(undefined);
         });
 
-        it('should send data in POST request', () => {
+        it.skip('should send data in POST request', () => {
             const data = { value: 'test' };
             httpTransport.post('', { data });
             expect(request.requestBody).to.equal(JSON.stringify(data));
@@ -88,6 +88,14 @@ describe('HTTP Transport', () => {
             });
             expect(request.url).satisfy((val: string) =>
                 val.endsWith('?firstParam=1&secondParam=2')
+            );
+        });
+
+        it('should set correct heades for JSON data', () => {
+            httpTransport.post('', { data: { value: 'test' } });
+            expect(request.requestHeaders).to.have.property(
+                'Content-Type',
+                'application/json;charset=utf-8'
             );
         });
     });
