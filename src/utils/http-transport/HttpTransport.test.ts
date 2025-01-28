@@ -71,12 +71,12 @@ describe('HTTP Transport', () => {
             expect(request.withCredentials).to.equal(true);
         });
 
-        it.skip('should not send data in GET request', () => {
+        it('should not send data in GET request', () => {
             httpTransport.get('', { data: { value: 'test' } });
             expect(request.requestBody).to.equal(undefined);
         });
 
-        it.skip('should send data in POST request', () => {
+        it('should send data in POST request', () => {
             const data = { value: 'test' };
             httpTransport.post('', { data });
             expect(request.requestBody).to.equal(JSON.stringify(data));
