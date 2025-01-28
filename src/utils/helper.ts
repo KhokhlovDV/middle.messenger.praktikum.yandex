@@ -20,4 +20,5 @@ export const helper = {
             hour: '2-digit',
             minute: '2-digit',
         }),
+    isFormData: (data: unknown) => data instanceof FormData,
 };

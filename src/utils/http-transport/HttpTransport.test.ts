@@ -6,7 +6,8 @@ import Sinon, {
     SinonFakeXMLHttpRequestStatic,
     SinonStub,
 } from 'sinon';
-import { HttpTransport, Methods } from './HttpTransport';
+import { HttpTransport } from './HttpTransport';
+import { helper } from '../helper';
 
 describe('HTTP Transport', () => {
     const sandbox = createSandbox();
@@ -54,6 +55,7 @@ describe('HTTP Transport', () => {
         let request: SinonFakeXMLHttpRequest;
 
         beforeEach(() => {
+            sandbox.stub(helper, 'isFormData').callsFake(() => false);
             xhr = Sinon.useFakeXMLHttpRequest();
             // @ts-expect-error: Not all signatures exist in fake object
             global.XMLHttpRequest = xhr;
@@ -93,15 +95,6 @@ describe('HTTP Transport', () => {
 
         it('should set correct heades for JSON data', () => {
             httpTransport.post('', { data: { value: 'test' } });
-            expect(request.requestHeaders)
-                .to.have.property('Content-Type')
-                .that.includes('application/json');
-        });
-
-        it('should set correct heades for JSON data V2', () => {
-            httpTransport.request('', Methods.POST, {
-                data: { value: 'test' },
-            });
             expect(request.requestHeaders)
                 .to.have.property('Content-Type')
                 .that.includes('application/json');

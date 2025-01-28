@@ -1,7 +1,8 @@
 import { BASE_URL } from '../../constants';
+import { helper } from '../helper';
 import { HttpError } from './HttpError';
 
-export enum Methods {
+enum Methods {
     GET = 'GET',
     PUT = 'PUT',
     POST = 'POST',
@@ -47,12 +48,12 @@ export class HttpTransport {
     delete: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.DELETE, options);
 
-    public request<T>(url: string, method: Methods, options: Options) {
+    private request<T>(url: string, method: Methods, options: Options) {
         const {
             query = {},
             headers = {},
             timeout = DEFAULT_TIMEOUT,
-            data,
+            data = null,
         } = options;
 
         return new Promise<T>((resolve, reject) => {
@@ -86,10 +87,7 @@ export class HttpTransport {
             xhr.withCredentials = true;
             xhr.responseType = 'json';
 
-            if (
-                options.data !== undefined &&
-                !(options.data instanceof FormData)
-            ) {
+            if (data && !helper.isFormData(data)) {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
@@ -97,10 +95,8 @@ export class HttpTransport {
                 xhr.setRequestHeader(k, v)
             );
 
-            if (method !== Methods.GET && data !== undefined) {
-                xhr.send(
-                    data instanceof FormData ? data : JSON.stringify(data)
-                );
+            if (method !== Methods.GET && data) {
+                xhr.send(helper.isFormData(data) ? data : JSON.stringify(data));
             } else {
                 xhr.send();
             }
