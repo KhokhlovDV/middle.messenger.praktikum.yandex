@@ -1,7 +1,7 @@
 import { BASE_URL } from '../../constants';
 import { HttpError } from './HttpError';
 
-enum Methods {
+export enum Methods {
     GET = 'GET',
     PUT = 'PUT',
     POST = 'POST',
@@ -47,7 +47,7 @@ export class HttpTransport {
     delete: HTTPMethod = (url, options = {}) =>
         this.request(url, Methods.DELETE, options);
 
-    private request<T>(url: string, method: Methods, options: Options) {
+    public request<T>(url: string, method: Methods, options: Options) {
         const {
             query = {},
             headers = {},

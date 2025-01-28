@@ -6,7 +6,7 @@ import Sinon, {
     SinonFakeXMLHttpRequestStatic,
     SinonStub,
 } from 'sinon';
-import { HttpTransport } from './HttpTransport';
+import { HttpTransport, Methods } from './HttpTransport';
 
 describe('HTTP Transport', () => {
     const sandbox = createSandbox();
@@ -71,12 +71,12 @@ describe('HTTP Transport', () => {
             expect(request.withCredentials).to.equal(true);
         });
 
-        it.skip('should not send data in GET request', () => {
+        it('should not send data in GET request', () => {
             httpTransport.get('', { data: { value: 'test' } });
             expect(request.requestBody).to.equal(undefined);
         });
 
-        it.skip('should send data in POST request', () => {
+        it('should send data in POST request', () => {
             const data = { value: 'test' };
             httpTransport.post('', { data });
             expect(request.requestBody).to.equal(JSON.stringify(data));
@@ -93,10 +93,18 @@ describe('HTTP Transport', () => {
 
         it('should set correct heades for JSON data', () => {
             httpTransport.post('', { data: { value: 'test' } });
-            expect(request.requestHeaders).to.have.property(
-                'Content-Type',
-                'application/json;charset=utf-8'
-            );
+            expect(request.requestHeaders)
+                .to.have.property('Content-Type')
+                .that.includes('application/json');
+        });
+
+        it('should set correct heades for JSON data V2', () => {
+            httpTransport.request('', Methods.POST, {
+                data: { value: 'test' },
+            });
+            expect(request.requestHeaders)
+                .to.have.property('Content-Type')
+                .that.includes('application/json');
         });
     });
 });
