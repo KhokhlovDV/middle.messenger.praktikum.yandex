@@ -86,9 +86,10 @@ export class HttpTransport {
             xhr.withCredentials = true;
             xhr.responseType = 'json';
 
-            if (data && !(data instanceof FormData)) {
-                xhr.setRequestHeader('Content-Type', 'application/json');
-            }
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            // if (data && !(data instanceof FormData)) {
+            //     xhr.setRequestHeader('Content-Type', 'application/json');
+            // }
 
             Object.entries(headers).forEach(([k, v]) =>
                 xhr.setRequestHeader(k, v)
