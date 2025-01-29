@@ -20,6 +20,8 @@
 
 Запуск проверок StyleLint(с попыткой автоматического исправления ошибок): `npm run lint:style:fix`
 
+Запуск тестов: `npm run test`
+
 ## Ссылки:
 
 ### Прототип
@@ -38,7 +40,7 @@ Netlify: https://kdv-messenger.netlify.app/
 
 Страница регистрации: https://kdv-messenger.netlify.app/sign-up
 
-Страница 5\*\*: https://kdv-messenger.netlify.app/500
+Страница 500: https://kdv-messenger.netlify.app/500
 
 Страница профиля: https://kdv-messenger.netlify.app/settings
 

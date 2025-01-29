@@ -5,7 +5,7 @@ import { Component } from './types';
 export class Router {
     private history: History;
 
-    private static instance: Router;
+    private static instance?: Router;
 
     private currentRoute: Route | null = null;
 
@@ -20,6 +20,10 @@ export class Router {
             Router.instance = new Router();
         }
         return Router.instance;
+    }
+
+    static destroyInstance() {
+        Router.instance = undefined;
     }
 
     private constructor() {
@@ -72,6 +76,10 @@ export class Router {
 
     getCurrentRoute() {
         return this.getRoute(window.location.pathname);
+    }
+
+    getPath() {
+        return window.location.pathname;
     }
 
     private getRoute(pathname: string) {
