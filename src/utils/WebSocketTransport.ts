@@ -12,7 +12,7 @@ const PING_TIME = 10000;
 export class WebSocketTransport extends EventBus {
     private socket?: WebSocket;
 
-    private pingInterval?: number;
+    private pingInterval?: ReturnType<typeof setInterval>;
 
     constructor(private url: string) {
         super();
@@ -41,7 +41,7 @@ export class WebSocketTransport extends EventBus {
 
         this.socket.addEventListener(WebSocketEvents.CLOSE, (event) => {
             clearInterval(this.pingInterval);
-            this.pingInterval = 0;
+            this.pingInterval = undefined;
             this.socket = undefined;
             this.emit(WebSocketEvents.CLOSE, event);
         });

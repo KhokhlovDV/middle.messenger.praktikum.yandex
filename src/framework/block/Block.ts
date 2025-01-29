@@ -72,6 +72,14 @@ export abstract class Block {
         Object.assign(this.lists, nextList);
     };
 
+    public getLists() {
+        return this.lists;
+    }
+
+    public getChildren() {
+        return this.children;
+    }
+
     private getChildrenPropsAndProps(propsAndChildren: BlockProps): {
         children: Record<string, Block>;
         props: BlockProps;

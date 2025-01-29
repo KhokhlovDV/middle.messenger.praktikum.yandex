@@ -1,4 +1,5 @@
 import { BASE_URL } from '../../constants';
+import { helper } from '../helper';
 import { HttpError } from './HttpError';
 
 enum Methods {
@@ -86,7 +87,7 @@ export class HttpTransport {
             xhr.withCredentials = true;
             xhr.responseType = 'json';
 
-            if (data && !(data instanceof FormData)) {
+            if (data && !helper.isFormData(data)) {
                 xhr.setRequestHeader('Content-Type', 'application/json');
             }
 
@@ -95,9 +96,7 @@ export class HttpTransport {
             );
 
             if (method !== Methods.GET && data) {
-                xhr.send(
-                    data instanceof FormData ? data : JSON.stringify(data)
-                );
+                xhr.send(helper.isFormData(data) ? data : JSON.stringify(data));
             } else {
                 xhr.send();
             }
